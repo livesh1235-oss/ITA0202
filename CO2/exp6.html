@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exp 6: Dynamic To-Do List Application</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --primary-dark: #4338ca;
+            --secondary: #06b6d4;
+            --accent: #f43f5e;
+            --warning: #f59e0b;
+            --success: #10b981;
+            
+            --bg-base: #090d16;
+            --bg-surface: #111827;
+            --bg-card: rgba(17, 24, 39, 0.85);
+            --border-color: rgba(255, 255, 255, 0.1);
+            
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            
+            --shadow-md: 0 12px 24px -4px rgba(0, 0, 0, 0.4);
+            --shadow-glow: 0 0 25px rgba(99, 102, 241, 0.25);
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --transition: all 0.25s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.12) 0px, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        /* NAVIGATION */
+        .top-nav {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 12px 24px;
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+        }
+
+        .nav-back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--primary-light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: var(--radius-sm);
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            transition: var(--transition);
+        }
+
+        .nav-back-link:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        /* CONTAINER */
+        .container {
+            max-width: 860px;
+            margin: 30px auto 50px auto;
+            padding: 0 20px;
+            flex: 1;
+            width: 100%;
+        }
+
+        .exp-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(6, 182, 212, 0.2));
+            color: var(--primary-light);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            padding: 5px 16px;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .exp-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, var(--primary-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 6px;
+        }
+
+        .exp-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* CARD */
+        .app-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            box-shadow: var(--shadow-md);
+        }
+
+        /* TASK INPUT FORM */
+        .task-input-section {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .task-input-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .input-title {
+            flex: 1;
+            background: #090d16;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 12px 16px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-family: inherit;
+        }
+
+        .input-title:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+        }
+
+        .task-meta-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .select-control, .date-control {
+            background: #090d16;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 9px 12px;
+            color: var(--text-primary);
+            font-size: 0.88rem;
+            font-family: inherit;
+        }
+
+        .btn-add-task {
+            margin-left: auto;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 9px 22px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 0.92rem;
+            cursor: pointer;
+            box-shadow: var(--shadow-glow);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-add-task:hover {
+            filter: brightness(1.1);
+            transform: translateY(-2px);
+        }
+
+        /* STATS & FILTERS */
+        .controls-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 6px;
+            background: var(--bg-surface);
+            padding: 4px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+        }
+
+        .filter-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .search-task-input {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 7px 14px;
+            color: var(--text-primary);
+            font-size: 0.88rem;
+            width: 200px;
+        }
+
+        /* TASK LIST */
+        .task-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .task-item {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: var(--transition);
+        }
+
+        .task-item:hover {
+            border-color: rgba(99, 102, 241, 0.4);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .task-item.completed {
+            opacity: 0.65;
+            background: rgba(17, 24, 39, 0.4);
+        }
+
+        .task-checkbox {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary);
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .task-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .task-title {
+            font-size: 0.98rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+            word-break: break-word;
+            transition: var(--transition);
+        }
+
+        .task-item.completed .task-title {
+            text-decoration: line-through;
+            color: var(--text-muted);
+        }
+
+        .task-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            flex-wrap: wrap;
+        }
+
+        /* PRIORITY BADGES */
+        .priority-badge {
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .priority-High { background: rgba(244, 63, 94, 0.18); color: #f87171; border: 1px solid rgba(244, 63, 94, 0.3); }
+        .priority-Medium { background: rgba(245, 158, 11, 0.18); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+        .priority-Low { background: rgba(16, 185, 129, 0.18); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+
+        .category-tag {
+            font-family: 'Fira Code', monospace;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: var(--secondary);
+        }
+
+        /* ACTIONS */
+        .task-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-action {
+            background: none;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            padding: 6px 10px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: var(--transition);
+        }
+
+        .btn-action:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .btn-action.delete:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+            background: rgba(244, 63, 94, 0.1);
+        }
+
+        /* PROGRESS TRACKER */
+        .progress-wrapper {
+            margin-top: 25px;
+            padding-top: 18px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 45px 20px;
+            color: var(--text-muted);
+        }
+
+        .empty-icon {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 650px) {
+            .task-input-row, .task-meta-row {
+                flex-direction: column;
+            }
+            .btn-add-task {
+                width: 100%;
+                justify-content: center;
+            }
+            .controls-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .search-task-input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <span>🎓</span>
+                <span>Web Tech Lab · CO2</span>
+            </a>
+            <a href="index.html" class="nav-back-link">← Lab Portal</a>
+        </div>
+    </nav>
+
+    <!-- CONTAINER -->
+    <div class="container">
+        <!-- HEADER -->
+        <header class="exp-header">
+            <div class="badge">Experiment 06 · DOM Manipulation &amp; Event Listeners</div>
+            <h1 class="exp-title">Dynamic To-Do List Application</h1>
+            <p class="exp-desc">Interactive task workflow management featuring dynamic DOM element creation, priority states, inline editing, filtering, and local storage synchronization.</p>
+        </header>
+
+        <div class="app-card">
+            <!-- INPUT SECTION -->
+            <div class="task-input-section">
+                <div class="task-input-row">
+                    <input type="text" id="taskTitleInput" class="input-title" placeholder="What academic task needs to be completed?">
+                </div>
+                <div class="task-meta-row">
+                    <select id="taskCategorySelect" class="select-control">
+                        <option value="Academic">📚 Academic</option>
+                        <option value="Lab Work">🔬 Lab Work</option>
+                        <option value="Project">🚀 Project</option>
+                        <option value="Exam Prep">📝 Exam Prep</option>
+                    </select>
+
+                    <select id="taskPrioritySelect" class="select-control">
+                        <option value="High">🔴 High Priority</option>
+                        <option value="Medium" selected>🟡 Medium Priority</option>
+                        <option value="Low">🟢 Low Priority</option>
+                    </select>
+
+                    <input type="date" id="taskDueDateInput" class="date-control">
+
+                    <button class="btn-add-task" id="addTaskBtn">
+                        <span>➕</span> Add Task
+                    </button>
+                </div>
+            </div>
+
+            <!-- CONTROLS & FILTER TABS -->
+            <div class="controls-bar">
+                <div class="filter-tabs">
+                    <button class="filter-btn active" data-filter="all">All Tasks</button>
+                    <button class="filter-btn" data-filter="active">Active</button>
+                    <button class="filter-btn" data-filter="completed">Completed</button>
+                    <button class="filter-btn" data-filter="high">High Priority</button>
+                </div>
+
+                <input type="text" id="searchTaskInput" class="search-task-input" placeholder="🔍 Search tasks...">
+            </div>
+
+            <!-- LIST -->
+            <ul class="task-list" id="taskListContainer">
+                <!-- Dynamically rendered via JS -->
+            </ul>
+
+            <!-- PROGRESS FOOTER -->
+            <div class="progress-wrapper">
+                <span id="taskStatsCounter">0 of 0 tasks completed (0%)</span>
+                <button class="btn-action" id="clearCompletedBtn">Clear Completed</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        let tasks = JSON.parse(localStorage.getItem('wt_co2_tasks')) || [
+            { id: 1, title: "Implement CO2 Lab Experiments in HTML & JS", category: "Lab Work", priority: "High", dueDate: "2026-08-25", completed: true },
+            { id: 2, title: "Review JavaScript Regular Expressions for Form Validation", category: "Academic", priority: "High", dueDate: "2026-08-28", completed: false },
+            { id: 3, title: "Prepare Student Result Analysis System Presentation", category: "Project", priority: "Medium", dueDate: "2026-09-02", completed: false },
+            { id: 4, title: "Solve Quiz Application practice test questions", category: "Exam Prep", priority: "Low", dueDate: "2026-09-05", completed: false }
+        ];
+
+        let currentFilter = 'all';
+
+        function saveTasks() {
+            localStorage.setItem('wt_co2_tasks', JSON.stringify(tasks));
+        }
+
+        function renderTasks() {
+            const listContainer = document.getElementById('taskListContainer');
+            const searchKeyword = document.getElementById('searchTaskInput').value.toLowerCase();
+
+            let filtered = tasks.filter(task => {
+                const matchesSearch = task.title.toLowerCase().includes(searchKeyword);
+                if (!matchesSearch) return false;
+
+                if (currentFilter === 'active') return !task.completed;
+                if (currentFilter === 'completed') return task.completed;
+                if (currentFilter === 'high') return task.priority === 'High';
+                return true;
+            });
+
+            if (filtered.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">📝</div>
+                        <p>No tasks found matching your criteria.</p>
+                    </div>
+                `;
+            } else {
+                listContainer.innerHTML = filtered.map(task => `
+                    <li class="task-item ${task.completed ? 'completed' : ''}" data-id="${task.id}">
+                        <input type="checkbox" class="task-checkbox" ${task.completed ? 'checked' : ''} onchange="toggleTask(${task.id})">
+                        <div class="task-content">
+                            <div class="task-title" id="title-${task.id}">${task.title}</div>
+                            <div class="task-meta">
+                                <span class="priority-badge priority-${task.priority}">${task.priority}</span>
+                                <span class="category-tag">${task.category}</span>
+                                <span>📅 Due: ${task.dueDate || 'No Date'}</span>
+                            </div>
+                        </div>
+                        <div class="task-actions">
+                            <button class="btn-action" onclick="editTask(${task.id})" title="Edit Task">✏️</button>
+                            <button class="btn-action delete" onclick="deleteTask(${task.id})" title="Delete Task">🗑️</button>
+                        </div>
+                    </li>
+                `).join('');
+            }
+
+            // Update Progress
+            const total = tasks.length;
+            const completedCount = tasks.filter(t => t.completed).length;
+            const percent = total > 0 ? Math.round((completedCount / total) * 100) : 0;
+            document.getElementById('taskStatsCounter').textContent = `${completedCount} of ${total} tasks completed (${percent}%)`;
+        }
+
+        function addTask() {
+            const titleInput = document.getElementById('taskTitleInput');
+            const catSelect = document.getElementById('taskCategorySelect');
+            const prioSelect = document.getElementById('taskPrioritySelect');
+            const dateInput = document.getElementById('taskDueDateInput');
+
+            const title = titleInput.value.trim();
+            if (!title) {
+                alert('Please enter a task title!');
+                return;
+            }
+
+            const newTask = {
+                id: Date.now(),
+                title,
+                category: catSelect.value,
+                priority: prioSelect.value,
+                dueDate: dateInput.value,
+                completed: false
+            };
+
+            tasks.unshift(newTask);
+            saveTasks();
+            titleInput.value = '';
+            renderTasks();
+        }
+
+        function toggleTask(id) {
+            const task = tasks.find(t => t.id === id);
+            if (task) {
+                task.completed = !task.completed;
+                saveTasks();
+                renderTasks();
+            }
+        }
+
+        function editTask(id) {
+            const task = tasks.find(t => t.id === id);
+            if (!task) return;
+            const newTitle = prompt('Edit Task Description:', task.title);
+            if (newTitle !== null && newTitle.trim() !== '') {
+                task.title = newTitle.trim();
+                saveTasks();
+                renderTasks();
+            }
+        }
+
+        function deleteTask(id) {
+            tasks = tasks.filter(t => t.id !== id);
+            saveTasks();
+            renderTasks();
+        }
+
+        document.getElementById('addTaskBtn').addEventListener('click', addTask);
+        document.getElementById('taskTitleInput').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') addTask();
+        });
+
+        // Filter tab triggers
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.getAttribute('data-filter');
+                renderTasks();
+            });
+        });
+
+        document.getElementById('searchTaskInput').addEventListener('input', renderTasks);
+
+        document.getElementById('clearCompletedBtn').addEventListener('click', () => {
+            tasks = tasks.filter(t => !t.completed);
+            saveTasks();
+            renderTasks();
+        });
+
+        // Initial Render
+        renderTasks();
+    </script>
+</body>
+</html>

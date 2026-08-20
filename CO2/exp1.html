@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exp 1: Responsive Student Profile Webpage</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --primary-dark: #4338ca;
+            --secondary: #06b6d4;
+            --accent: #f43f5e;
+            --success: #10b981;
+            --warning: #f59e0b;
+            
+            --bg-base: #090d16;
+            --bg-surface: #111827;
+            --bg-card: rgba(17, 24, 39, 0.75);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(99, 102, 241, 0.4);
+            
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            --shadow-glow: 0 0 25px rgba(99, 102, 241, 0.25);
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="light"] {
+            --bg-base: #f1f5f9;
+            --bg-surface: #ffffff;
+            --bg-card: rgba(255, 255, 255, 0.85);
+            --border-color: rgba(0, 0, 0, 0.08);
+            --border-hover: rgba(99, 102, 241, 0.5);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 10px 20px -3px rgba(0, 0, 0, 0.08);
+            --shadow-glow: 0 0 25px rgba(99, 102, 241, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.12) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.1) 0px, transparent 50%);
+            background-attachment: fixed;
+            transition: var(--transition);
+        }
+
+        /* TOP NAVIGATION */
+        .top-nav {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 12px 24px;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .nav-back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--primary-light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: var(--radius-sm);
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            transition: var(--transition);
+        }
+
+        .nav-back-link:hover {
+            background: var(--primary);
+            color: #ffffff;
+            transform: translateX(-3px);
+        }
+
+        .theme-toggle-btn {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .theme-toggle-btn:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-glow);
+        }
+
+        /* MAIN CONTAINER */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+            flex: 1;
+            width: 100%;
+        }
+
+        /* EXPERIMENT HEADER BADGE */
+        .exp-header {
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(6, 182, 212, 0.2));
+            color: var(--primary-light);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            padding: 6px 16px;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .exp-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--primary-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 6px;
+        }
+
+        .exp-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* PROFILE LAYOUT GRID */
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 340px 1fr;
+            gap: 28px;
+            align-items: start;
+        }
+
+        /* LEFT SIDEBAR PROFILE CARD */
+        .profile-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 30px 24px;
+            box-shadow: var(--shadow-md);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .profile-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: linear-gradient(135deg, #6366f1, #06b6d4);
+            z-index: 0;
+        }
+
+        .avatar-wrapper {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 30px auto 16px;
+            z-index: 1;
+        }
+
+        .avatar-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--bg-surface);
+            box-shadow: var(--shadow-md);
+            background: #1e293b;
+        }
+
+        .status-indicator {
+            position: absolute;
+            bottom: 6px;
+            right: 8px;
+            width: 18px;
+            height: 18px;
+            background: var(--success);
+            border: 3px solid var(--bg-surface);
+            border-radius: 50%;
+            title: "Active Student";
+        }
+
+        .profile-name {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .profile-role {
+            color: var(--primary-light);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .profile-id-tag {
+            display: inline-block;
+            font-family: 'Fira Code', monospace;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            padding: 4px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .profile-bio {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+            line-height: 1.5;
+            text-align: left;
+            background: rgba(0, 0, 0, 0.15);
+            padding: 14px;
+            border-radius: var(--radius-sm);
+            border-left: 3px solid var(--primary);
+        }
+
+        .info-list {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 24px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.88rem;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .info-label {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .info-val {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .social-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: var(--radius-sm);
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-btn:hover {
+            color: #ffffff;
+            background: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* RIGHT CONTENT AREA */
+        .content-area {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 26px;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            border-color: var(--border-hover);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-title-icon {
+            color: var(--primary-light);
+        }
+
+        /* SKILLS BARS */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 18px;
+        }
+
+        .skill-item {
+            background: var(--bg-surface);
+            padding: 14px 16px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+        }
+
+        .skill-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.88rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .skill-percent {
+            color: var(--secondary);
+            font-family: 'Fira Code', monospace;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.07);
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            border-radius: 9999px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* EDUCATION TIMELINE */
+        .timeline {
+            position: relative;
+            padding-left: 28px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 6px;
+            bottom: 6px;
+            width: 2px;
+            background: var(--border-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 22px;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -28px;
+            top: 4px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--bg-surface);
+            border: 3px solid var(--primary);
+        }
+
+        .timeline-year {
+            font-size: 0.75rem;
+            font-family: 'Fira Code', monospace;
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .timeline-title {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--text-primary);
+        }
+
+        .timeline-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .timeline-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* PROJECTS SHOWCASE */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 18px;
+        }
+
+        .project-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: var(--transition);
+        }
+
+        .project-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary-light);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .project-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .project-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 14px;
+            line-height: 1.4;
+        }
+
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: auto;
+        }
+
+        .tag {
+            font-size: 0.72rem;
+            font-family: 'Fira Code', monospace;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: rgba(99, 102, 241, 0.12);
+            color: var(--primary-light);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        /* CSS BOX MODEL DEMO HIGHLIGHT BAR */
+        .box-model-demo {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .box-stat {
+            background: var(--bg-surface);
+            padding: 14px 10px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+        }
+
+        .box-stat-num {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--secondary);
+        }
+
+        .box-stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* FOOTER */
+        footer {
+            margin-top: auto;
+            text-align: center;
+            padding: 24px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* RESPONSIVE MEDIA QUERIES */
+        @media (max-width: 900px) {
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+            .profile-card {
+                max-width: 500px;
+                margin: 0 auto;
+                width: 100%;
+            }
+            .exp-title {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .box-model-demo {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .container {
+                padding: 0 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP NAVIGATION -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <span>🎓</span>
+                <span>Web Tech Lab · CO2</span>
+            </a>
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <a href="index.html" class="nav-back-link">← Lab Portal</a>
+                <button class="theme-toggle-btn" id="themeToggle" title="Toggle Light/Dark Theme">🌓</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+        <!-- HEADER -->
+        <header class="exp-header">
+            <div class="badge">Experiment 01 · CSS Styling &amp; Box Model</div>
+            <h1 class="exp-title">Responsive Student Profile Webpage</h1>
+            <p class="exp-desc">Demonstrating HTML5 semantic structure, CSS selectors, modern typography, CSS box model, flexible cards, and responsive media queries.</p>
+        </header>
+
+        <!-- PROFILE GRID -->
+        <div class="profile-grid">
+            
+            <!-- LEFT PROFILE SIDEBAR -->
+            <aside class="profile-card">
+                <div class="avatar-wrapper">
+                    <!-- SVG Student Avatar -->
+                    <svg class="avatar-img" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="avatarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#4f46e5"/>
+                                <stop offset="100%" stop-color="#06b6d4"/>
+                            </linearGradient>
+                        </defs>
+                        <rect width="120" height="120" fill="#1e293b"/>
+                        <circle cx="60" cy="45" r="26" fill="url(#avatarGrad)"/>
+                        <ellipse cx="60" cy="98" rx="42" ry="26" fill="url(#avatarGrad)"/>
+                    </svg>
+                    <div class="status-indicator" title="Student Enrolled & Active"></div>
+                </div>
+
+                <h2 class="profile-name">Livesh Vetrivel</h2>
+                <div class="profile-role">B.Tech Information Technology</div>
+                <div class="profile-id-tag">REG: 717823IT123</div>
+
+                <div class="profile-bio">
+                    Passionate web developer and software engineering student specializing in frontend architectures, responsive UI/UX, and cloud-native applications.
+                </div>
+
+                <ul class="info-list">
+                    <li class="info-item">
+                        <div class="info-icon">🏛️</div>
+                        <div>
+                            <div class="info-label">Institution</div>
+                            <div class="info-val">Department of IT</div>
+                        </div>
+                    </li>
+                    <li class="info-item">
+                        <div class="info-icon">📍</div>
+                        <div>
+                            <div class="info-label">Campus Location</div>
+                            <div class="info-val">Chennai, India</div>
+                        </div>
+                    </li>
+                    <li class="info-item">
+                        <div class="info-icon">📧</div>
+                        <div>
+                            <div class="info-label">Email</div>
+                            <div class="info-val">livesh1235@gmail.com</div>
+                        </div>
+                    </li>
+                    <li class="info-item">
+                        <div class="info-icon">🎯</div>
+                        <div>
+                            <div class="info-label">CGPA</div>
+                            <div class="info-val">9.12 / 10.0</div>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="social-links">
+                    <a href="https://github.com/livesh1235-oss" target="_blank" class="social-btn" title="GitHub">🐙</a>
+                    <a href="#" class="social-btn" title="LinkedIn">💼</a>
+                    <a href="#" class="social-btn" title="Portfolio">🌐</a>
+                    <a href="#" class="social-btn" title="Resume PDF">📄</a>
+                </div>
+            </aside>
+
+            <!-- RIGHT CONTENT AREA -->
+            <main class="content-area">
+                
+                <!-- ACADEMIC STATS / BOX MODEL METRICS -->
+                <div class="box-model-demo">
+                    <div class="box-stat">
+                        <div class="box-stat-num">3rd</div>
+                        <div class="box-stat-label">Year of Study</div>
+                    </div>
+                    <div class="box-stat">
+                        <div class="box-stat-num">9.12</div>
+                        <div class="box-stat-label">Cumulative GPA</div>
+                    </div>
+                    <div class="box-stat">
+                        <div class="box-stat-num">14+</div>
+                        <div class="box-stat-label">Lab Projects</div>
+                    </div>
+                    <div class="box-stat">
+                        <div class="box-stat-num">98%</div>
+                        <div class="box-stat-label">Attendance</div>
+                    </div>
+                </div>
+
+                <!-- SKILLS CARD -->
+                <section class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <span class="card-title-icon">⚡</span> Technical Skill Matrix
+                        </h2>
+                    </div>
+                    <div class="skills-grid">
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span>HTML5 Semantic Markup</span>
+                                <span class="skill-percent">95%</span>
+                            </div>
+                            <div class="progress-bar-bg">
+                                <div class="progress-bar-fill" style="width: 95%;"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span>CSS3 &amp; Responsive Layouts</span>
+                                <span class="skill-percent">90%</span>
+                            </div>
+                            <div class="progress-bar-bg">
+                                <div class="progress-bar-fill" style="width: 90%;"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span>JavaScript DOM &amp; ES6+</span>
+                                <span class="skill-percent">88%</span>
+                            </div>
+                            <div class="progress-bar-bg">
+                                <div class="progress-bar-fill" style="width: 88%;"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span>Git &amp; Version Control</span>
+                                <span class="skill-percent">85%</span>
+                            </div>
+                            <div class="progress-bar-bg">
+                                <div class="progress-bar-fill" style="width: 85%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- EDUCATION TIMELINE CARD -->
+                <section class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <span class="card-title-icon">📚</span> Academic Progression
+                        </h2>
+                    </div>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-year">2023 - 2027 · CURRENT</div>
+                            <div class="timeline-title">Bachelor of Technology in Information Technology</div>
+                            <div class="timeline-subtitle">Department of Information Technology · Current CGPA: 9.12</div>
+                            <div class="timeline-desc">Coursework in Web Technologies, Data Structures, Algorithms, Object-Oriented Programming, and Database Systems.</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-year">2021 - 2023</div>
+                            <div class="timeline-title">Higher Secondary Certificate (HSC) - Computer Science</div>
+                            <div class="timeline-subtitle">State Board of Tamil Nadu · Aggregate: 94.5%</div>
+                            <div class="timeline-desc">Specialized in Mathematics, Physics, Chemistry, and Computer Science with focus on Python and C++.</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- FEATURED PROJECTS -->
+                <section class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <span class="card-title-icon">🚀</span> Featured Lab Works
+                        </h2>
+                    </div>
+                    <div class="projects-grid">
+                        <div class="project-card">
+                            <h3 class="project-title">Student Result Analysis System</h3>
+                            <p class="project-desc">Interactive dashboard calculating GPA, toppers with Math.max, and grade statistics.</p>
+                            <div class="tag-list">
+                                <span class="tag">JavaScript</span>
+                                <span class="tag">Math Object</span>
+                                <span class="tag">CSS Grid</span>
+                            </div>
+                        </div>
+                        <div class="project-card">
+                            <h3 class="project-title">Online Quiz Platform</h3>
+                            <p class="project-desc">Automated scoring engine with timed questionnaires and detailed answer explanations.</p>
+                            <div class="tag-list">
+                                <span class="tag">DOM Events</span>
+                                <span class="tag">Objects Array</span>
+                                <span class="tag">Timers</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </main>
+
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>Web Technology Laboratory · Course Outcome 2 · Experiment 01 | &copy; 2026</p>
+    </footer>
+
+    <!-- INTERACTIVE THEME SCRIPT -->
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            themeToggle.textContent = newTheme === 'light' ? '🌙' : '🌓';
+        });
+    </script>
+</body>
+</html>

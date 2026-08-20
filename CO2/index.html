@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Technology &amp; JavaScript Lab (CO2: Exp 1 - 10) | Master Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --primary-dark: #4338ca;
+            --secondary: #06b6d4;
+            --accent: #f43f5e;
+            --warning: #f59e0b;
+            --success: #10b981;
+            
+            --bg-base: #090d16;
+            --bg-surface: #111827;
+            --bg-card: #1e293b;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(99, 102, 241, 0.5);
+            
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+            --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+            --shadow-glow: 0 0 35px rgba(99, 102, 241, 0.3);
+            
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.12) 0px, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        /* HERO HEADER */
+        header.hero {
+            background: radial-gradient(circle at 50% 0%, #1e1b4b 0%, #090d16 80%);
+            padding: 60px 24px 40px 24px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .badge-nav-bar {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+        }
+
+        .badge-portal {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(99, 102, 241, 0.18);
+            color: #a5b4fc;
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            padding: 5px 16px;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .btn-switch-suite {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            padding: 5px 14px;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .btn-switch-suite:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        header.hero h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, var(--primary-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+        }
+
+        header.hero p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 820px;
+            margin: 0 auto 30px auto;
+        }
+
+        /* METRICS BAR */
+        .portal-stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .p-stat {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .p-stat-num {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--secondary);
+        }
+
+        /* CONTROLS SEARCH & FILTER */
+        .controls-section {
+            max-width: 1240px;
+            margin: 30px auto 0 auto;
+            padding: 0 24px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 12px 18px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            width: 340px;
+            max-width: 100%;
+            transition: var(--transition);
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+        }
+
+        .filter-tags-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn-tag-filter {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 7px 14px;
+            border-radius: 9999px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-tag-filter:hover, .btn-tag-filter.active {
+            color: white;
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        /* EXPERIMENT GRID */
+        main.experiments-grid {
+            max-width: 1240px;
+            margin: 25px auto 60px auto;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+            width: 100%;
+        }
+
+        /* CARD */
+        .exp-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 26px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .exp-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--border-hover);
+            box-shadow: var(--shadow-md), var(--shadow-glow);
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .exp-num-tag {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--secondary);
+            background: rgba(6, 182, 212, 0.12);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            padding: 3px 10px;
+            border-radius: 4px;
+        }
+
+        .exp-icon {
+            font-size: 1.5rem;
+        }
+
+        .exp-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            line-height: 1.3;
+        }
+
+        .exp-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 18px;
+            line-height: 1.5;
+        }
+
+        .req-tags-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 22px;
+        }
+
+        .req-tag {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.72rem;
+            background: #090d16;
+            color: #cbd5e1;
+            border: 1px solid var(--border-color);
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: auto;
+        }
+
+        .btn-launch {
+            flex: 2;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 11px;
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.92rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+
+        .btn-launch:hover {
+            filter: brightness(1.15);
+            transform: translateY(-2px);
+        }
+
+        .btn-preview {
+            flex: 1;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 11px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.88rem;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .btn-preview:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-primary);
+        }
+
+        /* MODAL PREVIEW */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-body {
+            background: #111827;
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            border-radius: var(--radius-lg);
+            max-width: 950px;
+            width: 100%;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .modal-header {
+            padding: 16px 24px;
+            background: #090d16;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .btn-close-modal {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-iframe {
+            flex: 1;
+            width: 100%;
+            border: none;
+            background: #000;
+        }
+
+        /* FOOTER */
+        footer {
+            margin-top: auto;
+            text-align: center;
+            padding: 30px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            background: #060a12;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            header.hero h1 {
+                font-size: 2rem;
+            }
+            .controls-section {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .search-box {
+                width: 100%;
+            }
+            main.experiments-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HERO HEADER -->
+    <header class="hero">
+        <div class="badge-nav-bar">
+            <span class="badge-portal">⚡ Course Outcome 2 (CO2) Suite</span>
+            <a href="../CO1/index.html" class="btn-switch-suite">← View CO1 Suite</a>
+        </div>
+
+        <h1>Web Technology &amp; UI Lab Portfolio</h1>
+        <p>A comprehensive master portal showcasing 10 interactive, production-ready lab experiments developed in Vanilla HTML5, modern CSS3, and JavaScript.</p>
+
+        <div class="portal-stats">
+            <div class="p-stat">
+                <span class="p-stat-num">10</span>
+                <span>Experiments</span>
+            </div>
+            <div class="p-stat">
+                <span class="p-stat-num">100%</span>
+                <span>Pure Vanilla JS</span>
+            </div>
+            <div class="p-stat">
+                <span class="p-stat-num">Responsive</span>
+                <span>Mobile &amp; Desktop</span>
+            </div>
+            <div class="p-stat">
+                <span class="p-stat-num">Offline</span>
+                <span>Self-Contained</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- SEARCH & FILTERS -->
+    <section class="controls-section">
+        <input type="text" id="searchInput" class="search-box" placeholder="🔍 Search experiments, tags, or topics...">
+        <div class="filter-tags-row">
+            <button class="btn-tag-filter active" data-filter="all">All (10)</button>
+            <button class="btn-tag-filter" data-filter="css">CSS &amp; Layout</button>
+            <button class="btn-tag-filter" data-filter="forms">Forms &amp; Regex</button>
+            <button class="btn-tag-filter" data-filter="js">JS &amp; Math</button>
+            <button class="btn-tag-filter" data-filter="apps">Interactive Apps</button>
+        </div>
+    </section>
+
+    <!-- MAIN EXPERIMENTS GRID -->
+    <main class="experiments-grid" id="expGrid">
+        
+        <!-- EXP 1 -->
+        <div class="exp-card" data-tags="css,profile,boxmodel">
+            <div>
+                <div class="card-top">
+                    <span class="exp-num-tag">EXP 01</span>
+                    <span class="exp-icon">👤</span>
+                </div>
+                <h2 class="exp-title">Responsive Student Profile Webpage</h2>
+                <p class="exp-desc">Structured student portfolio card utilizing CSS selectors, Google fonts, CSS box model, skills radar progress bars, and responsive media queries.</p>
+                <div class="req-tags-list">
+                    <span class="req-tag">CSS Box Model</span>
+                    <span class="req-tag">Typography</span>
+                    <span class="req-tag">Media Queries</span>
+                </div>
+            </div>
+            <div class="card-actions">
+                <a href="exp1.html" class="btn-launch">Launch Exp 01 🚀</a>
+                <button class="btn-preview" onclick="openPreview('exp1.html', 'Exp 1: Responsive Student Profile')">👁️ Live Modal</button>
+            </div>
+        </div>
+
+        <!-- EXP 2 -->
+        <div class="exp-card" data-tags="forms,validation,regex,js">
+            <div>
+                <div class="card-top">
+                    <span class="exp-num-tag">EXP 02</span>
+                    <span class="exp-icon">📝</span>
+                </div>
+                <h2 class="exp-title">Student Registration Form with Validation</h2>
+                <p class="exp-desc">Client-side validation system featuring regular expressions, live password strength entropy meter, event listeners, and submission summary modal.</p>
+                <div class="req-tags-list">
+                    <span class="req-tag">RegEx Validation</span>
+                    <span class="req-tag">Password Meter</span>
+                    <span class="req-tag">DOM Events</span>
+                </div>
+            </div>
+            <div class="card-actions">
+                <a href="exp2.html" class="btn-launch">Launch Exp 02 🚀</a>
+                <button class="btn-preview" onclick="openPreview('exp2.html', 'Exp 2: Registration Form Validation')">👁️ Live Modal</button>
+            </div>
+        </div>
+
+        <!-- EXP 3 -->
+        <div class="exp-card" data-tags="js,math,calculator,apps">
+            <div>
+                <div class="card-top">
+                    <span class="exp-num-tag">EXP 03</span>
+                    <span class="exp-icon">🔢</span>
+                </div>
+                <h2 class="exp-title">Interactive Scientific Calculator</h2>
+                <p class="exp-desc">Advanced scientific computation engine with CSS Grid layout, trigonometric &amp; logarithmic Math functions, DEG/RAD modes, and calculation history.</p>
+                <div class="req-tags-list">
+                    <span class="req-tag">Math Object</span>
+                    <span class="req-tag">CSS Grid</span>
+                    <span class="req-tag">Memory Registers</span>
+                </div>
+            </div>
+            <div class="card-actions">
+                <a href="exp3.html" class="btn-launch">Launch Exp 03 🚀</a>
+                <button class="btn-preview" onclick="openPreview('exp3.html', 'Exp 3: Scientific Calculator')">👁️ Live Modal</button>
+            </div>
+        </div>
+
+        <!-- EXP 4 -->
+        <div class="exp-card" data-tags="js,math,arrays,tables">
+            <div>
+                <div class="card-top">
+                    <span class="exp-num-tag">EXP 04</span>
+                    <span class="exp-icon">📊</span>
+                </div>
+                <h2 class="exp-title">Student Result Analysis System</h2>
+                <p class="exp-desc">Performance analytics ledger calculating GPA, grades, class highest topper via Math.max(), lowest score via Math.min(), and pass percentages.</p>
+                <div class="req-tags-list">
+                    <span class="req-tag">Math.max() / min()</span>
+                    <span class="req-tag">Arrays &amp; Objects</span>
+                    <span class="req-tag">Analytics Table</span>
+                </div>
+            </div>
+            <div class="card-actions">
+                <a href="exp4.html" class="btn-launch">Launch Exp 04 🚀</a>
+                <button class="btn-preview" onclick="openPreview('exp4.html', 'Exp 4: Student Result Analysis')">👁️ Live Modal</button>
+            </div>
+        </div>
+
+        <!-- EXP 5 -->
+        <div class="exp-card" data-tags="css,semantic,layout,grid">
+            <div>
+                <div class="card-top">
+                    <span class="exp-num-tag">EXP 05</span>
+                    <span class="exp-icon">🏛️</span>
+                </div>
+                <h2 class="exp-title">Responsive College Website Layout</h2>
+                <p class="exp-desc">Complete academic portal layout utilizing HTML5 semantic tags, sticky navigation, mobile hamburger drawer, CSS Grid departments, and ticker.</p>
+                <div class="req-tags-list">
+                    <span class="req-tag">Semantic HTML5</span>
+                    <span class="req-tag">Sticky Navbar</span>
+                    <span class="req-tag">CSS Grid Layout</span>
+                </div>
+            </div>
+            <div class="card-actions">
+                <a href="exp5.html" class="btn-launch">Launch Exp 05 🚀</a>
+                <button class="btn-preview" onclick="openPreview('exp5.html', 'Exp 5: Responsive College Layout')">👁️ Live Modal</button>
+            </div>
+        </div>
+
+        <!-- EXP 6 -->
+        <div class="exp-card" data-tags="js,apps,dom,storage">
+            <div>
+                <div class="card-top">
+                    <span class="exp-num-tag">EXP 06</span>
+                    <span class="exp-icon">✅</span>
+                </div>
+                <h2 class="exp-title">Dynamic To-Do List Application</h2>
+                <p class="exp-desc">Interactive task manager supporting dynamic DOM insertion, priority tags, inline editing, filter tabs, completion toggles, and localStorage.</p>
+                <div class="req-tags-list">
+                    <span class="req-tag">DOM Manipulation</span>
+                    <span class="req-tag">LocalStorage</span>
+                    <span class="req-tag">CRUD Operations</span>
+                </div>
+            </div>
+            <div class="card-actions">
+                <a href="exp6.html" class="btn-launch">Launch Exp 06 🚀</a>
+                <button class="btn-preview" onclick="openPreview('exp6.html', 'Exp 6: Dynamic To-Do List')">👁️ Live Modal</button>
+            </div>
+        </div>
+
+        <!-- EXP 7 -->
+        <div class="exp-card" data-tags="js,apps,quiz,scoring">
+            <div>
+                <div class="card-top">
+                    <span class="exp-num-tag">EXP 07</span>
+                    <span class="exp-icon">🎯</span>
+                </div>
+                <h2 class="exp-title">Online Quiz Application with Scoring</h2>
+                <p class="exp-desc">Timed multi-choice assessment engine featuring question objects array, instant scoring metrics, timer bar, and detailed explanation review.</p>
+                <div class="req-tags-list">
+                    <span class="req-tag">Objects Array</span>
+                    <span class="req-tag">Timer Countdown</span>
+                    <span class="req-tag">Auto Scoring</span>
+                </div>
+            </div>
+            <div class="card-actions">
+                <a href="exp7.html" class="btn-launch">Launch Exp 07 🚀</a>
+                <button class="btn-preview" onclick="openPreview('exp7.html', 'Exp 7: Online Quiz Platform')">👁️ Live Modal</button>
+            </div>
+        </div>
+
+        <!-- EXP 8 -->
+        <div class="exp-card" data-tags="js,clock,timer,date">
+            <div>
+                <div class="card-top">
+                    <span class="exp-num-tag">EXP 08</span>
+                    <span class="exp-icon">⏱️</span>
+                </div>
+                <h2 class="exp-title">Digital Clock &amp; Exam Countdown Timer</h2>
+                <p class="exp-desc">Neon glass digital chronometer with 12/24hr format toggle, timezone sync, and an examination countdown scheduler with SVG circular progress ring.</p>
+                <div class="req-tags-list">
+                    <span class="req-tag">Date Object</span>
+                    <span class="req-tag">setInterval()</span>
+                    <span class="req-tag">SVG Progress Ring</span>
+                </div>
+            </div>
+            <div class="card-actions">
+                <a href="exp8.html" class="btn-launch">Launch Exp 08 🚀</a>
+                <button class="btn-preview" onclick="openPreview('exp8.html', 'Exp 8: Digital Clock & Timer')">👁️ Live Modal</button>
+            </div>
+        </div>
+
+        <!-- EXP 9 -->
+        <div class="exp-card" data-tags="js,apps,cart,billing">
+            <div>
+                <div class="card-top">
+                    <span class="exp-num-tag">EXP 09</span>
+                    <span class="exp-icon">🛒</span>
+                </div>
+                <h2 class="exp-title">Product Shopping Cart &amp; Billing System</h2>
+                <p class="exp-desc">E-commerce cart ledger with real-time quantity updates, coupon redemption engine, GST (CGST/SGST) calculation, and printable invoice generator.</p>
+                <div class="req-tags-list">
+                    <span class="req-tag">Cart Calculation</span>
+                    <span class="req-tag">GST Tax Engine</span>
+                    <span class="req-tag">Printable Invoice</span>
+                </div>
+            </div>
+            <div class="card-actions">
+                <a href="exp9.html" class="btn-launch">Launch Exp 09 🚀</a>
+                <button class="btn-preview" onclick="openPreview('exp9.html', 'Exp 9: Shopping Cart & Billing')">👁️ Live Modal</button>
+            </div>
+        </div>
+
+        <!-- EXP 10 -->
+        <div class="exp-card" data-tags="js,css,debug,devtools">
+            <div>
+                <div class="card-top">
+                    <span class="exp-num-tag">EXP 10</span>
+                    <span class="exp-icon">🐞</span>
+                </div>
+                <h2 class="exp-title">Debug &amp; Correct Web Applications</h2>
+                <p class="exp-desc">Interactive DevTools playground simulating elements inspection, console logging, try...catch exception handling, and box-sizing troubleshooting.</p>
+                <div class="req-tags-list">
+                    <span class="req-tag">DevTools Simulator</span>
+                    <span class="req-tag">try...catch Sandbox</span>
+                    <span class="req-tag">CSS Debugging</span>
+                </div>
+            </div>
+            <div class="card-actions">
+                <a href="exp10.html" class="btn-launch">Launch Exp 10 🚀</a>
+                <button class="btn-preview" onclick="openPreview('exp10.html', 'Exp 10: Debugging Playground')">👁️ Live Modal</button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- LIVE MODAL PREVIEW -->
+    <div class="modal" id="previewModal">
+        <div class="modal-body">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">Experiment Preview</h3>
+                <button class="btn-close-modal" onclick="closePreview()">✕</button>
+            </div>
+            <iframe class="modal-iframe" id="modalIframe" src=""></iframe>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>Department of Information Technology · Web Technology Laboratory Suite · Course Outcome 2 (CO2) | &copy; 2026</p>
+    </footer>
+
+    <!-- SCRIPT -->
+    <script>
+        function openPreview(url, title) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalIframe').src = url;
+            document.getElementById('previewModal').style.display = 'flex';
+        }
+
+        function closePreview() {
+            document.getElementById('previewModal').style.display = 'none';
+            document.getElementById('modalIframe').src = '';
+        }
+
+        // Live Search & Filter
+        const searchInput = document.getElementById('searchInput');
+        const cards = document.querySelectorAll('.exp-card');
+        const filterBtns = document.querySelectorAll('.btn-tag-filter');
+
+        function filterCards() {
+            const query = searchInput.value.toLowerCase();
+            const activeBtn = document.querySelector('.btn-tag-filter.active');
+            const activeFilter = activeBtn ? activeBtn.getAttribute('data-filter') : 'all';
+
+            cards.forEach(card => {
+                const title = card.querySelector('.exp-title').textContent.toLowerCase();
+                const desc = card.querySelector('.exp-desc').textContent.toLowerCase();
+                const tags = card.getAttribute('data-tags') || '';
+                
+                const matchesQuery = title.includes(query) || desc.includes(query) || tags.includes(query);
+                
+                let matchesCategory = true;
+                if (activeFilter === 'css') matchesCategory = tags.includes('css') || tags.includes('layout') || tags.includes('boxmodel');
+                else if (activeFilter === 'forms') matchesCategory = tags.includes('forms') || tags.includes('validation') || tags.includes('regex');
+                else if (activeFilter === 'js') matchesCategory = tags.includes('js') || tags.includes('math') || tags.includes('arrays');
+                else if (activeFilter === 'apps') matchesCategory = tags.includes('apps') || tags.includes('cart') || tags.includes('quiz') || tags.includes('clock');
+
+                if (matchesQuery && matchesCategory) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        searchInput.addEventListener('input', filterCards);
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                filterCards();
+            });
+        });
+    </script>
+</body>
+</html>

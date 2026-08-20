@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exp 8: Digital Clock &amp; Examination Countdown Timer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Fira+Code:wght@400;500;600;700&family=Orbitron:wght@500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --primary-dark: #4338ca;
+            --secondary: #06b6d4;
+            --accent: #f43f5e;
+            --warning: #f59e0b;
+            --success: #10b981;
+            
+            --bg-base: #090d16;
+            --bg-surface: #111827;
+            --bg-card: rgba(17, 24, 39, 0.85);
+            --border-color: rgba(255, 255, 255, 0.1);
+            
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            
+            --shadow-md: 0 16px 32px -4px rgba(0, 0, 0, 0.5);
+            --shadow-glow: 0 0 35px rgba(6, 182, 212, 0.25);
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 24px;
+            --transition: all 0.25s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.12) 0px, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        /* NAVIGATION */
+        .top-nav {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 12px 24px;
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+        }
+
+        .nav-back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--primary-light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: var(--radius-sm);
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            transition: var(--transition);
+        }
+
+        .nav-back-link:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        /* CONTAINER */
+        .container {
+            max-width: 1000px;
+            margin: 30px auto 50px auto;
+            padding: 0 20px;
+            flex: 1;
+            width: 100%;
+        }
+
+        .exp-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(6, 182, 212, 0.2));
+            color: var(--primary-light);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            padding: 5px 16px;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .exp-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, var(--primary-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 6px;
+        }
+
+        .exp-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* SECTION CARDS */
+        .section-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 30px;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        /* DIGITAL CLOCK STYLING */
+        .clock-display-wrap {
+            background: #060a12;
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            border-radius: var(--radius-md);
+            padding: 26px 20px;
+            margin-bottom: 20px;
+            box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.8), var(--shadow-glow);
+            display: inline-block;
+            min-width: 320px;
+            max-width: 100%;
+        }
+
+        .digital-digits {
+            font-family: 'Orbitron', monospace;
+            font-size: 3.6rem;
+            font-weight: 900;
+            color: #38bdf8;
+            text-shadow: 0 0 20px rgba(56, 189, 248, 0.7);
+            letter-spacing: 0.05em;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .blink {
+            animation: colonBlink 1s infinite;
+        }
+
+        @keyframes colonBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.2; }
+        }
+
+        .clock-period {
+            font-size: 1.2rem;
+            color: #818cf8;
+            margin-left: 6px;
+        }
+
+        .clock-date-line {
+            font-family: 'Fira Code', monospace;
+            font-size: 1rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.04em;
+        }
+
+        .clock-controls {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            align-items: center;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-toggle {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-toggle:hover {
+            border-color: var(--secondary);
+            background: rgba(6, 182, 212, 0.1);
+        }
+
+        /* COUNTDOWN TIMER STYLING */
+        .timer-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            align-items: center;
+            text-align: left;
+        }
+
+        /* CIRCULAR PROGRESS */
+        .ring-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+
+        .ring-bg {
+            stroke: rgba(255, 255, 255, 0.08);
+        }
+
+        .ring-progress {
+            stroke: url(#ringGradient);
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.5s ease;
+        }
+
+        .ring-text-overlay {
+            position: absolute;
+            text-align: center;
+        }
+
+        .ring-time-val {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #ffffff;
+            text-shadow: 0 0 15px rgba(99, 102, 241, 0.5);
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .ring-time-lbl {
+            font-size: 0.75rem;
+            color: var(--secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 700;
+        }
+
+        /* TIMER CONTROLS */
+        .timer-config-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 20px;
+        }
+
+        .config-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .preset-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .btn-preset {
+            background: #090d16;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 9px 8px;
+            border-radius: var(--radius-sm);
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .btn-preset:hover, .btn-preset.active {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--primary-light);
+        }
+
+        .custom-time-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .time-input {
+            flex: 1;
+            background: #090d16;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 8px 12px;
+            color: var(--text-primary);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+        }
+
+        .timer-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-action {
+            flex: 1;
+            padding: 11px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn-start { background: linear-gradient(135deg, var(--success), #059669); color: white; }
+        .btn-pause { background: linear-gradient(135deg, var(--warning), #d97706); color: white; }
+        .btn-reset { background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-secondary); }
+
+        .btn-start:hover, .btn-pause:hover { filter: brightness(1.1); }
+        .btn-reset:hover { background: rgba(255, 255, 255, 0.08); color: var(--text-primary); }
+
+        /* ALERT BANNER */
+        .alarm-banner {
+            display: none;
+            background: rgba(244, 63, 94, 0.2);
+            border: 1.5px solid var(--accent);
+            color: #fca5a5;
+            padding: 12px;
+            border-radius: var(--radius-sm);
+            margin-top: 15px;
+            font-weight: 700;
+            animation: pulse 1s infinite;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .timer-layout {
+                grid-template-columns: 1fr;
+            }
+            .digital-digits {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <span>🎓</span>
+                <span>Web Tech Lab · CO2</span>
+            </a>
+            <a href="index.html" class="nav-back-link">← Lab Portal</a>
+        </div>
+    </nav>
+
+    <!-- CONTAINER -->
+    <div class="container">
+        <!-- HEADER -->
+        <header class="exp-header">
+            <div class="badge">Experiment 08 · Date Object &amp; Timers</div>
+            <h1 class="exp-title">Digital Clock &amp; Countdown Timer</h1>
+            <p class="exp-desc">Real-time chronometer and examination countdown scheduler utilizing JavaScript's Date object, setInterval(), and SVG progress rings.</p>
+        </header>
+
+        <!-- SECTION 1: LIVE DIGITAL CLOCK -->
+        <div class="section-card">
+            <h2 class="section-title"><span>🕒</span> Live Standard Chronometer</h2>
+
+            <div class="clock-display-wrap">
+                <div class="digital-digits">
+                    <span id="clockHours">00</span><span class="blink">:</span><span id="clockMinutes">00</span><span class="blink">:</span><span id="clockSeconds">00</span>
+                    <span class="clock-period" id="clockPeriod">AM</span>
+                </div>
+                <div class="clock-date-line" id="clockDate">Thursday, 20 August 2026</div>
+            </div>
+
+            <div class="clock-controls">
+                <button class="btn-toggle" id="formatToggleBtn" onclick="toggleFormat()">Switch to 24-Hour Format</button>
+                <button class="btn-toggle" onclick="changeTimeZone('IST')">Timezone: IST (UTC+5:30)</button>
+            </div>
+        </div>
+
+        <!-- SECTION 2: EXAMINATION COUNTDOWN TIMER -->
+        <div class="section-card">
+            <h2 class="section-title"><span>⏱️</span> Examination Session Countdown</h2>
+
+            <div class="timer-layout">
+                <!-- SVG PROGRESS RING -->
+                <div class="ring-container">
+                    <svg class="progress-ring" width="220" height="220">
+                        <defs>
+                            <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#6366f1"/>
+                                <stop offset="100%" stop-color="#06b6d4"/>
+                            </linearGradient>
+                        </defs>
+                        <circle class="ring-bg" stroke-width="12" fill="transparent" r="90" cx="110" cy="110"/>
+                        <circle class="ring-progress" id="timerRing" stroke-width="12" fill="transparent" r="90" cx="110" cy="110" stroke-dasharray="565.48" stroke-dashoffset="0"/>
+                    </svg>
+                    <div class="ring-text-overlay">
+                        <div class="ring-time-val" id="countdownDisplay">45:00</div>
+                        <div class="ring-time-lbl" id="countdownStatus">READY</div>
+                    </div>
+                </div>
+
+                <!-- TIMER CONFIGURATION -->
+                <div class="timer-config-card">
+                    <span class="config-label">Select Exam Preset:</span>
+                    <div class="preset-buttons">
+                        <button class="btn-preset active" onclick="setPreset(45, 'Web Tech Lab Exam')">Lab Exam (45m)</button>
+                        <button class="btn-preset" onclick="setPreset(180, 'Semester Final Exam')">Semester Final (3h)</button>
+                        <button class="btn-preset" onclick="setPreset(15, 'Unit Assessment')">Assessment (15m)</button>
+                        <button class="btn-preset" onclick="setPreset(1, 'Quick 1-Min Drill')">Drill (1m)</button>
+                    </div>
+
+                    <span class="config-label">Or Custom Minutes:</span>
+                    <div class="custom-time-row">
+                        <input type="number" id="customMinutesInput" class="time-input" min="1" max="300" placeholder="Enter minutes (e.g. 30)">
+                        <button class="btn-preset" onclick="applyCustomMinutes()">Set</button>
+                    </div>
+
+                    <div class="timer-actions">
+                        <button class="btn-action btn-start" id="startTimerBtn" onclick="startTimer()">▶ Start</button>
+                        <button class="btn-action btn-pause" id="pauseTimerBtn" onclick="pauseTimer()" disabled>⏸ Pause</button>
+                        <button class="btn-action btn-reset" onclick="resetTimer()">🔄 Reset</button>
+                    </div>
+
+                    <div class="alarm-banner" id="alarmBanner">
+                        🔔 TIME IS UP! Examination Session Completed.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT CLOCK & TIMER LOGIC -->
+    <script>
+        // DIGITAL CLOCK
+        let is24Hour = false;
+
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = String(now.getMinutes()).padStart(2, '0');
+            let seconds = String(now.getSeconds()).padStart(2, '0');
+            let period = '';
+
+            if (!is24Hour) {
+                period = hours >= 12 ? 'PM' : 'AM';
+                hours = hours % 12 || 12;
+            }
+
+            document.getElementById('clockHours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('clockMinutes').textContent = minutes;
+            document.getElementById('clockSeconds').textContent = seconds;
+            document.getElementById('clockPeriod').textContent = period;
+
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('clockDate').textContent = now.toLocaleDateString('en-US', options);
+        }
+
+        function toggleFormat() {
+            is24Hour = !is24Hour;
+            document.getElementById('formatToggleBtn').textContent = is24Hour ? 'Switch to 12-Hour Format' : 'Switch to 24-Hour Format';
+            updateClock();
+        }
+
+        function changeTimeZone(tz) {
+            alert(`Currently synchronizing standard browser time with ${tz} (Indian Standard Time).`);
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // COUNTDOWN TIMER
+        let totalSeconds = 45 * 60;
+        let remainingSeconds = totalSeconds;
+        let timerInterval = null;
+        let isRunning = false;
+
+        const circle = document.getElementById('timerRing');
+        const radius = circle.r.baseVal.value;
+        const circumference = 2 * Math.PI * radius;
+        circle.style.strokeDasharray = `${circumference} ${circumference}`;
+
+        function setProgress(percent) {
+            const offset = circumference - (percent / 100) * circumference;
+            circle.style.strokeDashoffset = offset;
+        }
+
+        function updateCountdownDisplay() {
+            const hours = Math.floor(remainingSeconds / 3600);
+            const minutes = Math.floor((remainingSeconds % 3600) / 60);
+            const seconds = remainingSeconds % 60;
+
+            if (hours > 0) {
+                document.getElementById('countdownDisplay').textContent = 
+                    `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            } else {
+                document.getElementById('countdownDisplay').textContent = 
+                    `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            }
+
+            const percent = ((totalSeconds - remainingSeconds) / totalSeconds) * 100;
+            setProgress(percent);
+        }
+
+        function setPreset(mins, name) {
+            pauseTimer();
+            totalSeconds = mins * 60;
+            remainingSeconds = totalSeconds;
+            document.querySelectorAll('.btn-preset').forEach(b => b.classList.remove('active'));
+            if (event && event.target) event.target.classList.add('active');
+            document.getElementById('countdownStatus').textContent = 'READY';
+            document.getElementById('alarmBanner').style.display = 'none';
+            updateCountdownDisplay();
+        }
+
+        function applyCustomMinutes() {
+            const val = parseInt(document.getElementById('customMinutesInput').value);
+            if (!isNaN(val) && val > 0) {
+                setPreset(val, 'Custom Timer');
+            }
+        }
+
+        function startTimer() {
+            if (isRunning) return;
+            if (remainingSeconds <= 0) return;
+
+            isRunning = true;
+            document.getElementById('startTimerBtn').disabled = true;
+            document.getElementById('pauseTimerBtn').disabled = false;
+            document.getElementById('countdownStatus').textContent = 'IN PROGRESS';
+            document.getElementById('alarmBanner').style.display = 'none';
+
+            timerInterval = setInterval(() => {
+                remainingSeconds--;
+                updateCountdownDisplay();
+
+                if (remainingSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    isRunning = false;
+                    document.getElementById('startTimerBtn').disabled = false;
+                    document.getElementById('pauseTimerBtn').disabled = true;
+                    document.getElementById('countdownStatus').textContent = 'EXPIRED';
+                    document.getElementById('alarmBanner').style.display = 'block';
+                    try {
+                        let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                        let osc = audioCtx.createOscillator();
+                        osc.type = 'sine';
+                        osc.frequency.setValueAtTime(880, audioCtx.currentTime);
+                        osc.connect(audioCtx.destination);
+                        osc.start();
+                        osc.stop(audioCtx.currentTime + 0.5);
+                    } catch(e) {}
+                }
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            if (!isRunning) return;
+            clearInterval(timerInterval);
+            isRunning = false;
+            document.getElementById('startTimerBtn').disabled = false;
+            document.getElementById('pauseTimerBtn').disabled = true;
+            document.getElementById('countdownStatus').textContent = 'PAUSED';
+        }
+
+        function resetTimer() {
+            pauseTimer();
+            remainingSeconds = totalSeconds;
+            document.getElementById('countdownStatus').textContent = 'RESET';
+            document.getElementById('alarmBanner').style.display = 'none';
+            updateCountdownDisplay();
+        }
+
+        // Initialize display
+        updateCountdownDisplay();
+    </script>
+</body>
+</html>

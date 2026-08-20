@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exp 5: Responsive College Website Layout</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-light: #818cf8;
+            --primary-dark: #3730a3;
+            --secondary: #06b6d4;
+            --accent: #f43f5e;
+            --gold: #f59e0b;
+            
+            --bg-base: #090d16;
+            --bg-surface: #111827;
+            --bg-card: #1e293b;
+            --border-color: rgba(255, 255, 255, 0.08);
+            
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+            --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+            --shadow-glow: 0 0 30px rgba(79, 70, 229, 0.3);
+            
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* TOP ANNOUNCEMENT BAR */
+        .announcement-bar {
+            background: linear-gradient(90deg, #312e81, #1e1b4b);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 8px 24px;
+            font-size: 0.82rem;
+            color: #c7d2fe;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .announcement-text {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .badge-live {
+            background: var(--accent);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            animation: pulse 1.8s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* STICKY MAIN HEADER & NAV */
+        header.college-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(17, 24, 39, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-wrap {
+            max-width: 1240px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 24px;
+        }
+
+        .college-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .brand-logo-icon {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .brand-text h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 800;
+            letter-spacing: -0.01em;
+        }
+
+        .brand-text span {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            display: block;
+        }
+
+        /* NAV LINKS */
+        nav.main-navigation ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            align-items: center;
+        }
+
+        nav.main-navigation a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.92rem;
+            font-weight: 600;
+            transition: var(--transition);
+            padding: 6px 10px;
+            border-radius: var(--radius-sm);
+        }
+
+        nav.main-navigation a:hover, 
+        nav.main-navigation a.active {
+            color: var(--primary-light);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .btn-portal-link {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary) !important;
+            padding: 8px 16px !important;
+            border-radius: var(--radius-sm);
+        }
+
+        .btn-portal-link:hover {
+            background: var(--primary) !important;
+            color: white !important;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.6rem;
+            cursor: pointer;
+        }
+
+        /* HERO BANNER */
+        section.hero-banner {
+            position: relative;
+            padding: 90px 24px;
+            text-align: center;
+            background: radial-gradient(circle at 50% 30%, rgba(79, 70, 229, 0.22) 0%, rgba(9, 13, 22, 0.9) 70%),
+                        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.02' fill-rule='evenodd'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+            border-bottom: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.15);
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            color: #a5b4fc;
+            padding: 6px 18px;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .hero-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3.4rem;
+            font-weight: 900;
+            line-height: 1.15;
+            max-width: 900px;
+            margin: 0 auto 20px auto;
+            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, var(--primary-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 720px;
+            margin: 0 auto 35px auto;
+        }
+
+        .hero-actions {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            text-decoration: none;
+            padding: 13px 28px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: var(--shadow-glow);
+            transition: var(--transition);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+        }
+
+        .btn-secondary {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            text-decoration: none;
+            padding: 13px 28px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* MAIN CONTENT LAYOUT */
+        main.content-wrapper {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 60px 24px;
+            width: 100%;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .section-tag {
+            color: var(--secondary);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.3rem;
+            font-weight: 800;
+        }
+
+        /* DEPARTMENTS GRID (CSS GRID) */
+        .departments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin-bottom: 65px;
+        }
+
+        .dept-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 30px;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dept-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-light);
+            box-shadow: var(--shadow-md);
+        }
+
+        .dept-icon {
+            font-size: 2.2rem;
+            margin-bottom: 16px;
+            display: inline-block;
+        }
+
+        .dept-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .dept-desc {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .dept-link {
+            color: var(--secondary);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* 2-COLUMN SECTION (ARTICLE & ASIDE) */
+        .news-events-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 65px;
+        }
+
+        /* ARTICLES / NEWS */
+        article.news-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 26px;
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+
+        article.news-card:hover {
+            border-color: rgba(99, 102, 241, 0.4);
+        }
+
+        .news-date {
+            font-size: 0.8rem;
+            color: var(--secondary);
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .news-heading {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .news-excerpt {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+        }
+
+        /* ASIDE: UPCOMING EVENTS */
+        aside.events-sidebar {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 26px;
+            height: fit-content;
+        }
+
+        .aside-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .event-item {
+            display: flex;
+            gap: 14px;
+            margin-bottom: 18px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .event-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .event-date-box {
+            background: rgba(99, 102, 241, 0.15);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: var(--radius-sm);
+            padding: 8px;
+            text-align: center;
+            min-width: 55px;
+            height: fit-content;
+        }
+
+        .event-day {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--primary-light);
+            line-height: 1;
+        }
+
+        .event-month {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .event-details h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .event-details p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* CAMPUS FACILITIES STATS */
+        .facilities-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        .facility-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 24px;
+        }
+
+        .facility-num {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--secondary);
+            margin-bottom: 4px;
+        }
+
+        .facility-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* FOOTER */
+        footer.college-footer {
+            background: #060a12;
+            border-top: 1px solid var(--border-color);
+            padding: 50px 24px 30px 24px;
+            margin-top: auto;
+        }
+
+        .footer-grid {
+            max-width: 1240px;
+            margin: 0 auto 40px auto;
+            display: grid;
+            grid-template-columns: 2fr repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .footer-brand h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .footer-brand p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            max-width: 320px;
+            line-height: 1.5;
+        }
+
+        .footer-col h4 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.88rem;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-light);
+        }
+
+        .footer-bottom {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        /* RESPONSIVE MEDIA QUERIES */
+        @media (max-width: 960px) {
+            .news-events-grid {
+                grid-template-columns: 1fr;
+            }
+            .facilities-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .hero-title {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav.main-navigation ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #111827;
+                flex-direction: column;
+                padding: 20px;
+                border-bottom: 1px solid var(--border-color);
+            }
+            nav.main-navigation ul.show {
+                display: flex;
+            }
+            .mobile-menu-toggle {
+                display: block;
+            }
+            .announcement-bar {
+                display: none;
+            }
+            .facilities-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP TICKER -->
+    <div class="announcement-bar">
+        <div class="announcement-text">
+            <span class="badge-live">Admissions 2026</span>
+            <span>Applications open for B.Tech Information Technology &amp; Computer Science Engineering!</span>
+        </div>
+        <div style="font-size: 0.8rem; color: var(--text-muted);">
+            📞 Admissions Desk: +91 (044) 2876-5432
+        </div>
+    </div>
+
+    <!-- MAIN HEADER WITH SEMANTIC NAV -->
+    <header class="college-header">
+        <div class="nav-wrap">
+            <a href="#home" class="college-brand">
+                <div class="brand-logo-icon">🏛️</div>
+                <div class="brand-text">
+                    <h1>Apex Institute of Technology</h1>
+                    <span>Autonomous · Accredited 'A++' by NAAC</span>
+                </div>
+            </a>
+
+            <button class="mobile-menu-toggle" id="menuToggle" aria-label="Toggle Navigation">☰</button>
+
+            <nav class="main-navigation">
+                <ul id="navList">
+                    <li><a href="#home" class="active">Home</a></li>
+                    <li><a href="#departments">Departments</a></li>
+                    <li><a href="#news">News &amp; Events</a></li>
+                    <li><a href="#campus">Campus</a></li>
+                    <li><a href="index.html" class="btn-portal-link">← Lab Portal</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero-banner" id="home">
+        <div class="hero-badge">Experiment 05 · Semantic Layout &amp; Responsive Grid</div>
+        <h1 class="hero-title">Empowering the Next Generation of Global Technologists</h1>
+        <p class="hero-subtitle">Experience world-class engineering education, cutting-edge computing laboratories, and industry-partnered research environments.</p>
+        <div class="hero-actions">
+            <a href="#departments" class="btn-primary">Explore Academic Programs</a>
+            <a href="#news" class="btn-secondary">View Campus Bulletins</a>
+        </div>
+    </section>
+
+    <!-- MAIN CONTENT -->
+    <main class="content-wrapper">
+        
+        <!-- DEPARTMENTS SECTION -->
+        <section id="departments">
+            <div class="section-header">
+                <span class="section-tag">Academic Disciplines</span>
+                <h2 class="section-title">Undergraduate &amp; Research Departments</h2>
+            </div>
+
+            <div class="departments-grid">
+                <div class="dept-card">
+                    <div>
+                        <span class="dept-icon">💻</span>
+                        <h3 class="dept-title">Information Technology</h3>
+                        <p class="dept-desc">Specialized curriculum in Full-Stack Web Technologies, Cloud Architectures, Distributed Systems, and DevOps Engineering.</p>
+                    </div>
+                    <a href="#" class="dept-link">Curriculum &amp; Labs →</a>
+                </div>
+
+                <div class="dept-card">
+                    <div>
+                        <span class="dept-icon">🤖</span>
+                        <h3 class="dept-title">AI &amp; Data Science</h3>
+                        <p class="dept-desc">Master Machine Learning algorithms, Deep Neural Networks, Big Data analytics, and Intelligent Agent Systems.</p>
+                    </div>
+                    <a href="#" class="dept-link">Curriculum &amp; Labs →</a>
+                </div>
+
+                <div class="dept-card">
+                    <div>
+                        <span class="dept-icon">🛡️</span>
+                        <h3 class="dept-title">Computer Science &amp; Engineering</h3>
+                        <p class="dept-desc">Foundational principles of Computation Theory, Algorithms, Cyber Security, Cryptography, and Software Design.</p>
+                    </div>
+                    <a href="#" class="dept-link">Curriculum &amp; Labs →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2-COLUMN NEWS & UPCOMING EVENTS -->
+        <section id="news">
+            <div class="section-header">
+                <span class="section-tag">Campus Bulletins</span>
+                <h2 class="section-title">Latest News &amp; Upcoming Events</h2>
+            </div>
+
+            <div class="news-events-grid">
+                <!-- ARTICLE CONTAINER -->
+                <div>
+                    <article class="news-card">
+                        <div class="news-date">AUGUST 18, 2026 · RESEARCH HIGHLIGHT</div>
+                        <h3 class="news-heading">Department of IT Wins National Hackathon for Cloud AI Innovations</h3>
+                        <p class="news-excerpt">Student team led by 3rd-year undergraduates developed a real-time smart campus energy management platform utilizing microservices and edge computing.</p>
+                    </article>
+
+                    <article class="news-card">
+                        <div class="news-date">AUGUST 12, 2026 · ACADEMIC CIRCULAR</div>
+                        <h3 class="news-heading">CO2 Web Technology Laboratory Examination Schedule Released</h3>
+                        <p class="news-excerpt">The end-semester practical assessments for Web Technology &amp; UI Design have been finalized. Students are advised to review experiment portfolios.</p>
+                    </article>
+                </div>
+
+                <!-- ASIDE: EVENTS -->
+                <aside class="events-sidebar">
+                    <h3 class="aside-title"><span>📅</span> Upcoming Events</h3>
+                    
+                    <div class="event-item">
+                        <div class="event-date-box">
+                            <div class="event-day">25</div>
+                            <div class="event-month">AUG</div>
+                        </div>
+                        <div class="event-details">
+                            <h4>International Tech Symposium</h4>
+                            <p>Auditorium Hall A · 10:00 AM</p>
+                        </div>
+                    </div>
+
+                    <div class="event-item">
+                        <div class="event-date-box">
+                            <div class="event-day">02</div>
+                            <div class="event-month">SEP</div>
+                        </div>
+                        <div class="event-details">
+                            <h4>Industry Placement Drive</h4>
+                            <p>Placement Cell · 09:00 AM</p>
+                        </div>
+                    </div>
+
+                    <div class="event-item">
+                        <div class="event-date-box">
+                            <div class="event-day">14</div>
+                            <div class="event-month">SEP</div>
+                        </div>
+                        <div class="event-details">
+                            <h4>Open Source Dev Workshop</h4>
+                            <p>Computing Lab 4 · 02:00 PM</p>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <!-- CAMPUS FACILITIES STATS -->
+        <section id="campus">
+            <div class="facilities-grid">
+                <div class="facility-card">
+                    <div class="facility-num">65+</div>
+                    <div class="facility-label">Advanced Computing Labs</div>
+                </div>
+                <div class="facility-card">
+                    <div class="facility-num">120K+</div>
+                    <div class="facility-label">Digital Library Volumes</div>
+                </div>
+                <div class="facility-card">
+                    <div class="facility-num">98.4%</div>
+                    <div class="facility-label">Career Placement Rate</div>
+                </div>
+                <div class="facility-card">
+                    <div class="facility-num">25+</div>
+                    <div class="facility-label">Center of Excellence Labs</div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- SEMANTIC FOOTER -->
+    <footer class="college-footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h3>Apex Institute of Technology</h3>
+                <p>An autonomous premier institution fostering technological excellence, innovation, and ethical engineering leadership since 1998.</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Academics</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Undergraduate (B.Tech)</a></li>
+                    <li><a href="#">Postgraduate (M.Tech)</a></li>
+                    <li><a href="#">Doctoral Programs</a></li>
+                    <li><a href="#">Academic Calendar</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Campus Portals</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Student ERP Login</a></li>
+                    <li><a href="#">Digital Library</a></li>
+                    <li><a href="#">Examination Cell</a></li>
+                    <li><a href="#">Research Portal</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Connect</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Contact Admissions</a></li>
+                    <li><a href="#">Campus Virtual Tour</a></li>
+                    <li><a href="#">Career Opportunities</a></li>
+                    <li><a href="#">Anti-Ragging Cell</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div>&copy; 2026 Apex Institute of Technology. All Rights Reserved.</div>
+            <div>Web Technology Laboratory · Course Outcome 2 · Experiment 05</div>
+        </div>
+    </footer>
+
+    <!-- MOBILE MENU SCRIPT -->
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const navList = document.getElementById('navList');
+
+        menuToggle.addEventListener('click', () => {
+            navList.classList.toggle('show');
+        });
+    </script>
+</body>
+</html>
