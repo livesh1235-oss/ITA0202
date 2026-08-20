@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Experiment 6 - XHTML-Compliant Web Page</title>
+    <style type="text/css">
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: #f8fafc;
+            color: #0f172a;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+
+        .header-badge {
+            display: inline-block;
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .back-nav {
+            margin-bottom: 20px;
+        }
+
+        .back-nav a {
+            color: #0284c7;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .rule-card {
+            background: #f1f5f9;
+            border-left: 4px solid #0284c7;
+            padding: 14px 18px;
+            margin: 15px 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .valid-badge {
+            background: #dcfce7;
+            color: #166534;
+            font-size: 0.8rem;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 6px;
+        }
+
+        code {
+            background: #e2e8f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+            color: #b91c1c;
+        }
+
+        table.xhtml-rules {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        table.xhtml-rules th, table.xhtml-rules td {
+            border: 1px solid #cbd5e1;
+            padding: 10px 12px;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        table.xhtml-rules th {
+            background: #f8fafc;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="back-nav">
+        <a href="index.html">&larr; Back to Lab Experiments Portal</a>
+    </div>
+
+    <span class="header-badge">Experiment 06</span>
+    <h1 style="margin-top:0; color:#0f172a;">Creating an XHTML-Compliant Web Page</h1>
+    <p><strong>Objective:</strong> Author an XML-compliant, strictly validated XHTML 1.0 document adhering to all syntactic rules: lowercase elements, explicit tag closures, quoted attribute values, rigorous nesting hierarchy, and self-closing empty elements.</p>
+
+    <hr />
+
+    <span class="valid-badge">&#x2714; W3C XHTML 1.0 Strict Validated Syntax</span>
+
+    <!-- RULE 1: STRICT DOCTYPE & XML NAMESPACE -->
+    <div class="rule-card">
+        <h3 style="margin: 0 0 6px 0; color: #0369a1;">1. DOCTYPE and XML Namespace (<span style="font-family: monospace;">xmlns</span>)</h3>
+        <p style="margin:0;">
+            Every XHTML document must begin with an XML prologue and an explicit DOCTYPE declaration referencing the W3C DTD, along with the standard <code>xmlns="http://www.w3.org/1999/xhtml"</code> attribute in the root <code>&lt;html&gt;</code> element.
+        </p>
+    </div>
+
+    <!-- RULE 2: ALL TAGS LOWERCASE -->
+    <div class="rule-card">
+        <h3 style="margin: 0 0 6px 0; color: #0369a1;">2. All Tags and Attributes in Lowercase</h3>
+        <p style="margin:0;">
+            Because XML is case-sensitive, all XHTML tags and attribute names must strictly be written in lowercase (e.g. <code>&lt;table&gt;</code>, <code>&lt;tr&gt;</code>, <code>&lt;td&gt;</code>, <code>&lt;p&gt;</code>, <code>class="..."</code>).
+        </p>
+    </div>
+
+    <!-- RULE 3: ALL TAGS PROPERLY CLOSED -->
+    <div class="rule-card">
+        <h3 style="margin: 0 0 6px 0; color: #0369a1;">3. Mandatory Tag Closure</h3>
+        <p style="margin:0;">
+            Non-empty elements must have matching closing tags (e.g. <code>&lt;p&gt;...&lt;/p&gt;</code>, <code>&lt;li&gt;...&lt;/li&gt;</code>). No tag closure can be omitted.
+        </p>
+    </div>
+
+    <!-- RULE 4: SELF-CLOSING EMPTY TAGS -->
+    <div class="rule-card">
+        <h3 style="margin: 0 0 6px 0; color: #0369a1;">4. Self-Closing Empty Elements</h3>
+        <p style="margin:0;">
+            Empty tags without inner content must be closed with a trailing space and forward slash: <code>&lt;br /&gt;</code>, <code>&lt;hr /&gt;</code>, <code>&lt;img src="..." alt="..." /&gt;</code>, and <code>&lt;input type="..." /&gt;</code>.
+        </p>
+    </div>
+
+    <!-- RULE 5: QUOTED ATTRIBUTES -->
+    <div class="rule-card">
+        <h3 style="margin: 0 0 6px 0; color: #0369a1;">5. All Attribute Values Must Be Quoted &amp; Attribute Minimization Prohibited</h3>
+        <p style="margin:0;">
+            Attribute values must always be enclosed within double quotes. Minimized attributes (e.g. <code>checked</code>, <code>disabled</code>) must be written in full: <code>checked="checked"</code>, <code>disabled="disabled"</code>.
+        </p>
+    </div>
+
+    <!-- SYNTAX COMPARISON TABLE -->
+    <h3 style="margin-top: 25px; color: #0f172a;">XHTML Strict vs. Legacy HTML Comparison</h3>
+    <table class="xhtml-rules">
+        <thead>
+            <tr>
+                <th>Syntactic Rule</th>
+                <th>Incorrect (Legacy HTML)</th>
+                <th>Correct (XHTML Strict Compliant)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Tag Case</strong></td>
+                <td><code>&lt;DIV&gt;&lt;P&gt;text&lt;/P&gt;&lt;/DIV&gt;</code></td>
+                <td><code>&lt;div&gt;&lt;p&gt;text&lt;/p&gt;&lt;/div&gt;</code></td>
+            </tr>
+            <tr>
+                <td><strong>Empty Tags</strong></td>
+                <td><code>&lt;br&gt;, &lt;hr&gt;, &lt;img src="pic.jpg"&gt;</code></td>
+                <td><code>&lt;br /&gt;, &lt;hr /&gt;, &lt;img src="pic.jpg" alt="pic" /&gt;</code></td>
+            </tr>
+            <tr>
+                <td><strong>Attribute Quotes</strong></td>
+                <td><code>&lt;table width=100% border=1&gt;</code></td>
+                <td><code>&lt;table style="width:100%" border="1"&gt;</code></td>
+            </tr>
+            <tr>
+                <td><strong>Attribute Minimization</strong></td>
+                <td><code>&lt;input type="checkbox" checked&gt;</code></td>
+                <td><code>&lt;input type="checkbox" checked="checked" /&gt;</code></td>
+            </tr>
+            <tr>
+                <td><strong>Proper Nesting</strong></td>
+                <td><code>&lt;b&gt;&lt;i&gt;Sample&lt;/b&gt;&lt;/i&gt;</code></td>
+                <td><code>&lt;b&gt;&lt;i&gt;Sample&lt;/i&gt;&lt;/b&gt;</code></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <hr />
+    <div style="text-align: center; color: #64748b; font-size: 0.9rem;">
+        Web Technology Lab &bull; Experiment 6 &bull; XHTML 1.0 Strict Compliant Document
+    </div>
+</div>
+
+</body>
+</html>

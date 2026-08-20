@@ -1,0 +1,249 @@
+/* Shared Stylesheet for Experiment 10: Multi-Page College Website */
+:root {
+    --primary: #1e3a8a;
+    --primary-light: #3b82f6;
+    --accent: #f59e0b;
+    --text-dark: #0f172a;
+    --text-muted: #475569;
+    --bg-light: #f8fafc;
+    --card-bg: #ffffff;
+    --border-color: #e2e8f0;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color: var(--text-dark);
+    background-color: var(--bg-light);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* TOP PORTAL BAR */
+.portal-bar {
+    background: #0f172a;
+    color: #94a3b8;
+    padding: 8px 20px;
+    font-size: 0.85rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.portal-bar a {
+    color: #38bdf8;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+/* MAIN HEADER */
+header.college-header {
+    background: linear-gradient(135deg, #1e3a8a, #172554);
+    color: white;
+    padding: 24px 20px;
+    text-align: center;
+}
+
+.college-brand h1 {
+    font-size: 1.8rem;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.college-brand p {
+    color: #93c5fd;
+    font-size: 0.95rem;
+}
+
+/* NAVIGATION BAR */
+nav.college-nav {
+    background: #1e293b;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+nav.college-nav a {
+    color: #f1f5f9;
+    text-decoration: none;
+    padding: 14px 22px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+nav.college-nav a:hover,
+nav.college-nav a.active {
+    background: var(--primary-light);
+    color: white;
+}
+
+/* MAIN CONTAINER */
+.main-wrapper {
+    flex: 1;
+    max-width: 1100px;
+    width: 100%;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.content-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 35px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--border-color);
+    margin-bottom: 30px;
+}
+
+/* HERO SECTION */
+.hero-banner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    align-items: center;
+    margin-bottom: 35px;
+}
+
+@media (max-width: 768px) {
+    .hero-banner {
+        grid-template-columns: 1fr;
+    }
+}
+
+.hero-banner img {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+}
+
+/* GRID & CARDS */
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin: 25px 0;
+}
+
+.feature-box {
+    background: #f8fafc;
+    border: 1px solid var(--border-color);
+    padding: 22px;
+    border-radius: 8px;
+    transition: transform 0.2s;
+}
+
+.feature-box:hover {
+    transform: translateY(-4px);
+}
+
+.feature-box h3 {
+    color: var(--primary);
+    margin-bottom: 10px;
+}
+
+/* TABLES */
+table.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+table.custom-table th, table.custom-table td {
+    padding: 12px 14px;
+    border: 1px solid var(--border-color);
+    text-align: left;
+}
+
+table.custom-table th {
+    background: #1e3a8a;
+    color: white;
+    font-weight: 600;
+}
+
+table.custom-table tr:nth-child(even) {
+    background: #f8fafc;
+}
+
+/* FORMS */
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #1e293b;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 0.95rem;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-primary:hover {
+    background: #1e40af;
+}
+
+.btn-secondary {
+    background: #f1f5f9;
+    color: #475569;
+    padding: 12px 24px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+/* FOOTER */
+footer.college-footer {
+    background: #0f172a;
+    color: #94a3b8;
+    padding: 30px 20px;
+    text-align: center;
+    margin-top: auto;
+    font-size: 0.9rem;
+}
+
+footer.college-footer a {
+    color: #38bdf8;
+    text-decoration: none;
+}

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment 3 - Creating a Class Timetable Using HTML Tables</title>
+    <style>
+        :root {
+            --primary: #059669;
+            --primary-dark: #047857;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --bg-page: #f0fdf4;
+            --bg-card: #ffffff;
+            --border: #bbf7d0;
+            --tag-bg: #dcfce7;
+            --tag-text: #166534;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1050px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border);
+        }
+
+        .header-badge {
+            display: inline-block;
+            background: var(--tag-bg);
+            color: var(--tag-text);
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .back-nav {
+            margin-bottom: 20px;
+        }
+
+        .back-nav a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .back-nav a:hover {
+            text-decoration: underline;
+        }
+
+        .tag-pill {
+            background: var(--tag-bg);
+            color: var(--tag-text);
+            font-family: monospace;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            margin: 25px 0;
+        }
+
+        /* Timetable specific table styles */
+        table.timetable {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+
+        table.timetable caption {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #065f46;
+            padding: 12px;
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            border-radius: 8px 8px 0 0;
+        }
+
+        table.timetable th {
+            background: #059669;
+            color: #ffffff;
+            font-weight: 600;
+            padding: 12px 8px;
+            border: 1px solid #047857;
+        }
+
+        table.timetable td {
+            padding: 10px 8px;
+            border: 1px solid #cbd5e1;
+        }
+
+        .day-col {
+            background: #f8fafc;
+            font-weight: bold;
+            color: #1e293b;
+        }
+
+        .lab-cell {
+            background: #fef3c7;
+            color: #92400e;
+            font-weight: 600;
+        }
+
+        .break-cell {
+            background: #fee2e2;
+            color: #991b1b;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .lunch-cell {
+            background: #e0e7ff;
+            color: #3730a3;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .seminar-cell {
+            background: #f3e8ff;
+            color: #6b21a8;
+            font-weight: 600;
+        }
+
+        .legend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-color {
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            border: 1px solid #cbd5e1;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="back-nav">
+        <a href="index.html">&larr; Back to Lab Experiments Portal</a>
+    </div>
+
+    <span class="header-badge">Experiment 03</span>
+    <h1 style="margin-top:0; color:#0f172a;">Creating a Class Timetable Using HTML Tables</h1>
+    <p><strong>Objective:</strong> Construct an academic class timetable implementing HTML <span class="tag-pill">&lt;table&gt;</span>, table rows (<span class="tag-pill">&lt;tr&gt;</span>), table headers (<span class="tag-pill">&lt;th&gt;</span>), data cells (<span class="tag-pill">&lt;td&gt;</span>), <span class="tag-pill">&lt;caption&gt;</span>, row merging (<span class="tag-pill">rowspan</span>), column merging (<span class="tag-pill">colspan</span>), along with <span class="tag-pill">border</span>, <span class="tag-pill">cellpadding</span>, and <span class="tag-pill">cellspacing</span> attributes.</p>
+
+    <!-- TIMETABLE HTML TABLE WITH ALL REQUIRED ATTRIBUTES -->
+    <div class="table-responsive">
+        <table class="timetable" border="1" cellpadding="10" cellspacing="0">
+            <caption>DEPARTMENT OF COMPUTER SCIENCE &amp; ENGINEERING &mdash; CLASS TIMETABLE (SEMESTER VI)</caption>
+            
+            <thead>
+                <tr>
+                    <th rowspan="2">Day / Time</th>
+                    <th>Period 1</th>
+                    <th>Period 2</th>
+                    <th rowspan="2">Tea Break<br><small>(10:40 - 11:00 AM)</small></th>
+                    <th>Period 3</th>
+                    <th>Period 4</th>
+                    <th rowspan="2">Lunch Break<br><small>(12:40 - 01:30 PM)</small></th>
+                    <th>Period 5</th>
+                    <th>Period 6</th>
+                    <th>Period 7</th>
+                </tr>
+                <tr>
+                    <th>09:00 - 09:50 AM</th>
+                    <th>09:50 - 10:40 AM</th>
+                    <th>11:00 - 11:50 AM</th>
+                    <th>11:50 - 12:40 PM</th>
+                    <th>01:30 - 02:20 PM</th>
+                    <th>02:20 - 03:10 PM</th>
+                    <th>03:10 - 04:00 PM</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <!-- MONDAY -->
+                <tr>
+                    <td class="day-col">MONDAY</td>
+                    <td>Web Technology (WT)</td>
+                    <td>Cloud Computing (CC)</td>
+                    <td class="break-cell" rowspan="5">TEA BREAK</td>
+                    <td>Compiler Design (CD)</td>
+                    <td>Artificial Intelligence (AI)</td>
+                    <td class="lunch-cell" rowspan="5">LUNCH BREAK</td>
+                    <td colspan="3" class="lab-cell">Web Technology Laboratory (Batch A) / Project Lab</td>
+                </tr>
+
+                <!-- TUESDAY -->
+                <tr>
+                    <td class="day-col">TUESDAY</td>
+                    <td colspan="2" class="lab-cell">Compiler Design Lab (Batch B)</td>
+                    <td>Software Engineering (SE)</td>
+                    <td>Web Technology (WT)</td>
+                    <td>Cloud Computing (CC)</td>
+                    <td>Artificial Intelligence (AI)</td>
+                    <td class="seminar-cell">Library / Mentoring</td>
+                </tr>
+
+                <!-- WEDNESDAY -->
+                <tr>
+                    <td class="day-col">WEDNESDAY</td>
+                    <td>Artificial Intelligence (AI)</td>
+                    <td>Compiler Design (CD)</td>
+                    <td>Web Technology (WT)</td>
+                    <td>Cloud Computing (CC)</td>
+                    <td colspan="3" class="lab-cell">Cloud Computing &amp; DevOps Lab (Batch A &amp; B)</td>
+                </tr>
+
+                <!-- THURSDAY -->
+                <tr>
+                    <td class="day-col">THURSDAY</td>
+                    <td>Software Engineering (SE)</td>
+                    <td>Web Technology (WT)</td>
+                    <td>Artificial Intelligence (AI)</td>
+                    <td>Compiler Design (CD)</td>
+                    <td>Cloud Computing (CC)</td>
+                    <td>Software Engineering (SE)</td>
+                    <td class="seminar-cell">Technical Seminar</td>
+                </tr>
+
+                <!-- FRIDAY -->
+                <tr>
+                    <td class="day-col">FRIDAY</td>
+                    <td>Compiler Design (CD)</td>
+                    <td>Artificial Intelligence (AI)</td>
+                    <td>Cloud Computing (CC)</td>
+                    <td>Software Engineering (SE)</td>
+                    <td colspan="2" class="seminar-cell">Placement Training &amp; Aptitude</td>
+                    <td class="seminar-cell">Sports &amp; Clubs</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- CODE CONCEPTS & LEGEND -->
+    <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; margin-top: 20px;">
+        <h4 style="margin-top:0; color:#065f46;">HTML Table Tags &amp; Attributes Used:</h4>
+        <ul style="margin-bottom:0;">
+            <li><strong>&lt;table border="1" cellpadding="10" cellspacing="0"&gt;</strong>: Defines the table with border width, internal cell padding, and cell spacing.</li>
+            <li><strong>&lt;caption&gt;</strong>: Provides an accessible, prominent title for the timetable.</li>
+            <li><strong>&lt;th&gt; and &lt;tr&gt;</strong>: Define table headers and table rows.</li>
+            <li><strong>rowspan="5"</strong>: Merged the Tea Break and Lunch columns across all 5 weekdays (Monday to Friday).</li>
+            <li><strong>colspan="3"</strong>: Merged 3 laboratory periods in the afternoon session for seamless practical lab representation.</li>
+        </ul>
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid #bbf7d0; margin: 30px 0;">
+    <footer style="text-align: center; color: var(--text-muted); font-size: 0.9rem;">
+        Web Technology Lab &bull; Experiment 3 &bull; Department of Computer Science &amp; Engineering
+    </footer>
+</div>
+
+</body>
+</html>

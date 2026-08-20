@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment 1 - Creating a Basic HTML Web Page</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --bg-page: #f8fafc;
+            --bg-card: #ffffff;
+            --border: #e2e8f0;
+            --tag-bg: #eff6ff;
+            --tag-text: #1d4ed8;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border);
+        }
+
+        .header-badge {
+            display: inline-block;
+            background: var(--tag-bg);
+            color: var(--tag-text);
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .back-nav {
+            margin-bottom: 20px;
+        }
+
+        .back-nav a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .back-nav a:hover {
+            text-decoration: underline;
+        }
+
+        .section-box {
+            background: #f1f5f9;
+            border-left: 4px solid var(--primary);
+            padding: 16px 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .demo-box {
+            border: 1px dashed #cbd5e1;
+            padding: 20px;
+            border-radius: 8px;
+            background: #ffffff;
+            margin: 15px 0;
+        }
+
+        .tag-pill {
+            background: #e0e7ff;
+            color: #3730a3;
+            font-family: monospace;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        code {
+            background: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+            color: #d946ef;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="back-nav">
+        <a href="index.html">&larr; Back to Lab Experiments Portal</a>
+    </div>
+
+    <span class="header-badge">Experiment 01</span>
+    <h1 style="margin-top:0; color:#0f172a;">Creating a Basic HTML Web Page</h1>
+    <p><strong>Objective:</strong> Demonstrate the use of basic HTML formatting tags including all 6 heading levels, paragraphs, line breaks, horizontal rules, text formatting (bold, italic, underline), superscripts, and subscripts.</p>
+
+    <hr>
+
+    <!-- SECTION 1: HEADING TAGS (h1 to h6) -->
+    <div class="section-box">
+        <h3>1. Demonstration of Heading Tags (<span class="tag-pill">&lt;h1&gt;</span> to <span class="tag-pill">&lt;h6&gt;</span>)</h3>
+        <p>HTML provides 6 levels of document headings. <span class="tag-pill">&lt;h1&gt;</span> is the most important, and <span class="tag-pill">&lt;h6&gt;</span> is the least important.</p>
+    </div>
+
+    <div class="demo-box">
+        <h1>Heading Level 1 - &lt;h1&gt; Main Document Title</h1>
+        <h2>Heading Level 2 - &lt;h2&gt; Major Section Heading</h2>
+        <h3>Heading Level 3 - &lt;h3&gt; Subsection Heading</h3>
+        <h4>Heading Level 4 - &lt;h4&gt; Topic Heading</h4>
+        <h5>Heading Level 5 - &lt;h5&gt; Minor Subtopic Heading</h5>
+        <h6>Heading Level 6 - &lt;h6&gt; Lowest Level Heading</h6>
+    </div>
+
+    <hr>
+
+    <!-- SECTION 2: PARAGRAPHS, LINE BREAKS, AND HORIZONTAL RULES -->
+    <div class="section-box">
+        <h3>2. Paragraphs (<span class="tag-pill">&lt;p&gt;</span>), Line Breaks (<span class="tag-pill">&lt;br&gt;</span>), and Horizontal Rules (<span class="tag-pill">&lt;hr&gt;</span>)</h3>
+        <p>Paragraphs define blocks of text. The line break tag creates a single line feed without starting a new paragraph. The horizontal rule inserts a thematic break.</p>
+    </div>
+
+    <div class="demo-box">
+        <p>
+            This is the first paragraph (<span class="tag-pill">&lt;p&gt;</span>). HyperText Markup Language (HTML) is the standard markup language for documents designed to be displayed in a web browser.
+        </p>
+        <p>
+            This is the second paragraph demonstrating the line break (<span class="tag-pill">&lt;br&gt;</span>) tag:<br>
+            Line 1: Computer Science and Engineering Department<br>
+            Line 2: Web Technology Laboratory<br>
+            Line 3: Academic Year 2025–2026
+        </p>
+        
+        <p>A horizontal line (<span class="tag-pill">&lt;hr&gt;</span>) separates the content below:</p>
+        <hr>
+        <p>Content continued after the thematic horizontal separator rule.</p>
+    </div>
+
+    <hr>
+
+    <!-- SECTION 3: TEXT FORMATTING (BOLD, ITALIC, UNDERLINE) -->
+    <div class="section-box">
+        <h3>3. Text Formatting: Bold (<span class="tag-pill">&lt;b&gt;</span> / <span class="tag-pill">&lt;strong&gt;</span>), Italic (<span class="tag-pill">&lt;i&gt;</span> / <span class="tag-pill">&lt;em&gt;</span>), and Underline (<span class="tag-pill">&lt;u&gt;</span>)</h3>
+        <p>Formatting elements are used to display text with special visual styling or semantic importance.</p>
+    </div>
+
+    <div class="demo-box">
+        <p><b>Bold Text (&lt;b&gt;):</b> <b>This text is rendered in bold using the &lt;b&gt; tag.</b></p>
+        <p><strong>Strong Text (&lt;strong&gt;):</strong> <strong>This text conveys strong semantic importance using &lt;strong&gt;.</strong></p>
+        <p><i>Italic Text (&lt;i&gt;):</i> <i>This text is rendered in italics using the &lt;i&gt; tag for stylistic differentiation.</i></p>
+        <p><em>Emphasized Text (&lt;em&gt;):</em> <em>This text conveys linguistic emphasis using the &lt;em&gt; tag.</em></p>
+        <p><u>Underlined Text (&lt;u&gt;):</u> <u>This text is underlined using the &lt;u&gt; tag.</u></p>
+        <p><b><i><u>Combined Formatting:</u></i></b> <b><i><u>This sentence is simultaneously Bold, Italic, and Underlined!</u></i></b></p>
+    </div>
+
+    <hr>
+
+    <!-- SECTION 4: SUPERSCRIPT AND SUBSCRIPT -->
+    <div class="section-box">
+        <h3>4. Superscripts (<span class="tag-pill">&lt;sup&gt;</span>) and Subscripts (<span class="tag-pill">&lt;sub&gt;</span>)</h3>
+        <p>Superscript renders text half a character above the normal line (useful for exponents and ordinal numbers). Subscript renders text half a character below (useful for chemical formulas and mathematical indices).</p>
+    </div>
+
+    <div class="demo-box">
+        <h4>Mathematical Equations (Using &lt;sup&gt;):</h4>
+        <p>
+            Algebraic Identity: (a + b)<sup>2</sup> = a<sup>2</sup> + 2ab + b<sup>2</sup><br>
+            Pythagorean Theorem: a<sup>2</sup> + b<sup>2</sup> = c<sup>2</sup><br>
+            Quadratic Form: f(x) = ax<sup>3</sup> + bx<sup>2</sup> + cx + d<br>
+            Ordinal Date: The submission deadline is the 25<sup>th</sup> of August.
+        </p>
+
+        <h4>Chemical & Scientific Formulas (Using &lt;sub&gt;):</h4>
+        <p>
+            Water: H<sub>2</sub>O<br>
+            Sulfuric Acid: H<sub>2</sub>SO<sub>4</sub><br>
+            Glucose: C<sub>6</sub>H<sub>12</sub>O<sub>6</sub><br>
+            Photosynthesis Equation: 6CO<sub>2</sub> + 6H<sub>2</sub>O &rarr; C<sub>6</sub>H<sub>12</sub>O<sub>6</sub> + 6O<sub>2</sub><br>
+            Vector Components: V = (x<sub>1</sub>, x<sub>2</sub>, x<sub>3</sub>, ..., x<sub>n</sub>)
+        </p>
+
+        <h4>Combined Subscript and Superscript:</h4>
+        <p>
+            Isotope Notation: <sub>92</sub><sup>238</sup>U (Uranium-238)<br>
+            Integral Notation: &int;<sub>0</sub><sup>&infin;</sup> e<sup>-x</sup> dx = 1
+        </p>
+    </div>
+
+    <hr>
+    <footer style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: 20px;">
+        Web Technology Lab &bull; Experiment 1 &bull; Department of Computer Science and Engineering
+    </footer>
+</div>
+
+</body>
+</html>

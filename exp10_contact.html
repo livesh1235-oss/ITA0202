@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - National Institute of Engineering &amp; Technology</title>
+    <link rel="stylesheet" href="exp10_style.css">
+</head>
+<body>
+
+    <!-- TOP PORTAL LINK -->
+    <div class="portal-bar">
+        <span>Experiment 10: Multi-Page College Website</span>
+        <a href="index.html">&larr; Return to Lab Portal</a>
+    </div>
+
+    <!-- MAIN HEADER -->
+    <header class="college-header">
+        <div class="college-brand">
+            <h1>NATIONAL INSTITUTE OF ENGINEERING &amp; TECHNOLOGY</h1>
+            <p>Affiliated to Anna University &bull; Approved by AICTE &bull; Accredited NAAC A++</p>
+        </div>
+    </header>
+
+    <!-- NAVIGATION BAR -->
+    <nav class="college-nav">
+        <a href="exp10_home.html">Home</a>
+        <a href="exp10_about.html">About Us</a>
+        <a href="exp10_courses.html">Departments &amp; Courses</a>
+        <a href="exp10_registration.html">Admission Registration</a>
+        <a href="exp10_contact.html" class="active">Contact &amp; Campus Map</a>
+    </nav>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="main-wrapper">
+        <div class="content-card">
+            <h2 style="color: var(--primary); margin-bottom: 15px;">Contact Information &amp; Campus Map</h2>
+            
+            <div class="grid-3" style="margin-bottom: 25px;">
+                <div class="feature-box">
+                    <h3>&#128205; Campus Address</h3>
+                    <p style="color: var(--text-muted); font-size: 0.95rem;">
+                        NIET Campus Parkway,<br>
+                        Tech Valley Road, Anna Nagar,<br>
+                        Chennai &mdash; 600025, Tamil Nadu, India.
+                    </p>
+                </div>
+
+                <div class="feature-box">
+                    <h3>&#9742; Call Helpline</h3>
+                    <p style="color: var(--text-muted); font-size: 0.95rem;">
+                        <strong>Admissions:</strong> +91 44 2235 7000<br>
+                        <strong>Dean's Office:</strong> +91 44 2235 7001<br>
+                        <strong>Toll Free:</strong> 1800-425-9999
+                    </p>
+                </div>
+
+                <div class="feature-box">
+                    <h3>&#9993; Email Addresses</h3>
+                    <p style="color: var(--text-muted); font-size: 0.95rem;">
+                        <strong>Admissions:</strong> <a href="mailto:admissions@niet.edu" style="color:var(--primary-light);">admissions@niet.edu</a><br>
+                        <strong>General Enquiry:</strong> <a href="mailto:info@niet.edu" style="color:var(--primary-light);">info@niet.edu</a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- EMBEDDED IFRAME OF CAMPUS / TIMETABLE / LOCATION -->
+            <h3 style="color: var(--primary); margin-bottom: 12px;">Interactive Campus Virtual Tour / Department View (&lt;iframe&gt;)</h3>
+            <div style="border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; margin-bottom: 25px;">
+                <iframe src="exp3.html" width="100%" height="350" title="Embedded Campus Department Schedule" style="border:none;"></iframe>
+            </div>
+
+            <!-- QUICK INQUIRY FORM -->
+            <h3 style="color: var(--primary); margin-bottom: 12px;">Send an Online Inquiry</h3>
+            <form onsubmit="alert('Thank you for contacting NIET. Our admission team will respond to your inquiry shortly!'); return false;">
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
+                    <div class="form-group">
+                        <label for="contactName">Your Name: *</label>
+                        <input type="text" id="contactName" required placeholder="Enter name">
+                    </div>
+                    <div class="form-group">
+                        <label for="contactEmail">Your Email: *</label>
+                        <input type="email" id="contactEmail" required placeholder="Enter email">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="contactMessage">Inquiry Message: *</label>
+                    <textarea id="contactMessage" rows="3" required placeholder="Type your message or questions here..."></textarea>
+                </div>
+                <button type="submit" class="btn-primary">Send Inquiry Message</button>
+            </form>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="college-footer">
+        <p>&copy; 2025 National Institute of Engineering &amp; Technology. All rights reserved.</p>
+        <p style="margin-top: 6px;">Web Technology Lab &bull; Experiment 10 (Contact Page)</p>
+    </footer>
+
+</body>
+</html>

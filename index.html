@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Technology &amp; HTML Lab Experiments (1 - 10) | Master Portal</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --accent: #06b6d4;
+            --bg-dark: #0f172a;
+            --card-dark: #1e293b;
+            --card-border: #334155;
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* HEADER HERO */
+        header.hero {
+            background: radial-gradient(circle at 50% 0%, #1e1b4b 0%, #0f172a 70%);
+            padding: 45px 20px 35px 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .badge-portal {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.2);
+            color: #a5b4fc;
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            padding: 4px 14px;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        header.hero h1 {
+            font-size: 2.3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        header.hero p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            max-width: 750px;
+            margin: 0 auto 20px auto;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .stat-item {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid var(--card-border);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            color: #cbd5e1;
+        }
+
+        .stat-item strong {
+            color: var(--accent);
+        }
+
+        /* SEARCH & FILTER BAR */
+        .controls-container {
+            max-width: 1200px;
+            margin: 25px auto 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .search-input {
+            background: var(--card-dark);
+            border: 1px solid var(--card-border);
+            color: white;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            width: 320px;
+            max-width: 100%;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+        }
+
+        /* EXPERIMENT GRID */
+        main.experiments-grid {
+            max-width: 1200px;
+            margin: 25px auto 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 22px;
+            width: 100%;
+        }
+
+        .exp-card {
+            background: var(--card-dark);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.25s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .exp-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.2);
+        }
+
+        .exp-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .exp-number {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #818cf8;
+            background: rgba(99, 102, 241, 0.15);
+            padding: 3px 10px;
+            border-radius: 6px;
+            text-transform: uppercase;
+        }
+
+        .exp-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .exp-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            font-size: 0.75rem;
+            font-family: monospace;
+            background: #0f172a;
+            color: #38bdf8;
+            padding: 3px 8px;
+            border-radius: 4px;
+            border: 1px solid #1e293b;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: auto;
+        }
+
+        .btn-launch {
+            flex: 1;
+            background: var(--primary);
+            color: white;
+            padding: 10px;
+            border-radius: 6px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn-launch:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-preview {
+            background: #334155;
+            color: #f8fafc;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+
+        .btn-preview:hover {
+            background: #475569;
+        }
+
+        /* MODAL PREVIEW */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: #ffffff;
+            width: 100%;
+            max-width: 1100px;
+            height: 85vh;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-header {
+            background: #0f172a;
+            color: white;
+            padding: 14px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-close {
+            background: #334155;
+            border: none;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .modal-iframe {
+            flex: 1;
+            width: 100%;
+            border: none;
+        }
+
+        /* FOOTER */
+        footer.master-footer {
+            background: #090d16;
+            color: var(--text-muted);
+            text-align: center;
+            padding: 25px 20px;
+            font-size: 0.9rem;
+            margin-top: auto;
+            border-top: 1px solid #1e293b;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HERO HEADER -->
+    <header class="hero">
+        <span class="badge-portal">Academic Year 2025–26 &bull; Web Technology Laboratory</span>
+        <h1>HTML &amp; Web Technology Lab Suite</h1>
+        <p>Complete implementation of all 10 laboratory experiments featuring semantic HTML5, XHTML strict syntax, XML data modeling with XSD/XSLT, HTTP protocol analysis, and a connected multi-page college web portal.</p>
+        
+        <div class="stats-bar">
+            <div class="stat-item">Experiments: <strong>10 / 10 Completed</strong></div>
+            <div class="stat-item">Standards: <strong>HTML5 &bull; XHTML 1.0 &bull; XML/XSD &bull; CSS3</strong></div>
+            <div class="stat-item">Directory: <strong>All in One Unified Folder</strong></div>
+        </div>
+    </header>
+
+    <!-- SEARCH FILTER BAR -->
+    <div class="controls-container">
+        <input type="text" id="searchInput" class="search-input" placeholder="&#128269; Search experiments or tags (e.g. table, form, get)..." onkeyup="filterExperiments()">
+        <span style="color: var(--text-muted); font-size: 0.9rem;">Showing <span id="countDisplay">10</span> experiments</span>
+    </div>
+
+    <!-- EXPERIMENTS GRID -->
+    <main class="experiments-grid" id="expGrid">
+
+        <!-- EXPERIMENT 1 -->
+        <div class="exp-card" data-title="Creating a Basic HTML Web Page" data-tags="headings paragraphs line break horizontal line bold italic underline superscript subscript h1 h2 h3 h4 h5 h6 p br hr b strong i em u sup sub">
+            <div>
+                <div class="exp-header">
+                    <span class="exp-number">Experiment 01</span>
+                </div>
+                <h2 class="exp-title">Creating a Basic HTML Web Page</h2>
+                <p class="exp-desc">
+                    Implements all 6 heading levels, formatted paragraphs, line breaks, horizontal rules, text styling (bold, italic, underline), superscripts, and subscripts for scientific formulas.
+                </p>
+                <div class="tag-list">
+                    <span class="tag">&lt;h1&gt;-&lt;h6&gt;</span>
+                    <span class="tag">&lt;p&gt;</span>
+                    <span class="tag">&lt;br&gt;</span>
+                    <span class="tag">&lt;hr&gt;</span>
+                    <span class="tag">&lt;b&gt; / &lt;i&gt; / &lt;u&gt;</span>
+                    <span class="tag">&lt;sup&gt; / &lt;sub&gt;</span>
+                </div>
+            </div>
+            <div class="card-actions">
+                <a href="exp1.html" class="btn-launch">Launch Page &rarr;</a>
+                <button class="btn-preview" onclick="openPreview('exp1.html', 'Experiment 1: Basic HTML Web Page')">Preview</button>
+            </div>
+        </div>
+
+        <!-- EXPERIMENT 2 -->
+        <div class="exp-card" data-title="Designing a Student Profile Page" data-tags="student profile unordered list ordered list description list nested list hyperlink ul ol dl dt dd li a href">
+            <div>
+                <div class="exp-header">
+                    <span class="exp-number">Experiment 02</span>
+                </div>
+                <h2 class="exp-title">Designing a Student Profile Page</h2>
+                <p class="exp-desc">
+                    Comprehensive student curriculum vitae displaying ordered education timelines, unordered interest lists, description project glossaries, hierarchical nested skills, and hyperlinks.
+                </p>
+                <div class="tag-list">
+                    <span class="tag">&lt;ul&gt; &amp; &lt;li&gt;</span>
+                    <span class="tag">&lt;ol&gt; &amp; &lt;li&gt;</span>
+                    <span class="tag">&lt;dl&gt;, &lt;dt&gt;, &lt;dd&gt;</span>
+                    <span class="tag">Nested Lists</span>
+                    <span class="tag">&lt;a href&gt;</span>
+                </div>
+            </div>
+            <div class="card-actions">
+                <a href="exp2.html" class="btn-launch">Launch Page &rarr;</a>
+                <button class="btn-preview" onclick="openPreview('exp2.html', 'Experiment 2: Student Profile Page')">Preview</button>
+            </div>
+        </div>
+
+        <!-- EXPERIMENT 3 -->
+        <div class="exp-card" data-title="Creating a Class Timetable Using HTML Tables" data-tags="class timetable tables rows columns table headings caption rowspan colspan border cellpadding cellspacing table tr th td">
+            <div>
+                <div class="exp-header">
+                    <span class="exp-number">Experiment 03</span>
+                </div>
+                <h2 class="exp-title">Class Timetable Using HTML Tables</h2>
+                <p class="exp-desc">
+                    Academic weekly timetable featuring custom cell merging across columns (colspan) and rows (rowspan), table caption, headers, border, cellpadding, and cellspacing.
+                </p>
+                <div class="tag-list">
+                    <span class="tag">&lt;table&gt;</span>
+                    <span class="tag">&lt;caption&gt;</span>
+                    <span class="tag">&lt;th&gt;, &lt;tr&gt;, &lt;td&gt;</span>
+                    <span class="tag">rowspan</span>
+                    <span class="tag">colspan</span>
+                    <span class="tag">cellpadding</span>
+                </div>
+            </div>
+            <div class="card-actions">
+                <a href="exp3.html" class="btn-launch">Launch Page &rarr;</a>
+                <button class="btn-preview" onclick="openPreview('exp3.html', 'Experiment 3: Class Timetable')">Preview</button>
+            </div>
+        </div>
+
+        <!-- EXPERIMENT 4 -->
+        <div class="exp-card" data-title="Creating a Student Registration Form" data-tags="student registration form text box password email radio checkbox dropdown list select textarea submit reset">
+            <div>
+                <div class="exp-header">
+                    <span class="exp-number">Experiment 04</span>
+                </div>
+                <h2 class="exp-title">Creating a Student Registration Form</h2>
+                <p class="exp-desc">
+                    Comprehensive student enrollment portal with text inputs, password fields, email validation, radio buttons, checkboxes, dropdown select menus, textarea, submit, and reset.
+                </p>
+                <div class="tag-list">
+                    <span class="tag">&lt;input type="text"&gt;</span>
+                    <span class="tag">password / email</span>
+                    <span class="tag">radio / checkbox</span>
+                    <span class="tag">&lt;select&gt; &amp; &lt;option&gt;</span>
+                    <span class="tag">&lt;textarea&gt;</span>
+                    <span class="tag">submit / reset</span>
+                </div>
+            </div>
+            <div class="card-actions">
+                <a href="exp4.html" class="btn-launch">Launch Page &rarr;</a>
+                <button class="btn-preview" onclick="openPreview('exp4.html', 'Experiment 4: Student Registration Form')">Preview</button>
+            </div>
+        </div>
+
+        <!-- EXPERIMENT 5 -->
+        <div class="exp-card" data-title="Demonstrating GET and POST Methods Using HTML Forms" data-tags="get post methods url changes query params body payload security form method">
+            <div>
+                <div class="exp-header">
+                    <span class="exp-number">Experiment 05</span>
+                </div>
+                <h2 class="exp-title">GET &amp; POST Methods Demonstration</h2>
+                <p class="exp-desc">
+                    Dual interactive forms comparing HTTP GET (query parameters visible in URL) with HTTP POST (data encapsulated in request body), with live address bar inspector.
+                </p>
+                <div class="tag-list">
+                    <span class="tag">method="GET"</span>
+                    <span class="tag">method="POST"</span>
+                    <span class="tag">URL Query String</span>
+                    <span class="tag">HTTP Body Payload</span>
+                    <span class="tag">Security Analysis</span>
+                </div>
+            </div>
+            <div class="card-actions">
+                <a href="exp5.html" class="btn-launch">Launch Page &rarr;</a>
+                <button class="btn-preview" onclick="openPreview('exp5.html', 'Experiment 5: GET and POST Methods')">Preview</button>
+            </div>
+        </div>
+
+        <!-- EXPERIMENT 6 -->
+        <div class="exp-card" data-title="Creating an XHTML-Compliant Web Page" data-tags="xhtml compliant lowercase closed tags quoted attributes nested elements self-closing empty tags w3c strict">
+            <div>
+                <div class="exp-header">
+                    <span class="exp-number">Experiment 06</span>
+                </div>
+                <h2 class="exp-title">XHTML-Compliant Web Page</h2>
+                <p class="exp-desc">
+                    Strict XHTML 1.0 Strict validated web document enforcing lowercase tags, quoted attributes, proper nested tags, XML namespace, and self-closing tags like &lt;br /&gt; and &lt;hr /&gt;.
+                </p>
+                <div class="tag-list">
+                    <span class="tag">XHTML 1.0 Strict</span>
+                    <span class="tag">xmlns</span>
+                    <span class="tag">Lowercase Tags</span>
+                    <span class="tag">Self-Closing &lt;br /&gt;</span>
+                    <span class="tag">Quoted Attrs</span>
+                </div>
+            </div>
+            <div class="card-actions">
+                <a href="exp6.html" class="btn-launch">Launch Page &rarr;</a>
+                <button class="btn-preview" onclick="openPreview('exp6.html', 'Experiment 6: XHTML-Compliant Web Page')">Preview</button>
+            </div>
+        </div>
+
+        <!-- EXPERIMENT 7 -->
+        <div class="exp-card" data-title="Creating an XML Document for Student Data" data-tags="xml document student data root element student roll number name department year email mobile xsd xslt">
+            <div>
+                <div class="exp-header">
+                    <span class="exp-number">Experiment 07</span>
+                </div>
+                <h2 class="exp-title">XML Document for Student Data</h2>
+                <p class="exp-desc">
+                    Hierarchical XML database with root &lt;students&gt; and records holding roll number, name, department, year, email, and mobile, with XSD schema validation and XSLT rendering.
+                </p>
+                <div class="tag-list">
+                    <span class="tag">&lt;students&gt; Root</span>
+                    <span class="tag">&lt;student&gt; Records</span>
+                    <span class="tag">exp7.xml</span>
+                    <span class="tag">exp7.xsd (Schema)</span>
+                    <span class="tag">exp7.xsl (XSLT)</span>
+                </div>
+            </div>
+            <div class="card-actions">
+                <a href="exp7.html" class="btn-launch">Launch Page &rarr;</a>
+                <button class="btn-preview" onclick="openPreview('exp7.html', 'Experiment 7: XML Student Database')">Preview</button>
+            </div>
+        </div>
+
+        <!-- EXPERIMENT 8 -->
+        <div class="exp-card" data-title="Creating a Webpage Using Images, Hyperlinks, and Iframes" data-tags="images hyperlinks iframes img anchor iframe width height alt text external embedding">
+            <div>
+                <div class="exp-header">
+                    <span class="exp-number">Experiment 08</span>
+                </div>
+                <h2 class="exp-title">Images, Hyperlinks &amp; Iframes</h2>
+                <p class="exp-desc">
+                    Multimedia gallery showcasing image sizing and alt attributes, diverse hyperlink types (internal, external, mailto, tel, bookmarks), and inline frame embeddings.
+                </p>
+                <div class="tag-list">
+                    <span class="tag">&lt;img&gt; with alt/dims</span>
+                    <span class="tag">&lt;a&gt; Hyperlinks</span>
+                    <span class="tag">&lt;iframe&gt; Embed</span>
+                    <span class="tag">Bookmark Anchors</span>
+                </div>
+            </div>
+            <div class="card-actions">
+                <a href="exp8.html" class="btn-launch">Launch Page &rarr;</a>
+                <button class="btn-preview" onclick="openPreview('exp8.html', 'Experiment 8: Images, Hyperlinks, Iframes')">Preview</button>
+            </div>
+        </div>
+
+        <!-- EXPERIMENT 9 -->
+        <div class="exp-card" data-title="Observing Internet Protocols Using Browser Developer Tools" data-tags="internet protocols browser developer tools network tab url protocol method status code file type size time">
+            <div>
+                <div class="exp-header">
+                    <span class="exp-number">Experiment 09</span>
+                </div>
+                <h2 class="exp-title">Network Protocols &amp; DevTools Lab</h2>
+                <p class="exp-desc">
+                    Interactive network laboratory with request triggers to inspect HTTP/HTTPS protocols, request methods, status codes (200, 404), MIME types, byte sizes, and waterfall timings.
+                </p>
+                <div class="tag-list">
+                    <span class="tag">DevTools Network (F12)</span>
+                    <span class="tag">HTTP/1.1 vs HTTP/2</span>
+                    <span class="tag">Status 200 / 404</span>
+                    <span class="tag">MIME Types</span>
+                    <span class="tag">Waterfall Timings</span>
+                </div>
+            </div>
+            <div class="card-actions">
+                <a href="exp9.html" class="btn-launch">Launch Page &rarr;</a>
+                <button class="btn-preview" onclick="openPreview('exp9.html', 'Experiment 9: Internet Protocols & DevTools')">Preview</button>
+            </div>
+        </div>
+
+        <!-- EXPERIMENT 10 -->
+        <div class="exp-card" data-title="Creating a Multi-Page College Website" data-tags="multi-page college website home about courses registration contact navigation links image table form list iframe">
+            <div>
+                <div class="exp-header">
+                    <span class="exp-number">Experiment 10</span>
+                </div>
+                <h2 class="exp-title">Multi-Page College Website</h2>
+                <p class="exp-desc">
+                    Complete 5-page university web application (Home, About, Courses, Registration, Contact) incorporating navigation bars, images, tables, forms, lists, and iframe embeds.
+                </p>
+                <div class="tag-list">
+                    <span class="tag">5 Linked Pages</span>
+                    <span class="tag">Home &bull; About &bull; Courses</span>
+                    <span class="tag">Registration &bull; Contact</span>
+                    <span class="tag">Shared CSS Layout</span>
+                </div>
+            </div>
+            <div class="card-actions">
+                <a href="exp10_home.html" class="btn-launch">Launch College Site &rarr;</a>
+                <button class="btn-preview" onclick="openPreview('exp10_home.html', 'Experiment 10: Multi-Page College Website')">Preview</button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- LIVE PREVIEW MODAL -->
+    <div id="previewModal" class="modal" onclick="closeModalOnBackdrop(event)">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">&#128421; Experiment Preview</h3>
+                <div style="display:flex; gap:10px; align-items:center;">
+                    <a id="modalNewTab" href="#" target="_blank" style="color:#38bdf8; font-size:0.85rem; text-decoration:none;">Open in New Tab &nearr;</a>
+                    <button class="btn-close" onclick="closePreview()">Close &times;</button>
+                </div>
+            </div>
+            <iframe id="modalIframe" class="modal-iframe" src="about:blank"></iframe>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="master-footer">
+        <p>&copy; 2025 Web Technology Laboratory &bull; Department of Computer Science and Engineering</p>
+        <p style="margin-top: 6px; font-size: 0.85rem; color: #64748b;">All 10 experiments created and structured in one single directory for easy submission &amp; evaluation.</p>
+    </footer>
+
+    <script>
+        function filterExperiments() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.exp-card');
+            let count = 0;
+
+            cards.forEach(card => {
+                const title = card.getAttribute('data-title').toLowerCase();
+                const tags = card.getAttribute('data-tags').toLowerCase();
+                const desc = card.querySelector('.exp-desc').textContent.toLowerCase();
+
+                if (title.includes(query) || tags.includes(query) || desc.includes(query)) {
+                    card.style.display = 'flex';
+                    count++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            document.getElementById('countDisplay').textContent = count;
+        }
+
+        function openPreview(url, title) {
+            document.getElementById('modalTitle').innerHTML = `&#128421; ${title}`;
+            document.getElementById('modalNewTab').href = url;
+            document.getElementById('modalIframe').src = url;
+            document.getElementById('previewModal').style.display = 'flex';
+        }
+
+        function closePreview() {
+            document.getElementById('previewModal').style.display = 'none';
+            document.getElementById('modalIframe').src = 'about:blank';
+        }
+
+        function closeModalOnBackdrop(e) {
+            if (e.target === document.getElementById('previewModal')) {
+                closePreview();
+            }
+        }
+    </script>
+
+</body>
+</html>

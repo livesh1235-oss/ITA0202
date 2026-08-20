@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment 7 - Creating an XML Document for Student Data</title>
+    <style>
+        :root {
+            --primary: #c026d3;
+            --primary-dark: #a21caf;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --bg-page: #fdf4ff;
+            --bg-card: #ffffff;
+            --border: #f0abfc;
+            --tag-bg: #fae8ff;
+            --tag-text: #a21caf;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border);
+        }
+
+        .header-badge {
+            display: inline-block;
+            background: var(--tag-bg);
+            color: var(--tag-text);
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .back-nav {
+            margin-bottom: 20px;
+        }
+
+        .back-nav a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .back-nav a:hover {
+            text-decoration: underline;
+        }
+
+        .tag-pill {
+            background: var(--tag-bg);
+            color: var(--tag-text);
+            font-family: monospace;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .tab-btn {
+            padding: 8px 16px;
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary-dark);
+        }
+
+        .code-container {
+            background: #0f172a;
+            color: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .xml-tag { color: #f43f5e; }
+        .xml-attr { color: #38bdf8; }
+        .xml-val { color: #fde047; }
+        .xml-text { color: #e2e8f0; }
+
+        table.data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        table.data-table th, table.data-table td {
+            border: 1px solid #f5d0fe;
+            padding: 10px 12px;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        table.data-table th {
+            background: #fae8ff;
+            color: #701a75;
+        }
+
+        table.data-table tr:nth-child(even) {
+            background: #fdf4ff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="back-nav">
+        <a href="index.html">&larr; Back to Lab Experiments Portal</a>
+    </div>
+
+    <span class="header-badge">Experiment 07</span>
+    <h1 style="margin-top:0; color:#0f172a;">Creating an XML Document for Student Data</h1>
+    <p><strong>Objective:</strong> Create a structured XML database document with root element <span class="tag-pill">&lt;students&gt;</span>, multiple <span class="tag-pill">&lt;student&gt;</span> records, storing <span class="tag-pill">&lt;rollno&gt;</span>, <span class="tag-pill">&lt;name&gt;</span>, <span class="tag-pill">&lt;department&gt;</span>, <span class="tag-pill">&lt;year&gt;</span>, <span class="tag-pill">&lt;email&gt;</span>, and <span class="tag-pill">&lt;mobile&gt;</span>.</p>
+
+    <!-- TABBED VIEWS -->
+    <div class="tab-buttons">
+        <button class="tab-btn active" onclick="showTab('rendered')">Rendered Table View</button>
+        <button class="tab-btn" onclick="showTab('xml')">Raw XML Document Source</button>
+        <button class="tab-btn" onclick="showTab('xsd')">XSD Schema Definition</button>
+    </div>
+
+    <!-- TAB 1: RENDERED TABLE VIEW -->
+    <div id="tab-rendered" class="tab-content">
+        <h3 style="color: #a21caf; margin-top: 0;">Parsed XML Student Database</h3>
+        <p style="font-size: 0.9rem; color: var(--text-muted);">
+            Direct XML file available at: <a href="exp7.xml" target="_blank" style="color:var(--primary); font-weight:600;">exp7.xml (Open XML File) &nearr;</a>
+        </p>
+
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Roll No</th>
+                    <th>Full Name</th>
+                    <th>Department</th>
+                    <th>Year</th>
+                    <th>Email Address</th>
+                    <th>Mobile</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>STD001</code></td>
+                    <td><strong>22CS084</strong></td>
+                    <td>Livesh Vetrivel M.S.</td>
+                    <td>Computer Science and Engineering</td>
+                    <td>III</td>
+                    <td>livesh.cse@college.edu</td>
+                    <td>+91 98765 43210</td>
+                </tr>
+                <tr>
+                    <td><code>STD002</code></td>
+                    <td><strong>22CS085</strong></td>
+                    <td>Aarav Sharma</td>
+                    <td>Computer Science and Engineering</td>
+                    <td>III</td>
+                    <td>aarav.s@college.edu</td>
+                    <td>+91 98765 43211</td>
+                </tr>
+                <tr>
+                    <td><code>STD003</code></td>
+                    <td><strong>22IT042</strong></td>
+                    <td>Ananya Subramanian</td>
+                    <td>Information Technology</td>
+                    <td>III</td>
+                    <td>ananya.sub@college.edu</td>
+                    <td>+91 98765 43212</td>
+                </tr>
+                <tr>
+                    <td><code>STD004</code></td>
+                    <td><strong>23AI018</strong></td>
+                    <td>Rohan Kulkarni</td>
+                    <td>Artificial Intelligence &amp; Data Science</td>
+                    <td>II</td>
+                    <td>rohan.ai@college.edu</td>
+                    <td>+91 98765 43213</td>
+                </tr>
+                <tr>
+                    <td><code>STD005</code></td>
+                    <td><strong>21EC099</strong></td>
+                    <td>Pooja Narayanan</td>
+                    <td>Electronics &amp; Communication Engineering</td>
+                    <td>IV</td>
+                    <td>pooja.ece@college.edu</td>
+                    <td>+91 98765 43214</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- TAB 2: RAW XML CODE -->
+    <div id="tab-xml" class="tab-content" style="display:none;">
+        <div class="code-container">
+<pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;<span class="xml-tag">students</span> <span class="xml-attr">xmlns:xsi</span>=<span class="xml-val">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="xml-attr">xsi:noNamespaceSchemaLocation</span>=<span class="xml-val">"exp7.xsd"</span>&gt;
+    &lt;<span class="xml-tag">student</span> <span class="xml-attr">id</span>=<span class="xml-val">"STD001"</span>&gt;
+        &lt;<span class="xml-tag">rollno</span>&gt;<span class="xml-text">22CS084</span>&lt;/<span class="xml-tag">rollno</span>&gt;
+        &lt;<span class="xml-tag">name</span>&gt;<span class="xml-text">Livesh Vetrivel M.S.</span>&lt;/<span class="xml-tag">name</span>&gt;
+        &lt;<span class="xml-tag">department</span>&gt;<span class="xml-text">Computer Science and Engineering</span>&lt;/<span class="xml-tag">department</span>&gt;
+        &lt;<span class="xml-tag">year</span>&gt;<span class="xml-text">III</span>&lt;/<span class="xml-tag">year</span>&gt;
+        &lt;<span class="xml-tag">email</span>&gt;<span class="xml-text">livesh.cse@college.edu</span>&lt;/<span class="xml-tag">email</span>&gt;
+        &lt;<span class="xml-tag">mobile</span>&gt;<span class="xml-text">+91 98765 43210</span>&lt;/<span class="xml-tag">mobile</span>&gt;
+    &lt;/<span class="xml-tag">student</span>&gt;
+    &lt;<span class="xml-tag">student</span> <span class="xml-attr">id</span>=<span class="xml-val">"STD002"</span>&gt;
+        &lt;<span class="xml-tag">rollno</span>&gt;<span class="xml-text">22CS085</span>&lt;/<span class="xml-tag">rollno</span>&gt;
+        &lt;<span class="xml-tag">name</span>&gt;<span class="xml-text">Aarav Sharma</span>&lt;/<span class="xml-tag">name</span>&gt;
+        &lt;<span class="xml-tag">department</span>&gt;<span class="xml-text">Computer Science and Engineering</span>&lt;/<span class="xml-tag">department</span>&gt;
+        &lt;<span class="xml-tag">year</span>&gt;<span class="xml-text">III</span>&lt;/<span class="xml-tag">year</span>&gt;
+        &lt;<span class="xml-tag">email</span>&gt;<span class="xml-text">aarav.s@college.edu</span>&lt;/<span class="xml-tag">email</span>&gt;
+        &lt;<span class="xml-tag">mobile</span>&gt;<span class="xml-text">+91 98765 43211</span>&lt;/<span class="xml-tag">mobile</span>&gt;
+    &lt;/<span class="xml-tag">student</span>&gt;
+&lt;/<span class="xml-tag">students</span>&gt;</code></pre>
+        </div>
+    </div>
+
+    <!-- TAB 3: XSD SCHEMA -->
+    <div id="tab-xsd" class="tab-content" style="display:none;">
+        <div class="code-container">
+<pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;<span class="xml-tag">xs:schema</span> <span class="xml-attr">xmlns:xs</span>=<span class="xml-val">"http://www.w3.org/2001/XMLSchema"</span>&gt;
+    &lt;<span class="xml-tag">xs:element</span> <span class="xml-attr">name</span>=<span class="xml-val">"students"</span>&gt;
+        &lt;<span class="xml-tag">xs:complexType</span>&gt;
+            &lt;<span class="xml-tag">xs:sequence</span>&gt;
+                &lt;<span class="xml-tag">xs:element</span> <span class="xml-attr">name</span>=<span class="xml-val">"student"</span> <span class="xml-attr">maxOccurs</span>=<span class="xml-val">"unbounded"</span>&gt;
+                    &lt;<span class="xml-tag">xs:complexType</span>&gt;
+                        &lt;<span class="xml-tag">xs:sequence</span>&gt;
+                            &lt;<span class="xml-tag">xs:element</span> <span class="xml-attr">name</span>=<span class="xml-val">"rollno"</span> <span class="xml-attr">type</span>=<span class="xml-val">"xs:string"</span>/&gt;
+                            &lt;<span class="xml-tag">xs:element</span> <span class="xml-attr">name</span>=<span class="xml-val">"name"</span> <span class="xml-attr">type</span>=<span class="xml-val">"xs:string"</span>/&gt;
+                            &lt;<span class="xml-tag">xs:element</span> <span class="xml-attr">name</span>=<span class="xml-val">"department"</span> <span class="xml-attr">type</span>=<span class="xml-val">"xs:string"</span>/&gt;
+                            &lt;<span class="xml-tag">xs:element</span> <span class="xml-attr">name</span>=<span class="xml-val">"year"</span> <span class="xml-attr">type</span>=<span class="xml-val">"xs:string"</span>/&gt;
+                            &lt;<span class="xml-tag">xs:element</span> <span class="xml-attr">name</span>=<span class="xml-val">"email"</span> <span class="xml-attr">type</span>=<span class="xml-val">"xs:string"</span>/&gt;
+                            &lt;<span class="xml-tag">xs:element</span> <span class="xml-attr">name</span>=<span class="xml-val">"mobile"</span> <span class="xml-attr">type</span>=<span class="xml-val">"xs:string"</span>/&gt;
+                        &lt;/<span class="xml-tag">xs:sequence</span>&gt;
+                        &lt;<span class="xml-tag">xs:attribute</span> <span class="xml-attr">name</span>=<span class="xml-val">"id"</span> <span class="xml-attr">type</span>=<span class="xml-val">"xs:ID"</span> <span class="xml-attr">use</span>=<span class="xml-val">"required"</span>/&gt;
+                    &lt;/<span class="xml-tag">xs:complexType</span>&gt;
+                &lt;/<span class="xml-tag">xs:element</span>&gt;
+            &lt;/<span class="xml-tag">xs:sequence</span>&gt;
+        &lt;/<span class="xml-tag">xs:complexType</span>&gt;
+    &lt;/<span class="xml-tag">xs:element</span>&gt;
+&lt;/<span class="xml-tag">xs:schema</span>&gt;</code></pre>
+        </div>
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid #f0abfc; margin: 30px 0;">
+    <footer style="text-align: center; color: var(--text-muted); font-size: 0.9rem;">
+        Web Technology Lab &bull; Experiment 7 &bull; XML Document Architecture
+    </footer>
+</div>
+
+<script>
+    function showTab(tabId) {
+        document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        
+        document.getElementById('tab-' + tabId).style.display = 'block';
+        event.target.classList.add('active');
+    }
+</script>
+
+</body>
+</html>

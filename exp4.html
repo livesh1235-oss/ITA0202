@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment 4 - Creating a Student Registration Form</title>
+    <style>
+        :root {
+            --primary: #7c3aed;
+            --primary-dark: #6d28d9;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --bg-page: #f5f3ff;
+            --bg-card: #ffffff;
+            --border: #ddd6fe;
+            --tag-bg: #ede9fe;
+            --tag-text: #6d28d9;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border);
+        }
+
+        .header-badge {
+            display: inline-block;
+            background: var(--tag-bg);
+            color: var(--tag-text);
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .back-nav {
+            margin-bottom: 20px;
+        }
+
+        .back-nav a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .back-nav a:hover {
+            text-decoration: underline;
+        }
+
+        .tag-pill {
+            background: var(--tag-bg);
+            color: var(--tag-text);
+            font-family: monospace;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+
+        fieldset {
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 24px;
+            background: #faf5ff;
+        }
+
+        legend {
+            font-weight: bold;
+            color: var(--primary-dark);
+            padding: 0 10px;
+            font-size: 1.05rem;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #334155;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 640px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            box-sizing: border-box;
+            background: #ffffff;
+            transition: border-color 0.2s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+        }
+
+        .radio-group, .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-top: 6px;
+        }
+
+        .radio-group label, .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: normal;
+            cursor: pointer;
+        }
+
+        .btn-container {
+            display: flex;
+            gap: 14px;
+            margin-top: 25px;
+        }
+
+        input[type="submit"],
+        input[type="reset"],
+        button {
+            padding: 12px 26px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        input[type="submit"] {
+            background: var(--primary);
+            color: white;
+            border: none;
+        }
+
+        input[type="submit"]:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        input[type="reset"] {
+            background: #f1f5f9;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+        }
+
+        input[type="reset"]:hover {
+            background: #e2e8f0;
+            color: #1e293b;
+        }
+
+        .alert-box {
+            display: none;
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            color: #065f46;
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="back-nav">
+        <a href="index.html">&larr; Back to Lab Experiments Portal</a>
+    </div>
+
+    <span class="header-badge">Experiment 04</span>
+    <h1 style="margin-top:0; color:#0f172a;">Creating a Student Registration Form</h1>
+    <p><strong>Objective:</strong> Design a comprehensive student enrollment form utilizing text boxes (<span class="tag-pill">text</span>), password fields (<span class="tag-pill">password</span>), email fields (<span class="tag-pill">email</span>), radio buttons (<span class="tag-pill">radio</span>), checkboxes (<span class="tag-pill">checkbox</span>), dropdown selection lists (<span class="tag-pill">select</span>), multiline text areas (<span class="tag-pill">textarea</span>), along with <span class="tag-pill">submit</span> and <span class="tag-pill">reset</span> buttons.</p>
+
+    <form id="regForm" action="#" method="POST" onsubmit="handleRegistration(event)">
+        <!-- FIELDSET 1: PERSONAL PARTICULARS -->
+        <fieldset>
+            <legend>Personal Information</legend>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="fullName">Full Name (Text Box): *</label>
+                    <input type="text" id="fullName" name="fullName" placeholder="e.g. Livesh Vetrivel" required>
+                </div>
+                <div class="form-group">
+                    <label for="rollNumber">Roll / Register Number (Text Box): *</label>
+                    <input type="text" id="rollNumber" name="rollNumber" placeholder="e.g. 22CS084" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="studentEmail">Email Address (Email Field): *</label>
+                    <input type="email" id="studentEmail" name="studentEmail" placeholder="student@college.edu" required>
+                </div>
+                <div class="form-group">
+                    <label for="accountPassword">Portal Password (Password Field): *</label>
+                    <input type="password" id="accountPassword" name="accountPassword" placeholder="Minimum 8 characters" required minlength="8">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Gender (Radio Buttons): *</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="gender" value="Male" required checked> Male</label>
+                    <label><input type="radio" name="gender" value="Female"> Female</label>
+                    <label><input type="radio" name="gender" value="Other"> Other</label>
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- FIELDSET 2: ACADEMIC DETAILS -->
+        <fieldset>
+            <legend>Academic Program &amp; Specialization</legend>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="department">Department (Dropdown List): *</label>
+                    <select id="department" name="department" required>
+                        <option value="" disabled selected>-- Select Your Department --</option>
+                        <option value="CSE">B.E. Computer Science and Engineering</option>
+                        <option value="IT">B.Tech. Information Technology</option>
+                        <option value="AIDS">B.Tech. Artificial Intelligence &amp; Data Science</option>
+                        <option value="ECE">B.E. Electronics &amp; Communication Engineering</option>
+                        <option value="MECH">B.E. Mechanical Engineering</option>
+                        <option value="CIVIL">B.E. Civil Engineering</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="academicYear">Year of Study (Dropdown List): *</label>
+                    <select id="academicYear" name="academicYear" required>
+                        <option value="" disabled selected>-- Select Academic Year --</option>
+                        <option value="I">1st Year (Freshman)</option>
+                        <option value="II">2nd Year (Sophomore)</option>
+                        <option value="III">3rd Year (Junior)</option>
+                        <option value="IV">4th Year (Senior)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Electives &amp; Laboratory Subscriptions (Checkboxes):</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="skills" value="WebDev" checked> Full Stack Web Tech</label>
+                    <label><input type="checkbox" name="skills" value="Cloud"> Cloud &amp; DevOps</label>
+                    <label><input type="checkbox" name="skills" value="AI"> Deep Learning &amp; AI</label>
+                    <label><input type="checkbox" name="skills" value="CyberSec"> Ethical Hacking &amp; Security</label>
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- FIELDSET 3: ADDRESS & ADDITIONAL DETAILS -->
+        <fieldset>
+            <legend>Residential Address &amp; Bio</legend>
+
+            <div class="form-group">
+                <label for="permanentAddress">Permanent Address (Text Area): *</label>
+                <textarea id="permanentAddress" name="permanentAddress" rows="3" placeholder="Enter door no, street name, city, state, pin code..." required></textarea>
+            </div>
+        </fieldset>
+
+        <!-- FORM ACTION BUTTONS -->
+        <div class="btn-container">
+            <input type="submit" value="Submit Registration">
+            <input type="reset" value="Reset Form">
+        </div>
+    </form>
+
+    <div id="resultBox" class="alert-box">
+        <h4 style="margin-top:0; color:#065f46;">Registration Form Submitted Successfully!</h4>
+        <div id="submittedData"></div>
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid #ddd6fe; margin: 30px 0;">
+    <footer style="text-align: center; color: var(--text-muted); font-size: 0.9rem;">
+        Web Technology Lab &bull; Experiment 4 &bull; Student Registration Form
+    </footer>
+</div>
+
+<script>
+    function handleRegistration(e) {
+        e.preventDefault();
+        const form = document.getElementById('regForm');
+        const name = document.getElementById('fullName').value;
+        const roll = document.getElementById('rollNumber').value;
+        const email = document.getElementById('studentEmail').value;
+        const dept = document.getElementById('department').value;
+        const year = document.getElementById('academicYear').value;
+        const gender = form.elements['gender'].value;
+        
+        const checkboxes = form.querySelectorAll('input[name="skills"]:checked');
+        let selectedSkills = Array.from(checkboxes).map(cb => cb.value).join(', ') || 'None';
+
+        const resultBox = document.getElementById('resultBox');
+        const dataDiv = document.getElementById('submittedData');
+
+        dataDiv.innerHTML = `
+            <p><strong>Candidate Name:</strong> ${name} | <strong>Roll No:</strong> ${roll}</p>
+            <p><strong>Email:</strong> ${email} | <strong>Gender:</strong> ${gender}</p>
+            <p><strong>Program:</strong> ${dept} (Year ${year})</p>
+            <p><strong>Selected Electives:</strong> ${selectedSkills}</p>
+        `;
+        resultBox.style.display = 'block';
+        resultBox.scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>

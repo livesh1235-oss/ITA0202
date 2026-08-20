@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment 9 - Observing Internet Protocols Using Browser Developer Tools</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --bg-page: #eef2ff;
+            --bg-card: #ffffff;
+            --border: #c7d2fe;
+            --tag-bg: #e0e7ff;
+            --tag-text: #3730a3;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border);
+        }
+
+        .header-badge {
+            display: inline-block;
+            background: var(--tag-bg);
+            color: var(--tag-text);
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .back-nav {
+            margin-bottom: 20px;
+        }
+
+        .back-nav a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .back-nav a:hover {
+            text-decoration: underline;
+        }
+
+        .tag-pill {
+            background: var(--tag-bg);
+            color: var(--tag-text);
+            font-family: monospace;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+
+        .instruction-box {
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-left: 4px solid var(--primary);
+            padding: 16px 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+
+        .btn-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .action-btn {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            padding: 12px 14px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .action-btn:hover {
+            border-color: var(--primary);
+            background: #f5f3ff;
+            transform: translateY(-2px);
+        }
+
+        .action-btn span.method {
+            font-size: 0.75rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            display: inline-block;
+            font-family: monospace;
+            width: fit-content;
+        }
+
+        .method-get { background: #dbeafe; color: #1e40af; }
+        .method-post { background: #dcfce7; color: #166534; }
+        .method-err { background: #fee2e2; color: #991b1b; }
+
+        table.network-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 0.88rem;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        table.network-table th {
+            background: #1e293b;
+            color: #f8fafc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        table.network-table td {
+            padding: 10px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .status-200 { color: #16a34a; font-weight: bold; }
+        .status-404 { color: #dc2626; font-weight: bold; }
+
+        .devtools-guide {
+            background: #1e1e2e;
+            color: #cdd6f4;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 25px 0;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .step-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background: #89b4fa;
+            color: #11111b;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 0.8rem;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="back-nav">
+        <a href="index.html">&larr; Back to Lab Experiments Portal</a>
+    </div>
+
+    <span class="header-badge">Experiment 09</span>
+    <h1 style="margin-top:0; color:#0f172a;">Observing Internet Protocols Using Browser Developer Tools</h1>
+    <p><strong>Objective:</strong> Utilize the browser's <strong>Developer Tools (F12) &rarr; Network Tab</strong> to observe real HTTP/HTTPS network traffic, analyzing URL, Protocol (HTTP/1.1, HTTP/2), Request Method, Status Code, MIME Type, Payload Size, and Waterfall Loading Times.</p>
+
+    <!-- STEP BY STEP GUIDE TO OPEN DEVTOOLS -->
+    <div class="devtools-guide">
+        <h3 style="color: #89b4fa; margin-top: 0;">How to Observe Network Traffic in Developer Tools:</h3>
+        <p><span class="step-num">1</span> Press <kbd style="background:#313244; padding:2px 6px; border-radius:4px; color:#f5e0dc;">F12</kbd> (or <kbd style="background:#313244; padding:2px 6px; border-radius:4px; color:#f5e0dc;">Ctrl + Shift + I</kbd> / <kbd style="background:#313244; padding:2px 6px; border-radius:4px; color:#f5e0dc;">Cmd + Option + I</kbd> on Mac) to open Developer Tools.</p>
+        <p><span class="step-num">2</span> Switch to the <strong>"Network"</strong> tab.</p>
+        <p><span class="step-num">3</span> Check the <strong>"Preserve log"</strong> box and select <strong>"All"</strong> or <strong>"Fetch/XHR"</strong> filter.</p>
+        <p><span class="step-num">4</span> Click any of the interactive trigger buttons below to generate real HTTP requests and observe them live in your Network panel!</p>
+    </div>
+
+    <!-- INTERACTIVE REQUEST DISPATCHER -->
+    <h3 style="color: var(--primary);">Interactive Network Traffic Simulator</h3>
+    <p>Click these buttons to dispatch various HTTP requests and inspect the headers and timings:</p>
+
+    <div class="btn-grid">
+        <button class="action-btn" onclick="triggerRequest('GET', 'exp7.xml', 'text/xml')">
+            <span class="method method-get">GET</span>
+            <strong>Fetch XML File</strong>
+            <small style="color: #64748b;">Returns 200 OK &bull; XML</small>
+        </button>
+
+        <button class="action-btn" onclick="triggerRequest('GET', 'exp1.html', 'text/html')">
+            <span class="method method-get">GET</span>
+            <strong>Fetch HTML Page</strong>
+            <small style="color: #64748b;">Returns 200 OK &bull; HTML</small>
+        </button>
+
+        <button class="action-btn" onclick="triggerRequest('POST', 'exp5.html', 'application/x-www-form-urlencoded')">
+            <span class="method method-post">POST</span>
+            <strong>Submit POST Payload</strong>
+            <small style="color: #64748b;">Sends HTTP Request Body</small>
+        </button>
+
+        <button class="action-btn" onclick="triggerRequest('GET', 'non_existent_file.json', 'application/json')">
+            <span class="method method-err">GET (404 Error)</span>
+            <strong>Request Missing File</strong>
+            <small style="color: #64748b;">Returns 404 Not Found</small>
+        </button>
+    </div>
+
+    <!-- LIVE REQUEST LOG TABLE -->
+    <h3 style="color: #0f172a; margin-top: 30px;">Live Captured Requests Log</h3>
+    <div style="overflow-x: auto;">
+        <table class="network-table" id="requestsTable">
+            <thead>
+                <tr>
+                    <th>URL / Resource</th>
+                    <th>Method</th>
+                    <th>Status</th>
+                    <th>Protocol</th>
+                    <th>MIME Type</th>
+                    <th>Size (Bytes)</th>
+                    <th>Time (ms)</th>
+                </tr>
+            </thead>
+            <tbody id="networkLogBody">
+                <tr>
+                    <td colspan="7" style="text-align: center; color: #94a3b8; padding: 20px;">
+                        No network requests dispatched yet. Click any button above or check your DevTools Network tab!
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- PROTOCOL EXPLANATION SECTION -->
+    <div class="instruction-box" style="margin-top: 30px;">
+        <h4 style="margin-top:0; color:#3730a3;">Key Network Attributes Explained:</h4>
+        <ul>
+            <li><strong>Protocol:</strong> The transport standard in use (e.g. <code>http/1.1</code>, <code>h2</code> for HTTP/2 multiplexing, or <code>h3</code> for HTTP/3 over QUIC).</li>
+            <li><strong>Status Code:</strong> 3-digit HTTP response code (<code>200 OK</code> = Success, <code>304</code> = Cached, <code>404</code> = Not Found, <code>500</code> = Server Error).</li>
+            <li><strong>MIME Type:</strong> The payload format indicated via the <code>Content-Type</code> header (e.g., <code>text/html</code>, <code>text/xml</code>, <code>application/json</code>).</li>
+            <li><strong>Waterfall:</strong> Breakdown of time spent in DNS Lookup, Initial Connection, SSL Handshake, Waiting (TTFB - Time to First Byte), and Content Download.</li>
+        </ul>
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid #c7d2fe; margin: 30px 0;">
+    <footer style="text-align: center; color: var(--text-muted); font-size: 0.9rem;">
+        Web Technology Lab &bull; Experiment 9 &bull; Network Protocols &amp; DevTools Inspection
+    </footer>
+</div>
+
+<script>
+    let firstLogged = false;
+
+    async function triggerRequest(method, url, contentType) {
+        const startTime = performance.now();
+        const tbody = document.getElementById('networkLogBody');
+
+        if (!firstLogged) {
+            tbody.innerHTML = '';
+            firstLogged = true;
+        }
+
+        try {
+            const options = {
+                method: method,
+                headers: { 'Content-Type': contentType }
+            };
+            if (method === 'POST') {
+                options.body = 'sampleKey=sampleValue&timestamp=' + Date.now();
+            }
+
+            const response = await fetch(url, options);
+            const duration = Math.round(performance.now() - startTime);
+            const text = await response.text();
+            const size = new Blob([text]).size;
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td><code>${url}</code></td>
+                <td><span class="tag-pill">${method}</span></td>
+                <td><span class="${response.ok ? 'status-200' : 'status-404'}">${response.status} ${response.statusText || (response.ok ? 'OK' : 'Not Found')}</span></td>
+                <td><code>${window.location.protocol.replace(':', '')}</code></td>
+                <td>${response.headers.get('content-type') || contentType}</td>
+                <td>${size} B</td>
+                <td>${duration} ms</td>
+            `;
+            tbody.insertBefore(row, tbody.firstChild);
+        } catch (err) {
+            const duration = Math.round(performance.now() - startTime);
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td><code>${url}</code></td>
+                <td><span class="tag-pill">${method}</span></td>
+                <td><span class="status-404">404 (Fetch Failed)</span></td>
+                <td><code>${window.location.protocol.replace(':', '')}</code></td>
+                <td>${contentType}</td>
+                <td>0 B</td>
+                <td>${duration} ms</td>
+            `;
+            tbody.insertBefore(row, tbody.firstChild);
+        }
+    }
+</script>
+
+</body>
+</html>

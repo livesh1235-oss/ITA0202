@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment 5 - Demonstrating GET and POST Methods Using HTML Forms</title>
+    <style>
+        :root {
+            --primary: #ea580c;
+            --primary-dark: #c2410c;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --bg-page: #fff7ed;
+            --bg-card: #ffffff;
+            --border: #fed7aa;
+            --tag-bg: #ffedd5;
+            --tag-text: #9a3412;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border);
+        }
+
+        .header-badge {
+            display: inline-block;
+            background: var(--tag-bg);
+            color: var(--tag-text);
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .back-nav {
+            margin-bottom: 20px;
+        }
+
+        .back-nav a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .back-nav a:hover {
+            text-decoration: underline;
+        }
+
+        .tag-pill {
+            background: var(--tag-bg);
+            color: var(--tag-text);
+            font-family: monospace;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+
+        .two-col-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin: 25px 0;
+        }
+
+        @media (max-width: 768px) {
+            .two-col-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-card {
+            border: 1px solid #fed7aa;
+            border-radius: 8px;
+            padding: 24px;
+            background: #fffdfa;
+        }
+
+        .form-card.get-card {
+            border-top: 4px solid #3b82f6;
+        }
+
+        .form-card.post-card {
+            border-top: 4px solid #ea580c;
+        }
+
+        .card-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            font-family: monospace;
+        }
+
+        .get-badge {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .post-badge {
+            background: #ffedd5;
+            color: #c2410c;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        select {
+            width: 100%;
+            padding: 9px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 0.9rem;
+        }
+
+        .btn-submit-get {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+        }
+
+        .btn-submit-post {
+            background: #ea580c;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+        }
+
+        .url-box {
+            background: #0f172a;
+            color: #38bdf8;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 12px;
+            border-radius: 6px;
+            word-break: break-all;
+            margin: 15px 0;
+            font-size: 0.88rem;
+        }
+
+        .payload-box {
+            background: #1e293b;
+            color: #fca5a5;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 15px 0;
+            font-size: 0.88rem;
+        }
+
+        table.comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table.comparison-table th, table.comparison-table td {
+            border: 1px solid #cbd5e1;
+            padding: 10px 14px;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        table.comparison-table th {
+            background: #f8fafc;
+            color: #1e293b;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="back-nav">
+        <a href="index.html">&larr; Back to Lab Experiments Portal</a>
+    </div>
+
+    <span class="header-badge">Experiment 05</span>
+    <h1 style="margin-top:0; color:#0f172a;">Demonstrating GET and POST Methods Using HTML Forms</h1>
+    <p><strong>Objective:</strong> Create two functional HTML forms demonstrating the architectural and security differences between HTTP <span class="tag-pill">GET</span> and HTTP <span class="tag-pill">POST</span> methods; observe URL changes, query parameter appending, and data payload visibility.</p>
+
+    <!-- LIVE URL OBSERVATION BANNER -->
+    <div style="background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 8px; padding: 15px; margin-bottom: 25px;">
+        <h4 style="margin: 0 0 8px 0; color: #1e293b;">Live Browser Address Bar Inspector:</h4>
+        <div id="liveUrl" class="url-box">Loading current URL...</div>
+        <div id="urlParamsInfo" style="font-size: 0.88rem; color: #475569;"></div>
+    </div>
+
+    <div class="two-col-grid">
+        <!-- FORM 1: GET METHOD -->
+        <div class="form-card get-card">
+            <span class="card-badge get-badge">METHOD: GET</span>
+            <h3 style="margin: 10px 0 6px 0; color: #1d4ed8;">Library Catalog Search</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">
+                Data is appended directly to the URL as key-value pairs (query string). Suitable for search, pagination, and non-sensitive data queries.
+            </p>
+
+            <form action="exp5.html" method="GET">
+                <div class="form-group">
+                    <label for="get_query">Search Keyword (Query):</label>
+                    <input type="text" id="get_query" name="query" placeholder="e.g. Data Structures" value="HTML5 and Web" required>
+                </div>
+                <div class="form-group">
+                    <label for="get_category">Category:</label>
+                    <select id="get_category" name="category">
+                        <option value="ComputerScience">Computer Science</option>
+                        <option value="Mathematics">Mathematics</option>
+                        <option value="Electronics">Electronics</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="get_sortBy">Sort By:</label>
+                    <select id="get_sortBy" name="sortBy">
+                        <option value="relevance">Relevance</option>
+                        <option value="latest">Latest First</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-submit-get">Submit via HTTP GET</button>
+            </form>
+
+            <div style="margin-top: 15px; font-size: 0.85rem;">
+                <strong>GET Characteristics:</strong>
+                <ul style="margin: 5px 0 0 0; padding-left: 20px;">
+                    <li>Appends data: <code>?query=...&amp;category=...</code></li>
+                    <li>Can be bookmarked &amp; cached</li>
+                    <li>Visible in browser history</li>
+                    <li>Data length limited by URL restrictions</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- FORM 2: POST METHOD -->
+        <div class="form-card post-card">
+            <span class="card-badge post-badge">METHOD: POST</span>
+            <h3 style="margin: 10px 0 6px 0; color: #c2410c;">Secure Student Portal Login</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">
+                Data is packaged inside the HTTP request body payload. The URL remains completely clean and confidential credentials are not exposed in history.
+            </p>
+
+            <form id="postDemoForm" action="exp5.html" method="POST" onsubmit="simulatePostSubmit(event)">
+                <div class="form-group">
+                    <label for="post_username">Username / Roll No:</label>
+                    <input type="text" id="post_username" name="username" placeholder="e.g. 22CS084" value="22CS084" required>
+                </div>
+                <div class="form-group">
+                    <label for="post_password">Secret Password:</label>
+                    <input type="password" id="post_password" name="password" placeholder="e.g. Pass@12345" value="SuperSecret#99" required>
+                </div>
+                <div class="form-group">
+                    <label for="post_role">Account Role:</label>
+                    <select id="post_role" name="role">
+                        <option value="Student">Student</option>
+                        <option value="Faculty">Faculty</option>
+                        <option value="Administrator">Administrator</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-submit-post">Submit via HTTP POST</button>
+            </form>
+
+            <div id="postPayloadDisplay" style="display:none; margin-top: 15px;">
+                <strong style="color: #c2410c;">Simulated HTTP POST Body Payload:</strong>
+                <div id="postBody" class="payload-box"></div>
+                <small style="color: #64748b;">Notice: The URL did NOT change. Sensitive parameters were submitted in the HTTP Body.</small>
+            </div>
+
+            <div style="margin-top: 15px; font-size: 0.85rem;">
+                <strong>POST Characteristics:</strong>
+                <ul style="margin: 5px 0 0 0; padding-left: 20px;">
+                    <li>Data sent in HTTP Message Body</li>
+                    <li>Never cached or stored in browser history</li>
+                    <li>No restriction on data payload length (supports uploads)</li>
+                    <li>Essential for passwords, transactions, and state changes</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- COMPARISON TABLE -->
+    <h3 style="color: #1e293b; margin-top: 30px;">Key Differences: HTTP GET vs. HTTP POST</h3>
+    <div style="overflow-x: auto;">
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>HTTP GET Method</th>
+                    <th>HTTP POST Method</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Data Visibility</strong></td>
+                    <td>Data is visible to everyone in the URL address bar.</td>
+                    <td>Data is hidden in the HTTP request payload body.</td>
+                </tr>
+                <tr>
+                    <td><strong>Browser History &amp; Bookmarks</strong></td>
+                    <td>Parameters remain in browser history and can be bookmarked.</td>
+                    <td>Parameters are never stored in history or bookmarks.</td>
+                </tr>
+                <tr>
+                    <td><strong>Security</strong></td>
+                    <td>Poor security for sensitive data (passwords, PII, payment info).</td>
+                    <td>High security for sensitive data transmissions.</td>
+                </tr>
+                <tr>
+                    <td><strong>Payload Size Limit</strong></td>
+                    <td>Restricted by URL length limits (~2048 characters).</td>
+                    <td>No inherent size restriction; allows file and media uploads.</td>
+                </tr>
+                <tr>
+                    <td><strong>Idempotency</strong></td>
+                    <td>Idempotent &amp; Safe (reading/fetching data without side effects).</td>
+                    <td>Non-idempotent (creates/updates records, triggers transactions).</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid #fed7aa; margin: 30px 0;">
+    <footer style="text-align: center; color: var(--text-muted); font-size: 0.9rem;">
+        Web Technology Lab &bull; Experiment 5 &bull; Department of Computer Science &amp; Engineering
+    </footer>
+</div>
+
+<script>
+    // Inspect current URL parameters on load
+    window.addEventListener('DOMContentLoaded', () => {
+        const urlBox = document.getElementById('liveUrl');
+        const info = document.getElementById('urlParamsInfo');
+        urlBox.textContent = window.location.href;
+
+        const params = new URLSearchParams(window.location.search);
+        if (params.toString()) {
+            let details = '<strong>Detected GET Query Parameters in URL:</strong><ul>';
+            params.forEach((val, key) => {
+                details += `<li><code>${key}</code> = <code>${val}</code></li>`;
+            });
+            details += '</ul>';
+            info.innerHTML = details;
+        } else {
+            info.innerHTML = '<em>No GET query parameters currently in URL (clean address). Try submitting the GET search form above!</em>';
+        }
+    });
+
+    function simulatePostSubmit(e) {
+        e.preventDefault();
+        const form = document.getElementById('postDemoForm');
+        const username = form.elements['username'].value;
+        const password = form.elements['password'].value;
+        const role = form.elements['role'].value;
+
+        const payloadDisplay = document.getElementById('postPayloadDisplay');
+        const postBody = document.getElementById('postBody');
+
+        postBody.innerHTML = `POST /exp5.html HTTP/1.1<br>Host: localhost:3000<br>Content-Type: application/x-www-form-urlencoded<br>Content-Length: ${username.length + password.length + role.length + 30}<br><br>username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}&role=${encodeURIComponent(role)}`;
+        
+        payloadDisplay.style.display = 'block';
+        payloadDisplay.scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>

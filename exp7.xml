@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="exp7.xsl"?>
+<!--
+    Experiment 7: Creating an XML Document for Student Data
+    Root Element: <students>
+    Child Elements: <student> containing <rollno>, <name>, <department>, <year>, <email>, <mobile>
+-->
+<students xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="exp7.xsd">
+    <student id="STD001">
+        <rollno>22CS084</rollno>
+        <name>Livesh Vetrivel M.S.</name>
+        <department>Computer Science and Engineering</department>
+        <year>III</year>
+        <email>livesh.cse@college.edu</email>
+        <mobile>+91 98765 43210</mobile>
+    </student>
+    <student id="STD002">
+        <rollno>22CS085</rollno>
+        <name>Aarav Sharma</name>
+        <department>Computer Science and Engineering</department>
+        <year>III</year>
+        <email>aarav.s@college.edu</email>
+        <mobile>+91 98765 43211</mobile>
+    </student>
+    <student id="STD003">
+        <rollno>22IT042</rollno>
+        <name>Ananya Subramanian</name>
+        <department>Information Technology</department>
+        <year>III</year>
+        <email>ananya.sub@college.edu</email>
+        <mobile>+91 98765 43212</mobile>
+    </student>
+    <student id="STD004">
+        <rollno>23AI018</rollno>
+        <name>Rohan Kulkarni</name>
+        <department>Artificial Intelligence and Data Science</department>
+        <year>II</year>
+        <email>rohan.ai@college.edu</email>
+        <mobile>+91 98765 43213</mobile>
+    </student>
+    <student id="STD005">
+        <rollno>21EC099</rollno>
+        <name>Pooja Narayanan</name>
+        <department>Electronics and Communication Engineering</department>
+        <year>IV</year>
+        <email>pooja.ece@college.edu</email>
+        <mobile>+91 98765 43214</mobile>
+    </student>
+</students>

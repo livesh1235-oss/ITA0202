@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admission Registration - National Institute of Engineering &amp; Technology</title>
+    <link rel="stylesheet" href="exp10_style.css">
+</head>
+<body>
+
+    <!-- TOP PORTAL LINK -->
+    <div class="portal-bar">
+        <span>Experiment 10: Multi-Page College Website</span>
+        <a href="index.html">&larr; Return to Lab Portal</a>
+    </div>
+
+    <!-- MAIN HEADER -->
+    <header class="college-header">
+        <div class="college-brand">
+            <h1>NATIONAL INSTITUTE OF ENGINEERING &amp; TECHNOLOGY</h1>
+            <p>Affiliated to Anna University &bull; Approved by AICTE &bull; Accredited NAAC A++</p>
+        </div>
+    </header>
+
+    <!-- NAVIGATION BAR -->
+    <nav class="college-nav">
+        <a href="exp10_home.html">Home</a>
+        <a href="exp10_about.html">About Us</a>
+        <a href="exp10_courses.html">Departments &amp; Courses</a>
+        <a href="exp10_registration.html" class="active">Admission Registration</a>
+        <a href="exp10_contact.html">Contact &amp; Campus Map</a>
+    </nav>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="main-wrapper">
+        <div class="content-card">
+            <h2 style="color: var(--primary); margin-bottom: 8px;">Online Admission Application Form (2025–26)</h2>
+            <p style="color: var(--text-muted); margin-bottom: 25px;">
+                Please fill in your authentic personal, academic, and contact details to apply for undergraduate engineering admissions.
+            </p>
+
+            <form id="collegeRegForm" onsubmit="handleCollegeRegistration(event)">
+                <div class="form-group">
+                    <label for="applicantName">Applicant's Full Name: *</label>
+                    <input type="text" id="applicantName" name="applicantName" placeholder="Enter full name as per 10th mark sheet" required>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label for="applicantEmail">Email Address: *</label>
+                        <input type="email" id="applicantEmail" name="applicantEmail" placeholder="applicant@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="applicantPhone">Mobile Number: *</label>
+                        <input type="tel" id="applicantPhone" name="applicantPhone" placeholder="+91 98765 43210" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="preferredCourse">Preferred Engineering Department: *</label>
+                    <select id="preferredCourse" name="preferredCourse" required>
+                        <option value="" disabled selected>-- Select Degree Program --</option>
+                        <option value="B.E. Computer Science and Engineering">B.E. Computer Science and Engineering (CSE)</option>
+                        <option value="B.Tech. Information Technology">B.Tech. Information Technology (IT)</option>
+                        <option value="B.Tech. AI &amp; Data Science">B.Tech. Artificial Intelligence &amp; Data Science</option>
+                        <option value="B.E. Electronics &amp; Communication">B.E. Electronics &amp; Communication (ECE)</option>
+                        <option value="B.E. Mechanical Engineering">B.E. Mechanical Engineering (MECH)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Hostel Accommodation Required:</label>
+                    <div style="display:flex; gap: 20px; margin-top: 5px;">
+                        <label><input type="radio" name="hostel" value="Yes" checked> Yes, I require campus hostel</label>
+                        <label><input type="radio" name="hostel" value="No"> No, Day Scholar</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Permanent Communication Address: *</label>
+                    <textarea id="address" name="address" rows="3" placeholder="Door No, Street, City, State, Pin Code..." required></textarea>
+                </div>
+
+                <div style="margin-top: 25px;">
+                    <button type="submit" class="btn-primary">Submit Application</button>
+                    <button type="reset" class="btn-secondary">Reset Fields</button>
+                </div>
+            </form>
+
+            <div id="confirmCard" style="display:none; background:#ecfdf5; border:1px solid #a7f3d0; border-radius:8px; padding:20px; margin-top:25px;">
+                <h4 style="color:#065f46; margin-bottom:8px;">&#10004; Application Received Successfully!</h4>
+                <div id="confirmMsg" style="color:#065f46; font-size:0.95rem;"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="college-footer">
+        <p>&copy; 2025 National Institute of Engineering &amp; Technology. All rights reserved.</p>
+        <p style="margin-top: 6px;">Web Technology Lab &bull; Experiment 10 (Registration Page)</p>
+    </footer>
+
+    <script>
+        function handleCollegeRegistration(e) {
+            e.preventDefault();
+            const name = document.getElementById('applicantName').value;
+            const email = document.getElementById('applicantEmail').value;
+            const course = document.getElementById('preferredCourse').value;
+
+            const card = document.getElementById('confirmCard');
+            const msg = document.getElementById('confirmMsg');
+            msg.innerHTML = `Thank you, <strong>${name}</strong>! Your application for <strong>${course}</strong> has been registered. An official admission letter will be sent to <code>${email}</code>.`;
+            card.style.display = 'block';
+            card.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+
+</body>
+</html>
