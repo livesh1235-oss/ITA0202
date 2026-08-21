@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit IV: Representing Web Data | Assessment I Solutions & Workbench</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Top Navigation -->
+        <header class="assessment-header">
+            <div class="meta-badge-row">
+                <span class="badge-unit">Web Technology &bull; Unit IV</span>
+                <span class="badge-marks">Max Marks: 30 &bull; Duration: 60 Mins</span>
+            </div>
+            <h1>Assessment I: Data Interpretation & XML/XPath/XSLT Workbench</h1>
+            <p class="scenario-desc"><strong>Academic Scenario:</strong> University Course Enrollment Analysis & Workload Planning.</p>
+            
+            <!-- Navigation Tabs -->
+            <nav class="tab-nav">
+                <button class="tab-btn active" onclick="switchTab('tab-solutions')">📋 Complete Solutions (Q1–Q4)</button>
+                <button class="tab-btn" onclick="switchTab('tab-xpath')">⚡ Live XPath Tester</button>
+                <button class="tab-btn" onclick="switchTab('tab-xslt')">🔄 Live XSLT Preview</button>
+                <button class="tab-btn" onclick="switchTab('tab-xml')">📄 XML Dataset</button>
+            </nav>
+        </header>
+
+        <!-- TAB 1: SOLUTIONS -->
+        <section id="tab-solutions" class="tab-pane active">
+            <!-- Question 1 Card -->
+            <div class="solution-card">
+                <div class="card-header">
+                    <span class="q-badge">Question 1</span>
+                    <h2>Interpret the XML Structure <span class="marks-tag">5 Marks</span></h2>
+                </div>
+                
+                <div class="answer-list">
+                    <div class="answer-item">
+                        <div class="q-text">a. Identify the root element.</div>
+                        <div class="a-text">Root Element: <code>&lt;courses&gt;</code> &mdash; The top-level document element containing all course entities.</div>
+                    </div>
+
+                    <div class="answer-item">
+                        <div class="q-text">b. Identify the repeating record element.</div>
+                        <div class="a-text">Repeating Element: <code>&lt;course&gt;</code> &mdash; Represents individual course record instances (C101 through C105).</div>
+                    </div>
+
+                    <div class="answer-item">
+                        <div class="q-text">c. Identify the attribute used to uniquely identify each course.</div>
+                        <div class="a-text">Attribute: <code>id</code> (e.g. <code>id="C101"</code>, <code>id="C102"</code>, <code>id="C103"</code>, <code>id="C104"</code>, <code>id="C105"</code>).</div>
+                    </div>
+
+                    <div class="answer-item">
+                        <div class="q-text">d. Identify the elements that represent numeric information.</div>
+                        <div class="a-text">Numeric Elements: <code>&lt;students&gt;</code> (enrollment count) and <code>&lt;credits&gt;</code> (academic credit count).</div>
+                    </div>
+
+                    <div class="answer-item">
+                        <div class="q-text">e. State whether the XML document is structurally well-formed and justify your answer.</div>
+                        <div class="a-text">
+                            <strong>Yes, the XML document is structurally well-formed.</strong>
+                            <ul class="justification-list">
+                                <li>It contains a single unique root element (<code>&lt;courses&gt;</code>).</li>
+                                <li>Every opening element has a matching, strictly closed closing tag (e.g., <code>&lt;name&gt;...&lt;/name&gt;</code>).</li>
+                                <li>Elements are properly nested in strict LIFO order without overlapping.</li>
+                                <li>All attribute values are enclosed in quotes (e.g. <code>id="C101"</code>).</li>
+                                <li>Contains a valid XML prolog: <code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;</code>.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 2 Card -->
+            <div class="solution-card">
+                <div class="card-header">
+                    <span class="q-badge">Question 2</span>
+                    <h2>Apply XPath for Data Selection <span class="marks-tag">10 Marks</span></h2>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Data Selection Requirement</th>
+                                <th>XPath Expression</th>
+                                <th>Extracted Result</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>a</td>
+                                <td>All course records</td>
+                                <td><code>/courses/course</code></td>
+                                <td>5 Course nodes (C101 &ndash; C105)</td>
+                            </tr>
+                            <tr>
+                                <td>b</td>
+                                <td>Names of all courses</td>
+                                <td><code>/courses/course/name</code></td>
+                                <td>Web Technology, AI, Web Tech Lab, ML, Database Systems</td>
+                            </tr>
+                            <tr>
+                                <td>c</td>
+                                <td>Courses having more than 50 students</td>
+                                <td><code>/courses/course[students > 50]</code></td>
+                                <td>C101 (58), C102 (72), C104 (64)</td>
+                            </tr>
+                            <tr>
+                                <td>d</td>
+                                <td>Courses carrying 4 credits</td>
+                                <td><code>/courses/course[credits = 4]</code></td>
+                                <td>WEB301 (C101), AI302 (C102), ML304 (C104)</td>
+                            </tr>
+                            <tr>
+                                <td>e</td>
+                                <td>Courses whose type is Theory</td>
+                                <td><code>/courses/course[type = 'Theory']</code></td>
+                                <td>C101, C102, C104, C105 (4 courses)</td>
+                            </tr>
+                            <tr>
+                                <td>f</td>
+                                <td>Names of Theory courses having &gt; 50 students</td>
+                                <td><code>/courses/course[type = 'Theory' and students > 50]/name</code></td>
+                                <td>Web Technology, Artificial Intelligence, Machine Learning</td>
+                            </tr>
+                            <tr>
+                                <td>g</td>
+                                <td>Faculty handling courses with &ge; 4 credits</td>
+                                <td><code>/courses/course[credits >= 4]/faculty</code></td>
+                                <td>Dr. Arun, Dr. Meena, Dr. Priya</td>
+                            </tr>
+                            <tr>
+                                <td>h</td>
+                                <td>The course whose id is C104</td>
+                                <td><code>/courses/course[@id = 'C104']</code></td>
+                                <td>ML304 &bull; Machine Learning</td>
+                            </tr>
+                            <tr>
+                                <td>i</td>
+                                <td>The first course available in XML</td>
+                                <td><code>/courses/course[1]</code></td>
+                                <td>WEB301 &bull; Web Technology (C101)</td>
+                            </tr>
+                            <tr>
+                                <td>j</td>
+                                <td>The last course available in XML</td>
+                                <td><code>/courses/course[last()]</code></td>
+                                <td>DB305 &bull; Database Systems (C105)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Question 3 Card -->
+            <div class="solution-card">
+                <div class="card-header">
+                    <span class="q-badge">Question 3</span>
+                    <h2>Apply XSLT for Data Presentation <span class="marks-tag">10 Marks</span></h2>
+                </div>
+
+                <p class="card-desc">XSLT transformation (<code>courses.xsl</code>) filtering courses with <code>students &gt; 40</code> and sorting descending by student enrollment:</p>
+
+                <div class="code-block">
+<pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"&gt;
+    &lt;xsl:output method="html" doctype-system="about:blank" indent="yes" encoding="UTF-8"/&gt;
+
+    &lt;xsl:template match="/"&gt;
+        &lt;html&gt;
+        &lt;head&gt;
+            &lt;title&gt;High Enrollment Courses&lt;/title&gt;
+        &lt;/head&gt;
+        &lt;body&gt;
+            &lt;h2&gt;High Enrollment Courses&lt;/h2&gt;
+            &lt;table border="1"&gt;
+                &lt;tr bgcolor="#1e293b" style="color: white;"&gt;
+                    &lt;th&gt;Course Code&lt;/th&gt;
+                    &lt;th&gt;Course Name&lt;/th&gt;
+                    &lt;th&gt;Faculty&lt;/th&gt;
+                    &lt;th&gt;Students&lt;/th&gt;
+                    &lt;th&gt;Credits&lt;/th&gt;
+                    &lt;th&gt;Type&lt;/th&gt;
+                &lt;/tr&gt;
+                &lt;!-- Filter condition: students &gt; 40 --&gt;
+                &lt;xsl:for-each select="/courses/course[students &gt; 40]"&gt;
+                    &lt;!-- Sorting: descending order of student count --&gt;
+                    &lt;xsl:sort select="students" data-type="number" order="descending"/&gt;
+                    &lt;tr&gt;
+                        &lt;td&gt;&lt;xsl:value-of select="code"/&gt;&lt;/td&gt;
+                        &lt;td&gt;&lt;xsl:value-of select="name"/&gt;&lt;/td&gt;
+                        &lt;td&gt;&lt;xsl:value-of select="faculty"/&gt;&lt;/td&gt;
+                        &lt;td&gt;&lt;xsl:value-of select="students"/&gt;&lt;/td&gt;
+                        &lt;td&gt;&lt;xsl:value-of select="credits"/&gt;&lt;/td&gt;
+                        &lt;td&gt;&lt;xsl:value-of select="type"/&gt;&lt;/td&gt;
+                    &lt;/tr&gt;
+                &lt;/xsl:for-each&gt;
+            &lt;/table&gt;
+        &lt;/body&gt;
+        &lt;/html&gt;
+    &lt;/xsl:template&gt;
+&lt;/xsl:stylesheet&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- Question 4 Card -->
+            <div class="solution-card">
+                <div class="card-header">
+                    <span class="q-badge">Question 4</span>
+                    <h2>Interpret the Extracted Data <span class="marks-tag">5 Marks</span></h2>
+                </div>
+
+                <div class="insights-grid">
+                    <div class="insight-box">
+                        <span class="insight-label">4.a Highest Enrollment</span>
+                        <div class="insight-val highlight-green">AI302 (72 Students)</div>
+                        <p class="insight-detail">Artificial Intelligence handled by Dr. Meena.</p>
+                    </div>
+
+                    <div class="insight-box">
+                        <span class="insight-label">4.b Lowest Enrollment</span>
+                        <div class="insight-val highlight-amber">WEB303 (36 Students)</div>
+                        <p class="insight-detail">Web Technology Laboratory handled by Dr. Ravi.</p>
+                    </div>
+
+                    <div class="insight-box">
+                        <span class="insight-label">4.c Number of Theory Courses</span>
+                        <div class="insight-val">4 Courses</div>
+                        <p class="insight-detail">WEB301, AI302, ML304, and DB305.</p>
+                    </div>
+
+                    <div class="insight-box">
+                        <span class="insight-label">4.d Courses with 4 Credits</span>
+                        <div class="insight-val">3 Courses</div>
+                        <p class="insight-detail">C101 (WEB301), C102 (AI302), and C104 (ML304).</p>
+                    </div>
+
+                    <div class="insight-box full-span">
+                        <span class="insight-label">4.e Additional TA Support Required (> 60 Students)</span>
+                        <div class="insight-val highlight-purple">2 Courses: AI302 (72) & ML304 (64)</div>
+                        <p class="insight-detail">Both courses exceed the 60-student threshold and require an additional Teaching Assistant assigned for workload balancing.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: LIVE XPATH TESTER -->
+        <section id="tab-xpath" class="tab-pane">
+            <div class="solution-card">
+                <div class="card-header">
+                    <span class="q-badge">Interactive Tool</span>
+                    <h2>XPath Query Evaluator against courses.xml</h2>
+                </div>
+                
+                <p class="card-desc">Select a preset query or enter any custom XPath expression to evaluate in real-time:</p>
+                
+                <div class="xpath-controls">
+                    <div class="presets-row">
+                        <button class="chip-btn" onclick="setXPath('/courses/course')">All Courses</button>
+                        <button class="chip-btn" onclick="setXPath('/courses/course/name')">Course Names</button>
+                        <button class="chip-btn" onclick="setXPath('/courses/course[students > 50]')">Students &gt; 50</button>
+                        <button class="chip-btn" onclick="setXPath('/courses/course[credits = 4]')">Credits = 4</button>
+                        <button class="chip-btn" onclick="setXPath('/courses/course[type = \'Theory\']')">Theory Courses</button>
+                        <button class="chip-btn" onclick="setXPath('/courses/course[type = \'Theory\' and students > 50]/name')">Theory &gt; 50 Names</button>
+                        <button class="chip-btn" onclick="setXPath('/courses/course[credits >= 4]/faculty')">Faculty &ge; 4 Credits</button>
+                        <button class="chip-btn" onclick="setXPath('/courses/course[@id = \'C104\']')">Course C104</button>
+                        <button class="chip-btn" onclick="setXPath('/courses/course[1]')">First Course</button>
+                        <button class="chip-btn" onclick="setXPath('/courses/course[last()]')">Last Course</button>
+                    </div>
+
+                    <div class="input-action-row">
+                        <input type="text" id="xpathInput" value="/courses/course[students > 50]" placeholder="Enter XPath expression (e.g. /courses/course[credits=4])">
+                        <button id="btnEvalXPath" class="btn btn-primary" onclick="evaluateXPath()">Evaluate XPath</button>
+                    </div>
+                </div>
+
+                <div class="xpath-results">
+                    <div class="result-header">
+                        <span>Matched Nodes (<strong id="nodeCount">0</strong>):</span>
+                    </div>
+                    <div id="xpathOutputBox" class="result-box">
+                        <!-- Evaluated results appear here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: LIVE XSLT PREVIEW -->
+        <section id="tab-xslt" class="tab-pane">
+            <div class="solution-card">
+                <div class="card-header">
+                    <span class="q-badge">Live Renderer</span>
+                    <h2>XSLT Transformation (courses.xml + courses.xsl)</h2>
+                </div>
+                <p class="card-desc">The live transformation below is rendered in the browser using the native browser XSLTProcessor API:</p>
+
+                <div id="xsltRenderOutput" class="xslt-render-box">
+                    <!-- Dynamic XSLT rendered output -->
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: RAW XML -->
+        <section id="tab-xml" class="tab-pane">
+            <div class="solution-card">
+                <div class="card-header">
+                    <span class="q-badge">Source Dataset</span>
+                    <h2>Raw courses.xml File Content</h2>
+                </div>
+                <div class="code-block">
+<pre id="rawXmlContent"><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;courses&gt;
+    &lt;course id="C101"&gt;
+        &lt;code&gt;WEB301&lt;/code&gt;
+        &lt;name&gt;Web Technology&lt;/name&gt;
+        &lt;faculty&gt;Dr. Arun&lt;/faculty&gt;
+        &lt;students&gt;58&lt;/students&gt;
+        &lt;credits&gt;4&lt;/credits&gt;
+        &lt;type&gt;Theory&lt;/type&gt;
+    &lt;/course&gt;
+    &lt;course id="C102"&gt;
+        &lt;code&gt;AI302&lt;/code&gt;
+        &lt;name&gt;Artificial Intelligence&lt;/name&gt;
+        &lt;faculty&gt;Dr. Meena&lt;/faculty&gt;
+        &lt;students&gt;72&lt;/students&gt;
+        &lt;credits&gt;4&lt;/credits&gt;
+        &lt;type&gt;Theory&lt;/type&gt;
+    &lt;/course&gt;
+    &lt;course id="C103"&gt;
+        &lt;code&gt;WEB303&lt;/code&gt;
+        &lt;name&gt;Web Technology Laboratory&lt;/name&gt;
+        &lt;faculty&gt;Dr. Ravi&lt;/faculty&gt;
+        &lt;students&gt;36&lt;/students&gt;
+        &lt;credits&gt;2&lt;/credits&gt;
+        &lt;type&gt;Practical&lt;/type&gt;
+    &lt;/course&gt;
+    &lt;course id="C104"&gt;
+        &lt;code&gt;ML304&lt;/code&gt;
+        &lt;name&gt;Machine Learning&lt;/name&gt;
+        &lt;faculty&gt;Dr. Priya&lt;/faculty&gt;
+        &lt;students&gt;64&lt;/students&gt;
+        &lt;credits&gt;4&lt;/credits&gt;
+        &lt;type&gt;Theory&lt;/type&gt;
+    &lt;/course&gt;
+    &lt;course id="C105"&gt;
+        &lt;code&gt;DB305&lt;/code&gt;
+        &lt;name&gt;Database Systems&lt;/name&gt;
+        &lt;faculty&gt;Dr. Kumar&lt;/faculty&gt;
+        &lt;students&gt;42&lt;/students&gt;
+        &lt;credits&gt;3&lt;/credits&gt;
+        &lt;type&gt;Theory&lt;/type&gt;
+    &lt;/course&gt;
+&lt;/courses&gt;</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>Web Technology &bull; Unit IV Assessment I &bull; Solutions & Workbench</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
