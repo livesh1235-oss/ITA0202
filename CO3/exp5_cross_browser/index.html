@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment 5: Cross-Browser Compatible Interactive Webpage</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <a href="../index.html" class="back-link">&larr; Back to Dashboard</a>
+            <h1>Experiment 5: Cross-Browser Compatible Interactive Webpage</h1>
+            <p class="subtitle">Feature detection, graceful degradation, and polyfill fallbacks for <code>localStorage</code>, <code>querySelector()</code>, and CSS <code>@supports</code></p>
+        </header>
+
+        <!-- Feature Detection Summary Cards -->
+        <section class="detection-summary">
+            <div class="summary-header">
+                <h2>Browser Feature Detection & Capability Matrix</h2>
+                <button id="btnRerunDetection" class="btn btn-outline">Re-run Tests</button>
+            </div>
+
+            <div class="matrix-grid">
+                <!-- Test 1: localStorage -->
+                <div class="matrix-card" id="cardLocalStorage">
+                    <div class="matrix-icon">💾</div>
+                    <div class="matrix-info">
+                        <h3>HTML5 LocalStorage</h3>
+                        <p class="status-line">Status: <span class="badge" id="badgeLocalStorage">Checking...</span></p>
+                        <p class="fallback-note" id="noteLocalStorage">Fallback: In-Memory / Cookie Polyfill</p>
+                    </div>
+                </div>
+
+                <!-- Test 2: querySelector -->
+                <div class="matrix-card" id="cardQuerySelector">
+                    <div class="matrix-icon">🎯</div>
+                    <div class="matrix-info">
+                        <h3>DOM querySelector</h3>
+                        <p class="status-line">Status: <span class="badge" id="badgeQuerySelector">Checking...</span></p>
+                        <p class="fallback-note" id="noteQuerySelector">Fallback: getElementById / TagName</p>
+                    </div>
+                </div>
+
+                <!-- Test 3: CSS Grid (@supports) -->
+                <div class="matrix-card" id="cardCssGrid">
+                    <div class="matrix-icon">🔲</div>
+                    <div class="matrix-info">
+                        <h3>CSS Grid (@supports)</h3>
+                        <p class="status-line">Status: <span class="badge" id="badgeCssGrid">Checking...</span></p>
+                        <p class="fallback-note">Fallback: Float / Flexbox layout</p>
+                    </div>
+                </div>
+
+                <!-- Test 4: Fetch API -->
+                <div class="matrix-card" id="cardFetch">
+                    <div class="matrix-icon">⚡</div>
+                    <div class="matrix-info">
+                        <h3>Fetch API</h3>
+                        <p class="status-line">Status: <span class="badge" id="badgeFetch">Checking...</span></p>
+                        <p class="fallback-note">Fallback: XMLHttpRequest (XHR)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Live Demonstration of Fallbacks -->
+        <main class="demo-grid">
+            <!-- 1. Interactive Storage Fallback Demo -->
+            <section class="card demo-card">
+                <h2 class="card-title">1. Storage Manager (LocalStorage with Fallback)</h2>
+                <p class="card-desc">If <code>window.localStorage</code> is disabled (e.g., Private Browsing / Security Restrictions), our wrapper falls back smoothly to an in-memory session store without crashing.</p>
+                
+                <div class="form-group">
+                    <label for="storageKey">Key Name:</label>
+                    <input type="text" id="storageKey" value="user_preference" placeholder="e.g. user_preference">
+                </div>
+
+                <div class="form-group">
+                    <label for="storageValue">Value Data:</label>
+                    <input type="text" id="storageValue" value="Dark Mode, English, CSE Dept" placeholder="Enter value...">
+                </div>
+
+                <div class="action-buttons">
+                    <button id="btnSaveStorage" class="btn btn-primary">Save Data</button>
+                    <button id="btnLoadStorage" class="btn btn-secondary">Load Data</button>
+                    <button id="btnClearStorage" class="btn btn-danger-outline">Remove Key</button>
+                </div>
+
+                <div class="output-box" id="storageOutput">
+                    <span class="output-label">Output Console:</span>
+                    <p id="storageMsg">Ready for storage operations...</p>
+                </div>
+            </section>
+
+            <!-- 2. Interactive DOM Query Selector Fallback Demo -->
+            <section class="card demo-card">
+                <h2 class="card-title">2. Safe DOM Element Lookup (Fallback Wrapper)</h2>
+                <p class="card-desc">Tests safe element lookup. If <code>querySelector</code> fails or is unsupported, it falls back to <code>getElementById</code> or <code>getElementsByTagName</code>.</p>
+                
+                <div id="targetElement" class="test-target-box">
+                    <div class="target-title">Target Element: <code>#targetElement</code></div>
+                    <p class="target-content">This content is dynamically manipulated across legacy and modern engines.</p>
+                </div>
+
+                <div class="action-buttons">
+                    <button id="btnQueryModern" class="btn btn-primary">Select via Safe DOM</button>
+                    <button id="btnSimulateLegacy" class="btn btn-secondary">Simulate Legacy Lookup</button>
+                </div>
+
+                <div class="output-box" id="domOutput">
+                    <span class="output-label">Lookup Output:</span>
+                    <p id="domMsg">Ready for DOM query...</p>
+                </div>
+            </section>
+        </main>
+
+        <!-- CSS @supports Visual Demo -->
+        <section class="card css-supports-card">
+            <h2 class="card-title">3. CSS <code>@supports</code> Feature Query Demonstration</h2>
+            <p class="card-desc">The card below uses CSS <code>@supports (backdrop-filter: blur(10px))</code> to apply a modern frosted glass aesthetic if supported, falling back gracefully to solid opaque background styling on older browsers.</p>
+            
+            <div class="glass-box">
+                <h4>Frosted Glass Component</h4>
+                <p>If modern CSS is supported, this box renders with backdrop blur and semi-transparent alpha glassmorphism. On noncompliant browsers, it degrades gracefully to a clean solid border card.</p>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

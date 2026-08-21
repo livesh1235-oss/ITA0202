@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Outcome 3 (CO3) Laboratory Suite</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --surface: #111827;
+            --surface-hover: #1f2937;
+            --border: #1f293d;
+            --text-primary: #f9fafb;
+            --text-secondary: #9ca3af;
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --accent-emerald: #10b981;
+            --accent-amber: #f59e0b;
+            --radius: 14px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 3rem 1.5rem;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Hero Header */
+        .hero {
+            text-align: center;
+            margin-bottom: 3.5rem;
+            position: relative;
+        }
+
+        .badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(59, 130, 246, 0.12);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.25);
+            padding: 0.35rem 1rem;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .hero h1 {
+            font-size: 2.75rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        /* Section Titles */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 3rem 0 1.5rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.75rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #f3f4f6;
+        }
+
+        .section-tag {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 6px;
+            text-transform: uppercase;
+        }
+
+        .tag-dom { background: rgba(59, 130, 246, 0.2); color: #93c5fd; }
+        .tag-servlet { background: rgba(139, 92, 246, 0.2); color: #c4b5fd; }
+
+        /* Grid Cards */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .exp-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.75rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .exp-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent-blue), transparent);
+            opacity: 0;
+            transition: opacity 0.25s;
+        }
+
+        .exp-card:hover {
+            transform: translateY(-4px);
+            border-color: #374151;
+            background: var(--surface-hover);
+            box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.4);
+        }
+
+        .exp-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .exp-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+            background: rgba(59, 130, 246, 0.1);
+            padding: 3px 8px;
+            border-radius: 6px;
+        }
+
+        .exp-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #f9fafb;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .exp-desc {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 1.25rem;
+        }
+
+        .tech-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .chip {
+            background: #1f2937;
+            color: #94a3b8;
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent-blue);
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .btn-launch {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 4rem;
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <header class="hero">
+            <div class="badge-pill">
+                <span>⚡</span> Laboratory Experiments (CO3)
+            </div>
+            <h1>Web Technology & Enterprise Servlets</h1>
+            <p>A comprehensive laboratory suite encompassing DOM manipulation, modern event handling, browser telemetry, cross-browser compatibility, and multi-threaded Java Servlets.</p>
+        </header>
+
+        <!-- Part 1: Client-Side DOM & JavaScript (Exp 1 - 5) -->
+        <section>
+            <div class="section-header">
+                <span class="section-tag tag-dom">Part 1</span>
+                <h2>Client-Side DOM & Browser Programming (Exp 1 – 5)</h2>
+            </div>
+
+            <div class="cards-grid">
+                <!-- Exp 1 -->
+                <a href="exp1_dom_profile/index.html" class="exp-card">
+                    <div>
+                        <div class="card-top">
+                            <span class="exp-num">EXP-01</span>
+                        </div>
+                        <h3 class="exp-title">DOM-Based Student Profile Manipulation</h3>
+                        <p class="exp-desc">Modify student profile details interactively using DOM selectors, inline styles, class lists, and element attributes.</p>
+                        <div class="tech-chips">
+                            <span class="chip">getElementById</span>
+                            <span class="chip">querySelector</span>
+                            <span class="chip">classList</span>
+                            <span class="chip">setAttribute</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="btn-launch">Launch Experiment &rarr;</span>
+                        <span style="color: var(--accent-emerald);">Interactive UI</span>
+                    </div>
+                </a>
+
+                <!-- Exp 2 -->
+                <a href="exp2_dynamic_registration/index.html" class="exp-card">
+                    <div>
+                        <div class="card-top">
+                            <span class="exp-num">EXP-02</span>
+                        </div>
+                        <h3 class="exp-title">Dynamic Student Registration List</h3>
+                        <p class="exp-desc">Create, append, traverse, and remove student records dynamically using DOM node creation and tree traversal.</p>
+                        <div class="tech-chips">
+                            <span class="chip">createElement</span>
+                            <span class="chip">appendChild</span>
+                            <span class="chip">parentElement</span>
+                            <span class="chip">remove()</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="btn-launch">Launch Experiment &rarr;</span>
+                        <span style="color: var(--accent-emerald);">Interactive UI</span>
+                    </div>
+                </a>
+
+                <!-- Exp 3 -->
+                <a href="exp3_event_registration/index.html" class="exp-card">
+                    <div>
+                        <div class="card-top">
+                            <span class="exp-num">EXP-03</span>
+                        </div>
+                        <h3 class="exp-title">Interactive Event Registration & Stream</h3>
+                        <p class="exp-desc">Demonstrates intrinsic vs modern event handling with a real-time event logger for mouse, keyboard, and form events.</p>
+                        <div class="tech-chips">
+                            <span class="chip">addEventListener</span>
+                            <span class="chip">onclick / change</span>
+                            <span class="chip">focus / blur</span>
+                            <span class="chip">submit</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="btn-launch">Launch Experiment &rarr;</span>
+                        <span style="color: var(--accent-emerald);">Interactive UI</span>
+                    </div>
+                </a>
+
+                <!-- Exp 4 -->
+                <a href="exp4_browser_dashboard/index.html" class="exp-card">
+                    <div>
+                        <div class="card-top">
+                            <span class="exp-num">EXP-04</span>
+                        </div>
+                        <h3 class="exp-title">Browser Information Dashboard</h3>
+                        <p class="exp-desc">Real-time browser telemetry monitoring URL, viewport dimensions, screen properties, scroll position, and online status.</p>
+                        <div class="tech-chips">
+                            <span class="chip">window.location</span>
+                            <span class="chip">innerWidth / innerHeight</span>
+                            <span class="chip">scrollX / scrollY</span>
+                            <span class="chip">navigator</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="btn-launch">Launch Experiment &rarr;</span>
+                        <span style="color: var(--accent-emerald);">Interactive UI</span>
+                    </div>
+                </a>
+
+                <!-- Exp 5 -->
+                <a href="exp5_cross_browser/index.html" class="exp-card">
+                    <div>
+                        <div class="card-top">
+                            <span class="exp-num">EXP-05</span>
+                        </div>
+                        <h3 class="exp-title">Cross-Browser Compatibility & Fallbacks</h3>
+                        <p class="exp-desc">Feature detection and graceful degradation suite for LocalStorage, querySelector, and CSS @supports feature queries.</p>
+                        <div class="tech-chips">
+                            <span class="chip">Feature Detection</span>
+                            <span class="chip">localStorage Fallback</span>
+                            <span class="chip">@supports CSS</span>
+                            <span class="chip">Polyfill Engine</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="btn-launch">Launch Experiment &rarr;</span>
+                        <span style="color: var(--accent-emerald);">Interactive UI</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Part 2: Server-Side Java Servlets (Exp 6 - 10) -->
+        <section>
+            <div class="section-header">
+                <span class="section-tag tag-servlet">Part 2</span>
+                <h2>Server-Side Java Servlets on Apache Tomcat (Exp 6 – 10)</h2>
+            </div>
+
+            <div class="cards-grid">
+                <!-- Exp 6 -->
+                <div class="exp-card">
+                    <div>
+                        <div class="card-top">
+                            <span class="exp-num">EXP-06</span>
+                        </div>
+                        <h3 class="exp-title">Dynamic Content Generation Servlet</h3>
+                        <p class="exp-desc">Extends <code>HttpServlet</code> to output dynamic HTML with student details, course title, and live server timestamp.</p>
+                        <div class="tech-chips">
+                            <span class="chip">HttpServlet</span>
+                            <span class="chip">doGet()</span>
+                            <span class="chip">PrintWriter</span>
+                            <span class="chip">LocalDateTime</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="servlets/src/main/java/com/co3/servlets/Exp6DynamicContentServlet.java" style="color: var(--accent-purple); text-decoration: none;">View Servlet Source &rarr;</a>
+                        <span style="color: #94a3b8; font-size: 0.75rem;">Endpoint: /exp6</span>
+                    </div>
+                </div>
+
+                <!-- Exp 7 -->
+                <div class="exp-card">
+                    <div>
+                        <div class="card-top">
+                            <span class="exp-num">EXP-07</span>
+                        </div>
+                        <h3 class="exp-title">Student Registration Form Processing</h3>
+                        <p class="exp-desc">HTML form submission handled by <code>doPost()</code> with server-side validation and dynamic acknowledgement receipt generation.</p>
+                        <div class="tech-chips">
+                            <span class="chip">doPost()</span>
+                            <span class="chip">getParameter()</span>
+                            <span class="chip">Input Validation</span>
+                            <span class="chip">Receipt Card</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="servlets/webapp/exp7_registration_form.html" style="color: var(--accent-purple); text-decoration: none;">Open Form &rarr;</a>
+                        <span style="color: #94a3b8; font-size: 0.75rem;">Endpoint: /exp7</span>
+                    </div>
+                </div>
+
+                <!-- Exp 8 -->
+                <div class="exp-card">
+                    <div>
+                        <div class="card-top">
+                            <span class="exp-num">EXP-08</span>
+                        </div>
+                        <h3 class="exp-title">Online Student Result Processing</h3>
+                        <p class="exp-desc">Processes 5 subject marks, validates numeric ranges, and computes Total, Average, High/Low, Grade, and Pass/Fail status.</p>
+                        <div class="tech-chips">
+                            <span class="chip">Result Computing</span>
+                            <span class="chip">Grade Calculation</span>
+                            <span class="chip">Numeric Validation</span>
+                            <span class="chip">HTML Report Table</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="servlets/webapp/exp8_result_form.html" style="color: var(--accent-purple); text-decoration: none;">Open Form &rarr;</a>
+                        <span style="color: #94a3b8; font-size: 0.75rem;">Endpoint: /exp8</span>
+                    </div>
+                </div>
+
+                <!-- Exp 9 -->
+                <div class="exp-card">
+                    <div>
+                        <div class="card-top">
+                            <span class="exp-num">EXP-09</span>
+                        </div>
+                        <h3 class="exp-title">Servlet Lifecycle Demonstration</h3>
+                        <p class="exp-desc">Monitors and counts invocations of <code>Constructor</code>, <code>init()</code>, <code>service()</code>, <code>doGet()</code>, and <code>destroy()</code> lifecycle stages.</p>
+                        <div class="tech-chips">
+                            <span class="chip">init(ServletConfig)</span>
+                            <span class="chip">service()</span>
+                            <span class="chip">destroy()</span>
+                            <span class="chip">Lifecycle Counters</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="servlets/src/main/java/com/co3/servlets/Exp9LifecycleServlet.java" style="color: var(--accent-purple); text-decoration: none;">View Servlet Source &rarr;</a>
+                        <span style="color: #94a3b8; font-size: 0.75rem;">Endpoint: /exp9</span>
+                    </div>
+                </div>
+
+                <!-- Exp 10 -->
+                <div class="exp-card">
+                    <div>
+                        <div class="card-top">
+                            <span class="exp-num">EXP-10</span>
+                        </div>
+                        <h3 class="exp-title">Thread-Safe Concurrent Visitor Counter</h3>
+                        <p class="exp-desc">Demonstrates race conditions in shared servlet instance variables vs thread-safe handling using <code>AtomicInteger</code> and synchronization.</p>
+                        <div class="tech-chips">
+                            <span class="chip">AtomicInteger</span>
+                            <span class="chip">synchronized</span>
+                            <span class="chip">Race Conditions</span>
+                            <span class="chip">Stack Variables</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="servlets/src/main/java/com/co3/servlets/Exp10VisitorCounterServlet.java" style="color: var(--accent-purple); text-decoration: none;">View Servlet Source &rarr;</a>
+                        <span style="color: #94a3b8; font-size: 0.75rem;">Endpoint: /exp10</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Deployment Guide Banner -->
+        <section style="margin-top: 3rem; background: #1e293b; border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: gap: 1.5rem;">
+            <div>
+                <h3 style="font-size: 1.2rem; color: #f8fafc; margin-bottom: 0.35rem;">📦 Apache Tomcat Deployment & Manual</h3>
+                <p style="color: #94a3b8; font-size: 0.9rem;">Complete step-by-step build guide with Maven POM, <code>web.xml</code> deployment descriptor, and theory notes.</p>
+            </div>
+            <a href="servlets/webapp/README_SERVLETS.md" style="background: var(--accent-blue); color: white; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; text-decoration: none; font-size: 0.9rem; white-space: nowrap;">Read Deployment Guide &rarr;</a>
+        </section>
+
+        <footer>
+            <p>Course Outcome 3 (CO3) Web Technology & Java Servlet Laboratory Suite &bull; Built with standard Web Standards & Java EE / Jakarta EE</p>
+        </footer>
+    </div>
+</body>
+</html>

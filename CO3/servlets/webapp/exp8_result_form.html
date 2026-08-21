@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment 8: Online Student Result Processing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: #f8fafc; color: #0f172a; padding: 2rem 1rem; }
+        .container { max-width: 680px; margin: 0 auto; background: #ffffff; border-radius: 12px; padding: 2.5rem; border: 1px solid #e2e8f0; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); }
+        .back-link { display: inline-block; color: #2563eb; text-decoration: none; font-weight: 600; font-size: 0.9rem; margin-bottom: 1rem; }
+        h1 { font-size: 1.6rem; color: #1e293b; margin-bottom: 0.5rem; }
+        .subtitle { color: #64748b; font-size: 0.9rem; margin-bottom: 1.75rem; }
+        .form-section-title { font-size: 0.95rem; font-weight: 700; color: #334155; margin: 1.5rem 0 0.75rem; padding-bottom: 0.35rem; border-bottom: 1px solid #e2e8f0; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+        .form-group { margin-bottom: 1rem; }
+        label { display: block; font-size: 0.85rem; font-weight: 600; color: #334155; margin-bottom: 0.35rem; }
+        input[type="text"], input[type="number"], select { width: 100%; padding: 0.65rem 0.85rem; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.9rem; outline: none; transition: border-color 0.2s; }
+        input:focus, select:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.15); }
+        .btn-submit { width: 100%; background: #2563eb; color: white; border: none; padding: 0.8rem; border-radius: 8px; font-weight: 600; font-size: 0.95rem; cursor: pointer; margin-top: 1.5rem; transition: background 0.2s; }
+        .btn-submit:hover { background: #1d4ed8; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../../index.html" class="back-link">&larr; Back to Dashboard</a>
+        <h1>Student Marks Result Processing</h1>
+        <p class="subtitle">Enter student marks for 5 subjects to calculate Total, Average, Highest/Lowest Marks, Grade, and Pass/Fail status via <code>Exp8ResultProcessingServlet</code>.</p>
+
+        <form action="../exp8" method="POST">
+            <!-- Student Information -->
+            <div class="form-section-title">Student Information</div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="studentName">Student Name *</label>
+                    <input type="text" id="studentName" name="studentName" value="Kavya Sundaram" required>
+                </div>
+                <div class="form-group">
+                    <label for="regNumber">Register Number *</label>
+                    <input type="text" id="regNumber" name="regNumber" value="21CS502" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="department">Department</label>
+                <input type="text" id="department" name="department" value="Computer Science & Engineering" readonly style="background: #f1f5f9;">
+            </div>
+
+            <!-- Marks Section -->
+            <div class="form-section-title">Subject Marks (Max 100 per subject, Pass >= 50)</div>
+            
+            <div class="form-group">
+                <label for="subject1">1. Data Structures & Algorithms (CS301) *</label>
+                <input type="number" id="subject1" name="subject1" min="0" max="100" step="0.5" value="88" required>
+            </div>
+
+            <div class="form-group">
+                <label for="subject2">2. Object-Oriented Programming Java (CS302) *</label>
+                <input type="number" id="subject2" name="subject2" min="0" max="100" step="0.5" value="92" required>
+            </div>
+
+            <div class="form-group">
+                <label for="subject3">3. Database Management Systems (CS303) *</label>
+                <input type="number" id="subject3" name="subject3" min="0" max="100" step="0.5" value="85" required>
+            </div>
+
+            <div class="form-group">
+                <label for="subject4">4. Web Technology & Frameworks (CS304) *</label>
+                <input type="number" id="subject4" name="subject4" min="0" max="100" step="0.5" value="95" required>
+            </div>
+
+            <div class="form-group">
+                <label for="subject5">5. Computer Networks (CS305) *</label>
+                <input type="number" id="subject5" name="subject5" min="0" max="100" step="0.5" value="79" required>
+            </div>
+
+            <button type="submit" class="btn-submit">Process Results & Compute Grade (doPost)</button>
+        </form>
+    </div>
+</body>
+</html>

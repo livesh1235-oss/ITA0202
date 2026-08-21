@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment 7: Student Registration Form</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: #f8fafc; color: #0f172a; padding: 2rem 1rem; }
+        .container { max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 12px; padding: 2.5rem; border: 1px solid #e2e8f0; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); }
+        .back-link { display: inline-block; color: #2563eb; text-decoration: none; font-weight: 600; font-size: 0.9rem; margin-bottom: 1rem; }
+        h1 { font-size: 1.6rem; color: #1e293b; margin-bottom: 0.5rem; }
+        .subtitle { color: #64748b; font-size: 0.9rem; margin-bottom: 1.75rem; }
+        .form-group { margin-bottom: 1.25rem; }
+        label { display: block; font-size: 0.85rem; font-weight: 600; color: #334155; margin-bottom: 0.35rem; }
+        input[type="text"], input[type="email"], select { width: 100%; padding: 0.65rem 0.85rem; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.9rem; outline: none; transition: border-color 0.2s; }
+        input:focus, select:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.15); }
+        .btn-submit { width: 100%; background: #2563eb; color: white; border: none; padding: 0.75rem; border-radius: 8px; font-weight: 600; font-size: 0.95rem; cursor: pointer; margin-top: 1rem; transition: background 0.2s; }
+        .btn-submit:hover { background: #1d4ed8; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../../index.html" class="back-link">&larr; Back to Dashboard</a>
+        <h1>Student Registration Form</h1>
+        <p class="subtitle">Submits data via <strong>HTTP POST</strong> to <code>Exp7RegistrationServlet</code> (<code>/exp7</code>) for validation and processing.</p>
+
+        <form action="../exp7" method="POST">
+            <div class="form-group">
+                <label for="studentName">Student Full Name *</label>
+                <input type="text" id="studentName" name="studentName" placeholder="e.g. John Doe" value="Eleanor Vance" required>
+            </div>
+
+            <div class="form-group">
+                <label for="regNumber">Register Number *</label>
+                <input type="text" id="regNumber" name="regNumber" placeholder="e.g. 21CS305" value="21CS305" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Student Email Address *</label>
+                <input type="email" id="email" name="email" placeholder="e.g. eleanor@college.edu" value="eleanor@college.edu" required>
+            </div>
+
+            <div class="form-group">
+                <label for="department">Department *</label>
+                <select id="department" name="department" required>
+                    <option value="" disabled>Select Department</option>
+                    <option value="Computer Science & Engineering" selected>Computer Science & Engineering</option>
+                    <option value="Information Technology">Information Technology</option>
+                    <option value="Artificial Intelligence & Data Science">Artificial Intelligence & Data Science</option>
+                    <option value="Electronics & Communication">Electronics & Communication</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="semester">Current Semester *</label>
+                <select id="semester" name="semester" required>
+                    <option value="" disabled>Select Semester</option>
+                    <option value="1">Semester 1</option>
+                    <option value="2">Semester 2</option>
+                    <option value="3">Semester 3</option>
+                    <option value="4">Semester 4</option>
+                    <option value="5" selected>Semester 5</option>
+                    <option value="6">Semester 6</option>
+                    <option value="7">Semester 7</option>
+                    <option value="8">Semester 8</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-submit">Submit Registration to Servlet (doPost)</button>
+        </form>
+    </div>
+</body>
+</html>

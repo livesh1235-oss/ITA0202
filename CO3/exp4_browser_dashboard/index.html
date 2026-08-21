@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment 4: Browser Information Dashboard Using Window Object</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <a href="../index.html" class="back-link">&larr; Back to Dashboard</a>
+            <h1>Experiment 4: Browser Information Dashboard</h1>
+            <p class="subtitle">Real-time telemetry using <code>window.location</code>, <code>window.innerWidth / innerHeight</code>, <code>window.scrollX / scrollY</code>, <code>navigator</code>, <code>screen</code>, and the <code>resize</code> event</p>
+        </header>
+
+        <!-- Status Banner -->
+        <div id="connectionBanner" class="connection-banner online">
+            <span class="status-dot"></span>
+            <span id="connectionText">Navigator Online Status: Online</span>
+        </div>
+
+        <!-- Telemetry Cards Grid -->
+        <main class="dashboard-grid">
+            <!-- 1. Window Location Object -->
+            <div class="card">
+                <div class="card-icon">🌐</div>
+                <h2 class="card-title">1. Location Object (<code>window.location</code>)</h2>
+                <ul class="info-list">
+                    <li><span class="label">Full URL (<code>href</code>):</span> <span class="val break-all" id="locHref">-</span></li>
+                    <li><span class="label">Protocol (<code>protocol</code>):</span> <span class="val badge" id="locProtocol">-</span></li>
+                    <li><span class="label">Host & Port (<code>host</code>):</span> <span class="val" id="locHost">-</span></li>
+                    <li><span class="label">Path Name (<code>pathname</code>):</span> <span class="val" id="locPathname">-</span></li>
+                    <li><span class="label">Origin (<code>origin</code>):</span> <span class="val" id="locOrigin">-</span></li>
+                </ul>
+                <div class="card-actions">
+                    <button class="btn btn-sm" onclick="reloadDashboard()">Reload (<code>location.reload()</code>)</button>
+                    <button class="btn btn-sm" onclick="assignDemoHash()">Add Hash #demo</button>
+                </div>
+            </div>
+
+            <!-- 2. Screen Object -->
+            <div class="card">
+                <div class="card-icon">🖥️</div>
+                <h2 class="card-title">2. Physical Screen (<code>window.screen</code>)</h2>
+                <ul class="info-list">
+                    <li><span class="label">Total Width (<code>screen.width</code>):</span> <span class="val highlight" id="screenWidth">-</span> px</li>
+                    <li><span class="label">Total Height (<code>screen.height</code>):</span> <span class="val highlight" id="screenHeight">-</span> px</li>
+                    <li><span class="label">Available Width (<code>availWidth</code>):</span> <span class="val" id="screenAvailWidth">-</span> px</li>
+                    <li><span class="label">Available Height (<code>availHeight</code>):</span> <span class="val" id="screenAvailHeight">-</span> px</li>
+                    <li><span class="label">Color Depth (<code>colorDepth</code>):</span> <span class="val" id="screenColorDepth">-</span> bit</li>
+                </ul>
+            </div>
+
+            <!-- 3. Viewport Dimensions & Resize -->
+            <div class="card">
+                <div class="card-icon">📐</div>
+                <h2 class="card-title">3. Viewport (<code>window.inner*</code>)</h2>
+                <div class="metric-row">
+                    <div class="metric-box">
+                        <span class="metric-val" id="viewportWidth">-</span>
+                        <span class="metric-lbl">Inner Width (px)</span>
+                    </div>
+                    <div class="metric-box">
+                        <span class="metric-val" id="viewportHeight">-</span>
+                        <span class="metric-lbl">Inner Height (px)</span>
+                    </div>
+                </div>
+                <p class="helper-text">Resize your browser window to see these values update dynamically in real time via the <code>window.addEventListener('resize')</code> event.</p>
+                <div class="counter-badge">
+                    Resize Events Triggered: <strong id="resizeCount">0</strong>
+                </div>
+            </div>
+
+            <!-- 4. Navigator Object -->
+            <div class="card">
+                <div class="card-icon">🧭</div>
+                <h2 class="card-title">4. Navigator (<code>window.navigator</code>)</h2>
+                <ul class="info-list">
+                    <li><span class="label">Browser Language (<code>language</code>):</span> <span class="val badge" id="navLanguage">-</span></li>
+                    <li><span class="label">Languages (<code>languages</code>):</span> <span class="val" id="navLanguages">-</span></li>
+                    <li><span class="label">Cookies Enabled (<code>cookieEnabled</code>):</span> <span class="val" id="navCookie">-</span></li>
+                    <li><span class="label">Logical CPU Cores (<code>hardwareConcurrency</code>):</span> <span class="val" id="navCores">-</span></li>
+                    <li><span class="label">User Agent (<code>userAgent</code>):</span> <span class="val break-all small" id="navUserAgent">-</span></li>
+                </ul>
+            </div>
+
+            <!-- 5. Scroll Position Telemetry -->
+            <div class="card full-width">
+                <div class="card-icon">📜</div>
+                <h2 class="card-title">5. Scroll Position (<code>window.scrollX & scrollY</code>)</h2>
+                <div class="scroll-telemetry">
+                    <div class="scroll-stat">
+                        <span class="stat-name">Horizontal Scroll (<code>scrollX</code>):</span>
+                        <span class="stat-val" id="scrollXVal">0 px</span>
+                    </div>
+                    <div class="scroll-stat">
+                        <span class="stat-name">Vertical Scroll (<code>scrollY</code>):</span>
+                        <span class="stat-val" id="scrollYVal">0 px</span>
+                    </div>
+                </div>
+
+                <div class="scroll-controls">
+                    <button class="btn btn-sm" onclick="scrollToTop()">Scroll to Top (<code>scrollTo(0,0)</code>)</button>
+                    <button class="btn btn-sm" onclick="scrollToBottom()">Scroll to Bottom</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Dummy Scroll Area to demonstrate live scrolling -->
+        <section class="scroll-playground">
+            <h3>Scroll Demonstration Area</h3>
+            <p>Scroll down this page to observe real-time updates to <code>window.scrollY</code> and <code>window.scrollX</code> coordinates in the dashboard panel above.</p>
+            <div class="scroll-spacer">
+                <p>--- End of Demonstration Viewport ---</p>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

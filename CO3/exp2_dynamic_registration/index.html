@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment 2: Dynamic Student Registration List Using DOM</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <a href="../index.html" class="back-link">&larr; Back to Dashboard</a>
+            <h1>Experiment 2: Dynamic Student Registration List Using DOM</h1>
+            <p class="subtitle">Demonstrating <code>createElement()</code>, <code>appendChild()</code>, <code>remove()</code>, <code>parentElement</code>, and <code>children</code></p>
+        </header>
+
+        <main class="content-grid">
+            <!-- Form Card -->
+            <section class="card form-card">
+                <h2 class="card-title">Register New Student</h2>
+                <form id="studentForm">
+                    <div class="form-group">
+                        <label for="studentName">Student Full Name *</label>
+                        <input type="text" id="studentName" placeholder="e.g. John Doe" required autocomplete="off">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="regNumber">Register Number *</label>
+                        <input type="text" id="regNumber" placeholder="e.g. 21CS204" required autocomplete="off">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="department">Department *</label>
+                        <select id="department" required>
+                            <option value="" disabled selected>Select Department</option>
+                            <option value="Computer Science & Engineering">Computer Science & Engineering</option>
+                            <option value="Information Technology">Information Technology</option>
+                            <option value="Artificial Intelligence & Data Science">Artificial Intelligence & Data Science</option>
+                            <option value="Electronics & Communication">Electronics & Communication</option>
+                            <option value="Mechanical Engineering">Mechanical Engineering</option>
+                        </select>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" id="btnAddStudent" class="btn btn-primary">
+                            <span>+</span> Add Student
+                        </button>
+                        <button type="button" id="btnPrefill" class="btn btn-secondary">Prefill Sample</button>
+                    </div>
+                </form>
+
+                <!-- Stats summary -->
+                <div class="stats-box">
+                    <div class="stat-item">
+                        <span class="stat-num" id="totalStudentsCount">0</span>
+                        <span class="stat-label">Total Registered</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-num" id="activeDeptsCount">0</span>
+                        <span class="stat-label">Departments</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Table & List View -->
+            <section class="card list-card">
+                <div class="list-header">
+                    <h2 class="card-title">Student Records Table</h2>
+                    <div class="actions-group">
+                        <button id="btnClearAll" class="btn btn-danger-outline" disabled>Clear All Records</button>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="student-table" id="studentTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Student Name</th>
+                                <th>Register No</th>
+                                <th>Department</th>
+                                <th style="text-align: right;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentTableBody">
+                            <!-- Dynamic rows will be inserted here via DOM createElement & appendChild -->
+                        </tbody>
+                    </table>
+
+                    <div id="emptyState" class="empty-state">
+                        <div class="empty-icon">📋</div>
+                        <h3>No Student Records Yet</h3>
+                        <p>Fill out the form on the left and click <strong>Add Student</strong> to dynamically append records to the DOM.</p>
+                    </div>
+                </div>
+
+                <!-- DOM Execution Inspector -->
+                <div class="dom-audit-panel">
+                    <div class="audit-header">DOM Tree Inspector:</div>
+                    <p id="domTreeInfo"><code>document.getElementById('studentTableBody').children.length: 0</code></p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

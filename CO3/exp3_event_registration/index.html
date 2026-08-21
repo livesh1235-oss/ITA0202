@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment 3: Interactive Event Registration Using JavaScript Events</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <a href="../index.html" class="back-link">&larr; Back to Dashboard</a>
+            <h1>Experiment 3: Interactive Event Registration</h1>
+            <p class="subtitle">Demonstrating intrinsic HTML attributes vs modern <code>addEventListener()</code> for events: <code>onclick</code>, <code>change</code>, <code>input</code>, <code>focus</code>, <code>blur</code>, <code>mouseover</code>, <code>mouseout</code>, and <code>submit</code></p>
+        </header>
+
+        <main class="content-grid">
+            <!-- Event Registration Form -->
+            <section class="card form-section">
+                <h2 class="card-title">Tech Conclave 2026 Event Registration</h2>
+                
+                <form id="eventRegForm">
+                    <!-- Participant Name (input, focus, blur) -->
+                    <div class="form-group">
+                        <label for="userName">Participant Name (Triggers: <code>focus</code>, <code>input</code>, <code>blur</code>)</label>
+                        <input type="text" id="userName" name="userName" placeholder="Type your full name..." autocomplete="off">
+                        <span id="nameStatus" class="field-hint">Awaiting input...</span>
+                    </div>
+
+                    <!-- Workshop Selection (change event) -->
+                    <div class="form-group">
+                        <label for="workshopSelect">Workshop Track (Triggers: <code>change</code>)</label>
+                        <!-- Intrinsic onchange combined with modern addEventListener -->
+                        <select id="workshopSelect" name="workshopSelect" onchange="handleIntrinsicChange(this.value)">
+                            <option value="" disabled selected>-- Select Workshop Track --</option>
+                            <option value="Cloud Architecture & Kubernetes">Cloud Architecture & Kubernetes</option>
+                            <option value="Generative AI & LLM Systems">Generative AI & LLM Systems</option>
+                            <option value="Cybersecurity & Zero Trust">Cybersecurity & Zero Trust</option>
+                            <option value="Full-Stack Web with React & Servlets">Full-Stack Web with React & Servlets</option>
+                        </select>
+                        <span id="workshopStatus" class="field-hint">Select a track to see details</span>
+                    </div>
+
+                    <!-- Experience Level (Radio buttons with change event) -->
+                    <div class="form-group">
+                        <label>Experience Level (Triggers: <code>change</code>)</label>
+                        <div class="radio-row">
+                            <label class="radio-label">
+                                <input type="radio" name="expLevel" value="Beginner" checked> Beginner
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="expLevel" value="Intermediate"> Intermediate
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="expLevel" value="Advanced"> Advanced
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Interactive Badge Box (mouseover, mouseout, click) -->
+                    <div class="form-group">
+                        <label>Interactive VIP Pass Card (Triggers: <code>mouseover</code>, <code>mouseout</code>, <code>onclick</code>)</label>
+                        <!-- Intrinsic mouseover/mouseout demo -->
+                        <div id="interactivePassCard" class="pass-card" 
+                             onmouseover="handleIntrinsicMouseOver(this)" 
+                             onmouseout="handleIntrinsicMouseOut(this)" 
+                             onclick="handleIntrinsicClick()">
+                            <div class="pass-title">🎟️ Early-Bird Delegate Pass</div>
+                            <div class="pass-note">Hover over me, move out, or click me to trigger intrinsic & DOM events!</div>
+                        </div>
+                    </div>
+
+                    <!-- Agree Checkbox -->
+                    <div class="form-group checkbox-group">
+                        <label>
+                            <input type="checkbox" id="agreeTerms" name="agreeTerms"> I agree to the event code of conduct
+                        </label>
+                    </div>
+
+                    <!-- Form Buttons -->
+                    <div class="form-actions">
+                        <!-- Submit event -->
+                        <button type="submit" id="btnSubmitForm" class="btn btn-primary">
+                            Submit Registration (<code>submit</code>)
+                        </button>
+                        <!-- Intrinsic onclick button -->
+                        <button type="button" class="btn btn-secondary" onclick="handleIntrinsicBtnClick()">
+                            Intrinsic <code>onclick</code> Test
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Real-time Event Stream & Comparison Panel -->
+            <section class="side-panel">
+                <!-- Live Event Logger -->
+                <div class="card logger-card">
+                    <div class="logger-header">
+                        <h3>⚡ Real-Time Event Stream</h3>
+                        <button id="btnClearLog" class="btn-clear">Clear Log</button>
+                    </div>
+                    <div id="eventStreamLog" class="event-stream-box">
+                        <div class="log-entry system">[Ready] Interact with the form to capture real-time event logs...</div>
+                    </div>
+                </div>
+
+                <!-- Comparison Table: Intrinsic vs addEventListener() -->
+                <div class="card comparison-card">
+                    <h3>📚 Intrinsic vs <code>addEventListener()</code> Comparison</h3>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Intrinsic (Inline HTML)</th>
+                                <th>Modern <code>addEventListener</code></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Syntax</strong></td>
+                                <td><code>&lt;button onclick="fn()"&gt;</code></td>
+                                <td><code>btn.addEventListener('click', fn)</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Multiple Handlers</strong></td>
+                                <td>❌ Overwrites previous handler</td>
+                                <td>✅ Multiple independent listeners</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Separation of Concerns</strong></td>
+                                <td>❌ Mixes HTML and JavaScript</td>
+                                <td>✅ Clean HTML/JS decoupling</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Event Phase Control</strong></td>
+                                <td>❌ Bubbling only</td>
+                                <td>✅ Supports Bubbling & Capturing</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Dynamic Removal</strong></td>
+                                <td>Harder (setting to <code>null</code>)</td>
+                                <td>✅ <code>removeEventListener()</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

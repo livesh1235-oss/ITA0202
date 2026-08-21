@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment 1: DOM-Based Student Profile Manipulation</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <a href="../index.html" class="back-link">&larr; Back to Dashboard</a>
+            <h1>Experiment 1: DOM-Based Student Profile Manipulation</h1>
+            <p class="subtitle">Demonstrating <code>getElementById()</code>, <code>querySelector()</code>, <code>textContent</code>, <code>style</code>, <code>classList</code>, and <code>setAttribute()</code></p>
+        </header>
+
+        <main class="content-grid">
+            <!-- Left Side: Profile Preview Card -->
+            <section class="card-section">
+                <div class="section-title">Student Profile Preview</div>
+                
+                <div id="profileCard" class="profile-card" data-status="active">
+                    <div class="avatar-container">
+                        <img id="studentAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80" alt="Student Avatar" class="profile-avatar">
+                        <span id="statusBadge" class="badge badge-active">Active</span>
+                    </div>
+
+                    <h2 id="studentHeading" class="student-name">Alex Johnson</h2>
+                    <p id="studentRoll" class="student-id">Reg No: <strong>21CS101</strong></p>
+                    <p id="studentDept" class="student-dept">Department of Computer Science & Engineering</p>
+                    <p id="studentBio" class="student-bio">Full-stack web developer passionate about cloud computing and modern UI/UX design.</p>
+                    
+                    <div class="profile-tags" id="profileTags">
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">Java</span>
+                        <span class="tag">Web Dev</span>
+                    </div>
+                </div>
+
+                <div id="hiddenPlaceholder" class="hidden-placeholder" style="display: none;">
+                    <p>Profile is currently hidden</p>
+                </div>
+            </section>
+
+            <!-- Right Side: Manipulation Controls -->
+            <section class="controls-section">
+                <div class="section-title">DOM Manipulation Controls</div>
+
+                <!-- 1. Change Heading (querySelector & textContent) -->
+                <div class="control-group">
+                    <label for="nameInput">1. Change Heading (<code>querySelector</code> & <code>textContent</code>)</label>
+                    <div class="input-row">
+                        <input type="text" id="nameInput" placeholder="Enter new student name..." value="Samantha Vance">
+                        <button id="btnChangeHeading" class="btn btn-primary">Update Name</button>
+                    </div>
+                </div>
+
+                <!-- 2. Change Text Color (style) -->
+                <div class="control-group">
+                    <label>2. Change Text Color (<code>element.style.color</code>)</label>
+                    <div class="color-presets">
+                        <button class="color-btn" style="background-color: #1e293b;" onclick="changeTextColor('#1e293b')" title="Dark Slate"></button>
+                        <button class="color-btn" style="background-color: #2563eb;" onclick="changeTextColor('#2563eb')" title="Royal Blue"></button>
+                        <button class="color-btn" style="background-color: #059669;" onclick="changeTextColor('#059669')" title="Emerald Green"></button>
+                        <button class="color-btn" style="background-color: #dc2626;" onclick="changeTextColor('#dc2626')" title="Ruby Red"></button>
+                        <button class="color-btn" style="background-color: #7c3aed;" onclick="changeTextColor('#7c3aed')" title="Purple"></button>
+                        <input type="color" id="customTextColor" value="#2563eb" onchange="changeTextColor(this.value)" title="Custom Color">
+                    </div>
+                </div>
+
+                <!-- 3. Change Background Color (style.backgroundColor) -->
+                <div class="control-group">
+                    <label>3. Change Background Color (<code>element.style.backgroundColor</code>)</label>
+                    <div class="color-presets">
+                        <button class="color-btn" style="background-color: #ffffff; border: 1px solid #cbd5e1;" onclick="changeBgColor('#ffffff')"></button>
+                        <button class="color-btn" style="background-color: #f0fdf4;" onclick="changeBgColor('#f0fdf4')"></button>
+                        <button class="color-btn" style="background-color: #eff6ff;" onclick="changeBgColor('#eff6ff')"></button>
+                        <button class="color-btn" style="background-color: #fef2f2;" onclick="changeBgColor('#fef2f2')"></button>
+                        <button class="color-btn" style="background-color: #faf5ff;" onclick="changeBgColor('#faf5ff')"></button>
+                        <input type="color" id="customBgColor" value="#ffffff" onchange="changeBgColor(this.value)" title="Custom Background">
+                    </div>
+                </div>
+
+                <!-- 4. Toggle Card Theme (classList.toggle) -->
+                <div class="control-group">
+                    <label>4. Toggle Theme Class (<code>classList.toggle</code>)</label>
+                    <div class="button-row">
+                        <button id="btnToggleTheme" class="btn btn-secondary">Toggle Dark Card</button>
+                        <button id="btnToggleBorder" class="btn btn-secondary">Toggle Accent Border</button>
+                    </div>
+                </div>
+
+                <!-- 5. Change Avatar & Status (setAttribute) -->
+                <div class="control-group">
+                    <label>5. Update Attributes (<code>setAttribute()</code>)</label>
+                    <div class="button-row">
+                        <button id="btnChangeAvatar" class="btn btn-secondary">Switch Avatar Image</button>
+                        <button id="btnToggleStatus" class="btn btn-secondary">Toggle Status Attribute</button>
+                    </div>
+                </div>
+
+                <!-- 6. Show / Hide Profile -->
+                <div class="control-group">
+                    <label>6. Visibility Control (<code>style.display</code> / <code>classList</code>)</label>
+                    <div class="button-row">
+                        <button id="btnToggleVisibility" class="btn btn-danger">Hide Profile</button>
+                        <button id="btnReset" class="btn btn-outline">Reset to Default</button>
+                    </div>
+                </div>
+
+                <!-- DOM Action Log -->
+                <div class="log-box">
+                    <div class="log-header">
+                        <span>DOM Method Execution Log:</span>
+                        <button id="btnClearLog" class="btn-text">Clear</button>
+                    </div>
+                    <div id="domLog" class="log-content">
+                        <p class="log-item initial">[Initialized] Ready to execute DOM manipulations...</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

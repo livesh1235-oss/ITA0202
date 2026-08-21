@@ -1,0 +1,356 @@
+:root {
+    --bg-main: #f8fafc;
+    --card-bg: #ffffff;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --primary: #9333ea;
+    --primary-hover: #7e22ce;
+    --success: #16a34a;
+    --warning: #d97706;
+    --danger: #dc2626;
+    --border: #e2e8f0;
+    --radius: 12px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    padding: 2rem 1rem 4rem;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1140px;
+    margin: 0 auto;
+}
+
+.header {
+    margin-bottom: 2rem;
+}
+
+.back-link {
+    display: inline-block;
+    color: var(--primary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    transition: transform 0.2s;
+}
+
+.back-link:hover {
+    transform: translateX(-4px);
+}
+
+.header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+.subtitle code {
+    background: #e2e8f0;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    color: #0f172a;
+}
+
+/* Feature Matrix Grid */
+.detection-summary {
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.summary-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+}
+
+.summary-header h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+/* Modern CSS Grid with flex fallback */
+.matrix-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+@supports (display: grid) {
+    .matrix-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 1rem;
+    }
+}
+
+.matrix-card {
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.1rem;
+    display: flex;
+    gap: 0.85rem;
+    align-items: center;
+}
+
+.matrix-icon {
+    font-size: 1.75rem;
+}
+
+.matrix-info h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 0.25rem;
+}
+
+.status-line {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+}
+
+.badge {
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.badge-supported {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.badge-fallback {
+    background: #fef3c7;
+    color: #b45309;
+}
+
+.badge-unsupported {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.fallback-note {
+    font-size: 0.72rem;
+    color: #64748b;
+    font-style: italic;
+}
+
+/* Demo Grid */
+.demo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 860px) {
+    .demo-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+}
+
+.card-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 1.25rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 0.35rem;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    outline: none;
+    transition: all 0.2s;
+}
+
+input[type="text"]:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(147, 51, 234, 0.15);
+}
+
+.action-buttons {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin: 1.25rem 0;
+}
+
+.btn {
+    padding: 0.55rem 1rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+}
+
+.btn-secondary {
+    background-color: #f1f5f9;
+    color: #334155;
+    border-color: #cbd5e1;
+}
+
+.btn-secondary:hover {
+    background-color: #e2e8f0;
+}
+
+.btn-danger-outline {
+    background: transparent;
+    color: var(--danger);
+    border: 1px solid var(--danger);
+}
+
+.btn-danger-outline:hover {
+    background: #fef2f2;
+}
+
+.btn-outline {
+    background: transparent;
+    color: #475569;
+    border: 1px solid #cbd5e1;
+}
+
+.btn-outline:hover {
+    background: #f8fafc;
+}
+
+.output-box {
+    background: #0f172a;
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+    color: #e2e8f0;
+    font-family: monospace;
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.output-label {
+    display: block;
+    color: #94a3b8;
+    font-size: 0.72rem;
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+}
+
+.test-target-box {
+    background: #f5f3ff;
+    border: 2px dashed #c084fc;
+    border-radius: 8px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s;
+}
+
+.target-title {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #6b21a8;
+    margin-bottom: 0.25rem;
+}
+
+.target-content {
+    font-size: 0.82rem;
+    color: #475569;
+}
+
+/* CSS @supports Demo Styling */
+.css-supports-card {
+    background: linear-gradient(135deg, #7e22ce 0%, #3b82f6 100%);
+    color: white;
+}
+
+.css-supports-card .card-title {
+    color: white;
+}
+
+.css-supports-card .card-desc {
+    color: #e2e8f0;
+}
+
+/* Fallback style for older browsers */
+.glass-box {
+    background: #ffffff;
+    color: #0f172a;
+    border: 2px solid #cbd5e1;
+    border-radius: 10px;
+    padding: 1.5rem;
+}
+
+/* Modern progressive enhancement using @supports */
+@supports (backdrop-filter: blur(12px)) or (-webkit-backdrop-filter: blur(12px)) {
+    .glass-box {
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        color: #ffffff;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.18);
+    }
+}

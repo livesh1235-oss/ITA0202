@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                             http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+
+    <display-name>CO3 Java Servlet Laboratory Suite</display-name>
+
+    <!-- Experiment 6: Dynamic Content Generation Servlet -->
+    <servlet>
+        <servlet-name>Exp6DynamicContentServlet</servlet-name>
+        <servlet-class>com.co3.servlets.Exp6DynamicContentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Exp6DynamicContentServlet</servlet-name>
+        <url-pattern>/exp6</url-pattern>
+    </servlet-mapping>
+
+    <!-- Experiment 7: Student Registration Form Servlet -->
+    <servlet>
+        <servlet-name>Exp7RegistrationServlet</servlet-name>
+        <servlet-class>com.co3.servlets.Exp7RegistrationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Exp7RegistrationServlet</servlet-name>
+        <url-pattern>/exp7</url-pattern>
+    </servlet-mapping>
+
+    <!-- Experiment 8: Student Result Processing Servlet -->
+    <servlet>
+        <servlet-name>Exp8ResultProcessingServlet</servlet-name>
+        <servlet-class>com.co3.servlets.Exp8ResultProcessingServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Exp8ResultProcessingServlet</servlet-name>
+        <url-pattern>/exp8</url-pattern>
+    </servlet-mapping>
+
+    <!-- Experiment 9: Servlet Lifecycle Demonstration Servlet -->
+    <servlet>
+        <servlet-name>Exp9LifecycleServlet</servlet-name>
+        <servlet-class>com.co3.servlets.Exp9LifecycleServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Exp9LifecycleServlet</servlet-name>
+        <url-pattern>/exp9</url-pattern>
+    </servlet-mapping>
+
+    <!-- Experiment 10: Thread-Safe Visitor Counter Servlet -->
+    <servlet>
+        <servlet-name>Exp10VisitorCounterServlet</servlet-name>
+        <servlet-class>com.co3.servlets.Exp10VisitorCounterServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Exp10VisitorCounterServlet</servlet-name>
+        <url-pattern>/exp10</url-pattern>
+    </servlet-mapping>
+
+    <welcome-file-list>
+        <welcome-file>exp7_registration_form.html</welcome-file>
+    </welcome-file-list>
+
+</web-app>
