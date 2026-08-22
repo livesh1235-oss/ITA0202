@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex University Event Registration Portal | Unit II Assessment</title>
+    
+    <!-- External CSS Style Sheet (Main Website Design) -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+    <!-- Internal CSS Demonstration (Specifically for Special Flash Campaign Notice Banner) -->
+    <style>
+        /* Internal CSS Demonstration Section as required by Assessment Specification B.1 */
+        #flash-notice-banner {
+            background: linear-gradient(90deg, #1e1b4b 0%, #312e81 50%, #1e1b4b 100%);
+            border-bottom: 1px solid #4338ca;
+            color: #e0e7ff;
+            padding: 0.6rem 1rem;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        #flash-notice-banner .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #38bdf8;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px #38bdf8;
+        }
+
+        #flash-notice-banner a {
+            color: #38bdf8;
+            text-decoration: underline;
+            margin-left: 0.35rem;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. Internal CSS Styled Notice Banner -->
+    <aside id="flash-notice-banner" aria-label="Important Announcement">
+        <span class="pulse-dot"></span>
+        <span><strong>University Spring Conclave 2026:</strong> Early-bird registration closes on 
+        <!-- Inline CSS Demonstration as required by Assessment Specification B.1 on one small element -->
+        <span style="color: #fbbf24; font-weight: 800; text-decoration: underline dotted;">February 28, 2026</span>.</span>
+        <a href="#events">Explore Events &rarr;</a>
+    </aside>
+
+    <!-- 2. Header Section (Sticky Navigation Bar) -->
+    <header class="site-header" id="siteHeader">
+        <div class="header-container">
+            <div class="logo-group">
+                <div class="logo-icon">🏛️</div>
+                <div class="logo-text">
+                    <span class="univ-name">APEX UNIVERSITY</span>
+                    <span class="portal-tagline">Event Registration Portal</span>
+                </div>
+            </div>
+
+            <nav class="main-nav" aria-label="Main Navigation">
+                <ul class="nav-list">
+                    <li><a href="#hero" class="nav-link active">Home</a></li>
+                    <li><a href="#events" class="nav-link">Event Catalogue</a></li>
+                    <li><a href="#register" class="nav-link">Register Now</a></li>
+                    <li><a href="#boxmodel-calc" class="nav-link">Box Model</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-action">
+                <a href="#register" class="btn btn-header">Quick Register</a>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <!-- 3. Hero Section -->
+        <section class="hero-section" id="hero">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <div class="campaign-badge">
+                        <span>🚀</span> Annual Campus Fest 2026
+                    </div>
+                    <h1 class="hero-title">Empowering Student Innovation, Culture & Leadership</h1>
+                    <p class="hero-subtitle">
+                        Discover world-class hackathons, national cultural festivals, corporate placement bootcamps, and inter-university sports tournaments. Register your spot today!
+                    </p>
+                    
+                    <div class="hero-meta-row">
+                        <div class="meta-item">
+                            <span class="meta-icon">📅</span>
+                            <div>
+                                <span class="meta-label">Campaign Period</span>
+                                <strong class="meta-value">March 15 &ndash; 20, 2026</strong>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-icon">📍</span>
+                            <div>
+                                <span class="meta-label">Primary Venue</span>
+                                <strong class="meta-value">University Convention Center</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-cta-group">
+                        <a href="#events" class="btn btn-primary btn-lg">Browse 4+ Events</a>
+                        <a href="#register" class="btn btn-secondary btn-lg">Register Online</a>
+                    </div>
+                </div>
+
+                <div class="hero-visual">
+                    <div class="hero-stats-card">
+                        <div class="stat-badge">LIVE STATUS</div>
+                        <div class="stat-number">2,400+</div>
+                        <div class="stat-label">Students Already Registered</div>
+                        <div class="stat-progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
+                        <div class="stat-meta">85% Capacity Reached Across 4 Tracks</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Event Catalogue Section (CSS Grid / Flexbox Layout) -->
+        <section class="catalogue-section" id="events">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-subtitle">Diverse Opportunities</span>
+                    <h2 class="section-title">Official Event Catalogue</h2>
+                    <p class="section-description">Select from technical hackathons, cultural fests, corporate placement bootcamps, and sports tournaments.</p>
+                </div>
+
+                <!-- Event Cards Grid Layout -->
+                <div class="events-grid">
+                    
+                    <!-- Event Card 1: Technical Workshop / Hackathon -->
+                    <article class="event-card" data-category="technical" id="card-hackathon">
+                        <div class="card-badge badge-technical">Technical</div>
+                        <div class="card-image-wrap">
+                            <span class="card-icon-art">💻</span>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="event-title">HackApex 2026: 24-Hour AI & Web3 Hackathon</h3>
+                            <div class="event-metadata">
+                                <span class="meta-pill">📅 March 15, 2026 &bull; 09:00 AM</span>
+                                <span class="meta-pill">📍 Tech Park Auditorium A</span>
+                            </div>
+                            <p class="event-desc">
+                                A 24-hour national hackathon focused on building intelligent web applications, cloud systems, and blockchain security protocols with industry mentors.
+                            </p>
+                            <div class="card-footer-action">
+                                <span class="reg-status status-open">● Open (64 Spots Left)</span>
+                                <button class="btn btn-card" onclick="selectEvent('HackApex 2026: 24-Hour Hackathon')">Register Event</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Event Card 2: Cultural Fest -->
+                    <article class="event-card" data-category="cultural" id="card-cultural">
+                        <div class="card-badge badge-cultural">Cultural</div>
+                        <div class="card-image-wrap">
+                            <span class="card-icon-art">🎭</span>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="event-title">Rhythm & Roots: Inter-College Cultural Gala</h3>
+                            <div class="event-metadata">
+                                <span class="meta-pill">📅 March 16, 2026 &bull; 05:00 PM</span>
+                                <span class="meta-pill">📍 Open Air Amphitheatre</span>
+                            </div>
+                            <p class="event-desc">
+                                Celebrate music, classical and western dance, theatrical drama, and digital arts with renowned celebrity guest judges and live bands.
+                            </p>
+                            <div class="card-footer-action">
+                                <span class="reg-status status-open">● Open (120 Spots Left)</span>
+                                <button class="btn btn-card" onclick="selectEvent('Rhythm & Roots: Cultural Gala')">Register Event</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Event Card 3: Placement Training -->
+                    <article class="event-card" data-category="placement" id="card-placement">
+                        <div class="card-badge badge-placement">Placement</div>
+                        <div class="card-image-wrap">
+                            <span class="card-icon-art">💼</span>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="event-title">Corporate Readiness & Mock Interview BootCamp</h3>
+                            <div class="event-metadata">
+                                <span class="meta-pill">📅 March 17, 2026 &bull; 10:00 AM</span>
+                                <span class="meta-pill">📍 Career Placement Cell & Lab 4</span>
+                            </div>
+                            <p class="event-desc">
+                                Intensive resume review, algorithm whiteboard interviews, and corporate soft-skills training conducted by Fortune 500 engineering recruiters.
+                            </p>
+                            <div class="card-footer-action">
+                                <span class="reg-status status-fast">⚡ Fast Filling (18 Spots)</span>
+                                <button class="btn btn-card" onclick="selectEvent('Corporate Readiness & Mock Interview BootCamp')">Register Event</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Event Card 4: Sports Tournament -->
+                    <article class="event-card" data-category="sports" id="card-sports">
+                        <div class="card-badge badge-sports">Sports</div>
+                        <div class="card-image-wrap">
+                            <span class="card-icon-art">🏆</span>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="event-title">Apex Championship: Inter-Department Sports Fest</h3>
+                            <div class="event-metadata">
+                                <span class="meta-pill">📅 March 18, 2026 &bull; 08:00 AM</span>
+                                <span class="meta-pill">📍 University Sports Complex & Ground</span>
+                            </div>
+                            <p class="event-desc">
+                                Annual track and field, basketball, badminton, football, and table tennis championship competitions with medals and institutional trophies.
+                            </p>
+                            <div class="card-footer-action">
+                                <span class="reg-status status-open">● Open (45 Spots Left)</span>
+                                <button class="btn btn-card" onclick="selectEvent('Apex Championship: Sports Fest')">Register Event</button>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Interactive Registration Form Section -->
+        <section class="form-section" id="register">
+            <div class="section-container">
+                <div class="form-wrapper">
+                    <div class="form-intro">
+                        <span class="section-subtitle">Seamless Online Entry</span>
+                        <h2 class="form-title">Student Event Registration</h2>
+                        <p class="form-desc">Complete the form below to confirm your seat. Instant confirmation badges will be generated.</p>
+                        
+                        <div class="security-box">
+                            <div class="sec-item">🔒 Official University Portal</div>
+                            <div class="sec-item">✅ Zero Registration Fee for Students</div>
+                            <div class="sec-item">📜 Verified Certificate of Participation</div>
+                        </div>
+                    </div>
+
+                    <div class="form-card-container">
+                        <form id="universityRegForm" class="registration-form" novalidate>
+                            <div class="form-group">
+                                <label for="studentName" class="form-label">Full Name of Student <span class="req">*</span></label>
+                                <input type="text" id="studentName" name="studentName" class="form-input" placeholder="e.g. Sandra Bullock" required autocomplete="name">
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="regNumber" class="form-label">Register Number <span class="req">*</span></label>
+                                    <input type="text" id="regNumber" name="regNumber" class="form-input" placeholder="e.g. 21CS101" required autocomplete="off">
+                                </div>
+                                <div class="form-group">
+                                    <label for="department" class="form-label">Academic Department <span class="req">*</span></label>
+                                    <select id="department" name="department" class="form-select" required>
+                                        <option value="" disabled selected>-- Select Department --</option>
+                                        <option value="Computer Science & Engineering">Computer Science & Engineering</option>
+                                        <option value="Information Technology">Information Technology</option>
+                                        <option value="Artificial Intelligence & Data Science">Artificial Intelligence & Data Science</option>
+                                        <option value="Electronics & Communication">Electronics & Communication</option>
+                                        <option value="Mechanical Engineering">Mechanical Engineering</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="emailAddress" class="form-label">Student Email Address <span class="req">*</span></label>
+                                <input type="email" id="emailAddress" name="emailAddress" class="form-input" placeholder="e.g. student@apex.edu" required autocomplete="email">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="eventSelection" class="form-label">Target Event Selection <span class="req">*</span></label>
+                                <select id="eventSelection" name="eventSelection" class="form-select" required>
+                                    <option value="" disabled selected>-- Choose Event to Register --</option>
+                                    <option value="HackApex 2026: 24-Hour AI & Web3 Hackathon">HackApex 2026: 24-Hour AI & Web3 Hackathon (Technical)</option>
+                                    <option value="Rhythm & Roots: Cultural Gala">Rhythm & Roots: Inter-College Cultural Gala (Cultural)</option>
+                                    <option value="Corporate Readiness & Mock Interview BootCamp">Corporate Readiness & Mock Interview BootCamp (Placement)</option>
+                                    <option value="Apex Championship: Sports Fest">Apex Championship: Inter-Department Sports Fest (Sports)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group checkbox-group">
+                                <label class="checkbox-label" for="agreeTerms">
+                                    <input type="checkbox" id="agreeTerms" required>
+                                    <span>I confirm that the details provided are accurate and agree to adhere to event codes of conduct.</span>
+                                </label>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-block" id="btnSubmitForm">
+                                Submit Event Registration &rarr;
+                            </button>
+
+                            <!-- Success Banner after Submission -->
+                            <div id="formSuccessMessage" class="success-banner" style="display: none;">
+                                <h4>🎉 Registration Successful!</h4>
+                                <p id="successDetails">Your registration details have been received.</p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. CSS Box Model Calculation & Theoretical Reference Section -->
+        <section class="boxmodel-section" id="boxmodel-calc">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-subtitle">Assessment Requirement B.3</span>
+                    <h2 class="section-title">CSS Box Model Analysis & Calculation</h2>
+                    <p class="section-description">Verification of content, padding, border, and margin dimensions for Event Card 1 (<code>#card-hackathon</code>).</p>
+                </div>
+
+                <div class="boxmodel-grid">
+                    <!-- Visual Box Model Diagram -->
+                    <div class="boxmodel-diagram">
+                        <div class="box-margin">
+                            <span class="box-label">Margin: 16px (All Sides)</span>
+                            <div class="box-border">
+                                <span class="box-label">Border: 1px Solid #334155</span>
+                                <div class="box-padding">
+                                    <span class="box-label">Padding: 24px (All Sides)</span>
+                                    <div class="box-content">
+                                        <strong>Content Area</strong>
+                                        <span>Width: 320px &bull; Height: Auto</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mathematical Calculation Card -->
+                    <div class="boxmodel-math-card">
+                        <h3>📐 Total Horizontal Width Calculation</h3>
+                        <div class="math-block">
+                            <p><strong>1. Default Content-Box Model (<code>box-sizing: content-box</code>):</strong></p>
+                            <code>Total Width = Content Width + Left Padding + Right Padding + Left Border + Right Border + Left Margin + Right Margin</code>
+                            <div class="calculation-step">
+                                \[\text{Total Width} = 320 + 24 + 24 + 1 + 1 + 16 + 16 = 398\text{ px}\]
+                                <em>(Excluding outer margin: \(320 + 48 + 2 = 370\text{ px}\) rendered on screen)</em>
+                            </div>
+
+                            <p style="margin-top: 1rem;"><strong>2. Applied Border-Box Model (<code>box-sizing: border-box</code>):</strong></p>
+                            <code>Specified Width (370px) = Content (320px) + Total Padding (48px) + Total Border (2px)</code>
+                            <div class="calculation-step highlight-step">
+                                \[\text{Total Rendered Width} = 370\text{ px} + (16 + 16\text{ Margin}) = 402\text{ px}\]
+                                <strong>Key Advantage:</strong> In <code>border-box</code>, adding padding or borders never blows out grid columns or creates horizontal overflow on mobile screens.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 7. Fixed Help & Telemetry Floating Action Button (Beyond Normal Flow Demonstration) -->
+    <div class="fixed-floating-btn" id="fixedHelpBtn" title="Fixed Position Help Button">
+        <a href="#register" class="float-btn-link">
+            <span class="float-icon">💬</span>
+            <span class="float-text">Live Support</span>
+        </a>
+    </div>
+
+    <!-- 8. Footer Section -->
+    <footer class="site-footer" id="contact">
+        <div class="footer-container">
+            <div class="footer-col brand-col">
+                <div class="footer-logo">
+                    <span class="footer-icon">🏛️</span>
+                    <strong>APEX UNIVERSITY</strong>
+                </div>
+                <p class="footer-text">
+                    Autonomous Institution accredited with 'A++' Grade. Leading education and student innovation since 1994.
+                </p>
+                <div class="social-links">
+                    <a href="#" class="social-icon" aria-label="University Twitter">𝕏</a>
+                    <a href="#" class="social-icon" aria-label="University LinkedIn">in</a>
+                    <a href="#" class="social-icon" aria-label="University YouTube">▶</a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="#hero">Portal Home</a></li>
+                    <li><a href="#events">Event Catalogue</a></li>
+                    <li><a href="#register">Online Registration</a></li>
+                    <li><a href="#boxmodel-calc">CSS Box Model</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Event Categories</h4>
+                <ul class="footer-links">
+                    <li><a href="#events">Technical Workshops</a></li>
+                    <li><a href="#events">Cultural Extravaganza</a></li>
+                    <li><a href="#events">Placement Bootcamps</a></li>
+                    <li><a href="#events">Inter-College Sports</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Contact Academic Office</h4>
+                <address class="footer-address">
+                    Academic Events & Student Affairs Cell<br>
+                    Admin Block, 3rd Floor, Apex University<br>
+                    Email: <a href="mailto:events@apex.edu">events@apex.edu</a><br>
+                    Helpline: +91 44 2800 4500
+                </address>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 Apex University. All Rights Reserved. Designed for Unit II Skill Development Assessment &bull; Web Technology (ITA02).</p>
+        </div>
+    </footer>
+
+    <!-- Interactive Script -->
+    <script src="script.js"></script>
+</body>
+</html>
