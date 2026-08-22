@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question 1: DOM-Based Interactive Student Registration Preview</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <a href="../index.html" class="back-link">&larr; Back to Assessment Dashboard</a>
+            <div class="meta-tag">CO3 &bull; Assessment 1 &bull; Question 1</div>
+            <h1>DOM-Based Student Registration Preview</h1>
+            <p class="subtitle">Enter student details below to immediately generate a dynamic, styled profile preview without page reloading.</p>
+        </header>
+
+        <main class="content-grid">
+            <!-- Left Side: Registration Input Form -->
+            <section class="card form-card">
+                <h2 class="card-title">Student Registration Form</h2>
+                
+                <form id="registrationForm">
+                    <div class="form-group">
+                        <label for="studentName">Student Full Name *</label>
+                        <input type="text" id="studentName" placeholder="e.g. Johnathan Vance" required autocomplete="off" value="Priya Dharshini">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="regNumber">Register Number *</label>
+                        <input type="text" id="regNumber" placeholder="e.g. 21CS402" required autocomplete="off" value="21CS402">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="department">Department *</label>
+                        <select id="department" required>
+                            <option value="" disabled>Select Department</option>
+                            <option value="Computer Science & Engineering" selected>Computer Science & Engineering</option>
+                            <option value="Information Technology">Information Technology</option>
+                            <option value="Artificial Intelligence & Data Science">Artificial Intelligence & Data Science</option>
+                            <option value="Electronics & Communication Engineering">Electronics & Communication Engineering</option>
+                            <option value="Mechanical Engineering">Mechanical Engineering</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="yearOfStudy">Year of Study *</label>
+                        <select id="yearOfStudy" required>
+                            <option value="" disabled>Select Year</option>
+                            <option value="1st Year (Freshman)">1st Year (Freshman)</option>
+                            <option value="2nd Year (Sophomore)">2nd Year (Sophomore)</option>
+                            <option value="3rd Year (Junior)" selected>3rd Year (Junior)</option>
+                            <option value="4th Year (Senior)">4th Year (Senior)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" id="btnDisplayProfile" class="btn btn-primary">
+                            <span>✨</span> Display Profile
+                        </button>
+                        <button type="button" id="btnClearForm" class="btn btn-secondary">
+                            Reset Form
+                        </button>
+                    </div>
+                </form>
+
+                <div class="concepts-box">
+                    <div class="concept-title">Concepts Demonstrated:</div>
+                    <ul class="concept-list">
+                        <li><code>getElementById()</code> & <code>querySelector()</code> to read values</li>
+                        <li><code>createElement()</code> & <code>textContent</code> to construct nodes</li>
+                        <li><code>addEventListener()</code> for Display and Remove clicks</li>
+                        <li><code>classList</code> styling to visually distinguish profile</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Right Side: Dynamic Profile Output Canvas -->
+            <section class="card preview-card">
+                <div class="preview-header">
+                    <h2 class="card-title">Generated Student Profile</h2>
+                    <span id="previewStatus" class="status-indicator ready">Live DOM Preview</span>
+                </div>
+
+                <!-- Container where DOM profile card is injected -->
+                <div id="profileContainer" class="profile-container">
+                    <div id="emptyState" class="empty-state">
+                        <div class="empty-icon">🪪</div>
+                        <h3>No Profile Displayed</h3>
+                        <p>Fill in the registration form and click <strong>Display Profile</strong> to dynamically render the student card.</p>
+                    </div>
+                </div>
+
+                <!-- DOM Execution Telemetry -->
+                <div class="audit-panel">
+                    <span class="audit-label">DOM Action Telemetry:</span>
+                    <p id="auditLog">Awaiting user interaction...</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
