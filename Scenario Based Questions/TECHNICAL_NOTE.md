@@ -39,7 +39,7 @@
 
 ## 3. CSS Box Model – Event Card Width Calculation (Requirement B.3)
 
-**Target Element:** `#card-hackathon` (Event Card 1 – HackApex 2026)
+**Target Element:** `#card-hackathon` (Event Card 1 – Hackathon 2026 at SCAD 1st Floor)
 
 | Box Model Layer | Value | Side |
 | :--- | :--- | :--- |
@@ -73,7 +73,7 @@ Total Rendered Width    = 270 px (unchanged — padding/border absorbed inside)
 | **CSS Grid** | `display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));` | Event Catalogue — multi-column desktop → single-column mobile |
 | **Flexbox** | `display: flex; justify-content: space-between;` | Header row, hero CTA buttons, meta-row, form controls |
 | **Position: Sticky** | `position: sticky; top: 0; z-index: 1000;` | Navigation header remains visible while scrolling |
-| **Position: Absolute** | `position: absolute; top: 1.25rem; right: 1.25rem;` | Category badge (Technical / Cultural / Placement / Sports) inside each event card |
+| **Position: Absolute** | `position: absolute; top: 1.25rem; right: 1.25rem;` | Category badge (Hackathon / Makvyantra 2.0 / Non-Tech / Sports) inside each event card |
 | **Position: Relative** | `position: relative;` | Every `.event-card` acts as anchor for its absolute-positioned badge |
 | **Position: Fixed** | `position: fixed; bottom: 2rem; right: 2rem; z-index: 999;` | Live Support floating action button — always visible in the viewport |
 | **z-index** | `z-index: 1000` (header), `z-index: 999` (FAB), `z-index: 10` (badge) | Stacking hierarchy — header over all, FAB below header |

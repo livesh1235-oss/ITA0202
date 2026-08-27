@@ -1,6 +1,6 @@
 /**
  * ==============================================================================
- * APEX UNIVERSITY - EVENT REGISTRATION PORTAL
+ * LIVESH UNIVERSITY - EVENT REGISTRATION PORTAL
  * Unit II: Cascading Style Sheets (CSS3) - Skill Development Laboratory Assessment
  * Course Code: ITA02 | Scenario-Based Questions
  * ==============================================================================
@@ -501,6 +501,8 @@ img {
 
 /* Attribute / Class Specific Badges */
 .badge-technical { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.4); }
+.badge-makvyantra { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.4); }
+.badge-nontech   { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
 .badge-cultural  { background: rgba(244, 63, 94, 0.2);  color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.4); }
 .badge-placement { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
 .badge-sports    { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }

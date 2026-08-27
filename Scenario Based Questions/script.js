@@ -37,7 +37,7 @@ function selectEvent(eventName) {
     const sel = document.getElementById('eventSelection');
     if (sel) {
         for (let i = 0; i < sel.options.length; i++) {
-            if (sel.options[i].value.includes(eventName.substring(0, 20))) {
+            if (sel.options[i].value === eventName || sel.options[i].value.includes(eventName) || eventName.includes(sel.options[i].value)) {
                 sel.selectedIndex = i;
                 break;
             }
