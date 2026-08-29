@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CO4 Assessment 2: IT Service Request System (MVC)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --surface: #111827;
+            --surface-card: #1e293b;
+            --surface-inner: #0f172a;
+            --border: #334155;
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --accent-emerald: #10b981;
+            --accent-purple: #8b5cf6;
+            --accent-amber: #f59e0b;
+            --accent-red: #ef4444;
+            --text-primary: #f8fafc;
+            --text-muted: #94a3b8;
+            --radius: 12px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-primary); min-height: 100vh; padding: 2.5rem 1.25rem; line-height: 1.6; }
+        .container { max-width: 1080px; margin: 0 auto; }
+
+        /* Header Hero */
+        .hero { text-align: center; margin-bottom: 2.5rem; }
+        .badge-pill { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(139, 92, 246, 0.15); color: #a78bfa; border: 1px solid rgba(139, 92, 246, 0.3); padding: 0.35rem 1.2rem; border-radius: 999px; font-size: 0.82rem; font-weight: 700; text-transform: uppercase; margin-bottom: 1rem; letter-spacing: 0.05em; }
+        .hero h1 { font-size: 2.4rem; font-weight: 800; background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #94a3b8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.6rem; letter-spacing: -0.02em; }
+        .hero p { color: var(--text-muted); font-size: 1rem; max-width: 720px; margin: 0 auto; }
+
+        /* Navigation Tabs */
+        .tabs-nav { display: flex; gap: 0.5rem; background: var(--surface); padding: 0.4rem; border-radius: 10px; border: 1px solid var(--border); margin-bottom: 2rem; overflow-x: auto; }
+        .tab-btn { background: transparent; color: var(--text-muted); border: none; padding: 0.65rem 1.25rem; border-radius: 8px; font-weight: 700; font-size: 0.88rem; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+        .tab-btn.active { background: var(--primary); color: #ffffff; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); }
+        .tab-btn:hover:not(.active) { color: #ffffff; background: var(--surface-card); }
+
+        .tab-content { display: none; animation: fadeIn 0.25s ease-in-out; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Form Card */
+        .portal-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 2.25rem; box-shadow: 0 15px 35px rgba(0,0,0,0.4); margin-bottom: 2rem; }
+        .card-header { border-bottom: 1px solid var(--border); padding-bottom: 1.25rem; margin-bottom: 1.75rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .card-header h2 { font-size: 1.45rem; color: #ffffff; font-weight: 800; }
+        .card-header p { color: var(--text-muted); font-size: 0.88rem; }
+        
+        .mvc-tag { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; font-weight: 700; padding: 3px 10px; border-radius: 6px; font-family: 'JetBrains Mono', monospace; }
+        .tag-model { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
+        .tag-view { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .tag-controller { background: rgba(139, 92, 246, 0.15); color: #a78bfa; border: 1px solid rgba(139, 92, 246, 0.3); }
+
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.25rem; }
+        @media (max-width: 640px) { .form-row { grid-template-columns: 1fr; } }
+        
+        .form-group { margin-bottom: 1.25rem; }
+        label { display: block; font-size: 0.85rem; font-weight: 600; color: #cbd5e1; margin-bottom: 0.4rem; }
+        .req { color: var(--accent-red); }
+
+        input[type="text"], select, textarea {
+            width: 100%;
+            padding: 0.75rem 0.95rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.92rem;
+            outline: none;
+            background: var(--surface-inner);
+            color: #ffffff;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        input:focus, select:focus, textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(59,130,246,0.25); }
+        textarea { resize: vertical; min-height: 100px; }
+
+        .radio-group { display: flex; gap: 1.5rem; margin-top: 0.5rem; flex-wrap: wrap; }
+        .radio-label { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; color: #cbd5e1; cursor: pointer; }
+        .radio-label input { accent-color: var(--primary); width: 17px; height: 17px; }
+
+        .btn-group { display: flex; gap: 1rem; margin-top: 1.5rem; }
+        .btn-submit { flex: 2; background: var(--primary); color: white; border: none; padding: 0.85rem 1.5rem; border-radius: 8px; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+        .btn-submit:hover { background: var(--primary-hover); }
+        .btn-sample { flex: 1; background: var(--surface-card); color: #cbd5e1; border: 1px solid var(--border); padding: 0.85rem 1rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: all 0.2s; }
+        .btn-sample:hover { background: #334155; color: white; }
+
+        /* Output Card */
+        #outputArea { display: none; margin-top: 2.5rem; animation: fadeIn 0.35s ease; }
+        .ack-card { background: var(--surface-card); border-radius: var(--radius); padding: 2rem; border: 1px solid var(--border); box-shadow: 0 15px 30px rgba(0,0,0,0.3); }
+        
+        .success-banner { background: rgba(16, 185, 129, 0.15); border-left: 4px solid var(--accent-emerald); padding: 1rem 1.25rem; border-radius: 8px; margin-bottom: 1.75rem; display: flex; align-items: center; gap: 1rem; }
+        .success-icon { font-size: 1.6rem; color: var(--accent-emerald); }
+        
+        .details-table { width: 100%; border-collapse: collapse; margin-bottom: 1.75rem; font-size: 0.9rem; }
+        .details-table th { width: 35%; background: var(--surface-inner); color: var(--text-muted); padding: 0.8rem 1rem; text-align: left; border-bottom: 1px solid var(--border); font-weight: 600; font-size: 0.82rem; text-transform: uppercase; }
+        .details-table td { padding: 0.85rem 1rem; border-bottom: 1px solid var(--border); color: #f1f5f9; background: rgba(15, 23, 42, 0.5); }
+        .details-table tr:last-child th, .details-table tr:last-child td { border-bottom: none; }
+
+        .ticket-id { font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; font-weight: 700; background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.4); padding: 3px 10px; border-radius: 6px; }
+        
+        .priority-high { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); padding: 3px 10px; border-radius: 4px; font-weight: 700; }
+        .priority-medium { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); padding: 3px 10px; border-radius: 4px; font-weight: 700; }
+        .priority-low { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); padding: 3px 10px; border-radius: 4px; font-weight: 700; }
+
+        /* MVC Architecture Explanation Block */
+        .mvc-explanation { background: var(--surface-inner); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; margin-top: 1.5rem; }
+        .mvc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1rem 0; }
+        @media (max-width: 700px) { .mvc-grid { grid-template-columns: 1fr; } }
+        .mvc-box { background: var(--surface-card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; }
+        .mvc-box h4 { font-size: 0.85rem; text-transform: uppercase; margin-bottom: 0.4rem; font-family: 'JetBrains Mono', monospace; }
+        .mvc-box p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.45; }
+
+        /* Code Viewer */
+        .code-container { background: #080c14; border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem; overflow-x: auto; margin-top: 1rem; }
+        pre { font-family: 'JetBrains Mono', monospace; font-size: 0.86rem; color: #e2e8f0; line-height: 1.6; }
+        
+        .rubric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+        .rubric-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem; }
+        .rubric-card h4 { font-size: 0.95rem; margin-bottom: 0.25rem; }
+        .rubric-card .marks { font-size: 0.8rem; font-weight: 700; color: var(--accent-emerald); font-family: 'JetBrains Mono', monospace; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="hero">
+            <div class="badge-pill">
+                <span>⚡</span> Course Outcome 4 &bull; Assessment 2 &bull; Industry Problem Solving
+            </div>
+            <h1>IT Service Request Management System</h1>
+            <p>Complete Model-View-Controller (MVC) Architecture Implementation using Java Bean (Model), JSP Views, and HttpServlet Controller.</p>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="tabs-nav">
+            <button class="tab-btn active" onclick="switchTab('tab-simulator')">🖥️ Interactive System &amp; Portal</button>
+            <button class="tab-btn" onclick="switchTab('tab-architecture')">🏛️ MVC Architecture &amp; Flow</button>
+            <button class="tab-btn" onclick="switchTab('tab-solutions')">📑 Questions &amp; Code Solutions</button>
+        </nav>
+
+        <!-- TAB 1: Interactive System -->
+        <section id="tab-simulator" class="tab-content active">
+            <div class="portal-card">
+                <div class="card-header">
+                    <div>
+                        <h2>IT Service Request Form</h2>
+                        <p>Submit hardware, software, network, or account support tickets via MVC architecture.</p>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <span class="mvc-tag tag-view">View: serviceRequest.jsp</span>
+                        <span class="mvc-tag tag-controller">Controller: ServiceRequestServlet</span>
+                    </div>
+                </div>
+
+                <form id="srForm">
+                    <!-- Employee ID & Employee Name -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="employeeId">Employee ID <span class="req">*</span></label>
+                            <input type="text" id="employeeId" placeholder="e.g. EMP-4091" value="EMP-4091" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="employeeName">Employee Name <span class="req">*</span></label>
+                            <input type="text" id="employeeName" placeholder="e.g. Livesh Vetrivel" value="Livesh Vetrivel" required>
+                        </div>
+                    </div>
+
+                    <!-- Department -->
+                    <div class="form-group">
+                        <label for="department">Department <span class="req">*</span></label>
+                        <select id="department" required>
+                            <option value="">-- Select Department --</option>
+                            <option value="Engineering" selected>Engineering / Software Development</option>
+                            <option value="Human Resources">Human Resources (HR)</option>
+                            <option value="Finance">Finance &amp; Accounts</option>
+                            <option value="Marketing">Marketing &amp; Sales</option>
+                            <option value="Operations">Operations &amp; Logistics</option>
+                            <option value="Quality Assurance">Quality Assurance (QA)</option>
+                        </select>
+                    </div>
+
+                    <!-- Problem Category -->
+                    <div class="form-group">
+                        <label for="problemCategory">Problem Category <span class="req">*</span></label>
+                        <select id="problemCategory" required>
+                            <option value="">-- Select Category --</option>
+                            <option value="Network" selected>Network Connectivity &amp; VPN Access</option>
+                            <option value="Software">Software Installation / Licensing</option>
+                            <option value="Hardware">Hardware Malfunction / Display Issue</option>
+                            <option value="Account">Account Access &amp; Active Directory</option>
+                            <option value="Other">Other / Application Errors</option>
+                        </select>
+                    </div>
+
+                    <!-- Priority Level -->
+                    <div class="form-group">
+                        <label>Priority Level <span class="req">*</span></label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="priority" value="Low"> Low
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="priority" value="Medium"> Medium
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="priority" value="High" checked> High
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Problem Description -->
+                    <div class="form-group">
+                        <label for="problemDescription">Problem Description <span class="req">*</span></label>
+                        <textarea id="problemDescription" rows="4" placeholder="Describe the technical issue in detail..." required>Unable to connect to the internal production VPN gateway. Receiving handshake timeout error on port 443.</textarea>
+                    </div>
+
+                    <div class="btn-group">
+                        <button type="submit" class="btn-submit">
+                            <span>Submit Service Request via MVC Controller</span>
+                            <span>&rarr;</span>
+                        </button>
+                        <button type="button" id="btnSample" class="btn-sample">Load Sample Ticket</button>
+                    </div>
+                </form>
+
+                <!-- Acknowledgement Output View -->
+                <div id="outputArea"></div>
+            </div>
+        </section>
+
+        <!-- TAB 2: Architecture -->
+        <section id="tab-architecture" class="tab-content">
+            <div class="portal-card">
+                <div class="card-header">
+                    <div>
+                        <h2>MVC Architectural Lifecycle</h2>
+                        <p>Complete separation of concerns between Model, View, and Controller layers.</p>
+                    </div>
+                </div>
+
+                <div class="rubric-grid">
+                    <div class="rubric-card">
+                        <span class="mvc-tag tag-model">Model</span>
+                        <h4 style="margin-top: 0.5rem;">ServiceRequest.java</h4>
+                        <div class="marks">Question 2 &bull; 5 Marks</div>
+                        <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.4rem;">Pure Java Bean encapsulating employeeId, name, department, category, description, and priority with getters/setters.</p>
+                    </div>
+                    <div class="rubric-card">
+                        <span class="mvc-tag tag-view">View (Input)</span>
+                        <h4 style="margin-top: 0.5rem;">serviceRequest.jsp</h4>
+                        <div class="marks">Question 1 &bull; 7 Marks</div>
+                        <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.4rem;">Collects employee complaint parameters via HTTP POST with proper input fields and validation display.</p>
+                    </div>
+                    <div class="rubric-card">
+                        <span class="mvc-tag tag-controller">Controller</span>
+                        <h4 style="margin-top: 0.5rem;">ServiceRequestServlet</h4>
+                        <div class="marks">Question 3 &bull; 10 Marks</div>
+                        <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.4rem;">Validates parameters, generates ticket ID (SR-1001), instantiates Model, binds attributes, and dispatches views.</p>
+                    </div>
+                    <div class="rubric-card">
+                        <span class="mvc-tag tag-view">View (Result)</span>
+                        <h4 style="margin-top: 0.5rem;">acknowledgement.jsp</h4>
+                        <div class="marks">Question 4 &bull; 8 Marks</div>
+                        <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.4rem;">Displays formatted confirmation table with request number and detailed MVC component mapping.</p>
+                    </div>
+                </div>
+
+                <div class="mvc-explanation">
+                    <h3 style="font-size: 1.1rem; margin-bottom: 0.75rem; color: #ffffff;">🔄 Step-by-Step Request Flow</h3>
+                    <div class="code-container">
+<pre>[1. Employee Browser] ---> (Submits Form) ---> [2. serviceRequest.jsp (View)]
+                                                     │
+                                                     ▼ (HTTP POST /submitRequest)
+                                            [3. ServiceRequestServlet (Controller)]
+                                                     │
+                                                     ├──> Validates inputs
+                                                     ├──> Instantiates [4. ServiceRequest (Model)]
+                                                     ├──> Generates Tracking ID: "SR-1001"
+                                                     ├──> request.setAttribute("serviceRequest", model)
+                                                     │
+                                                     ▼ (RequestDispatcher.forward())
+                                            [5. acknowledgement.jsp (View)]
+                                                     │
+                                                     ▼ (Rendered Response)
+                                            [6. Employee Confirmation Screen]</pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: Code Solutions -->
+        <section id="tab-solutions" class="tab-content">
+            <div class="portal-card">
+                <div class="card-header">
+                    <div>
+                        <h2>Full Source Code &amp; Solutions</h2>
+                        <p>Direct code implementations for all 4 questions assessed in CO4 Assessment 2.</p>
+                    </div>
+                </div>
+
+                <h3 style="font-size: 1.1rem; color: #60a5fa; margin-top: 1rem;">1. Model: <code>ServiceRequest.java</code></h3>
+                <div class="code-container">
+<pre>package com.it.model;
+
+import java.io.Serializable;
+
+public class ServiceRequest implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    private String employeeId;
+    private String employeeName;
+    private String department;
+    private String problemCategory;
+    private String problemDescription;
+    private String priority;
+
+    public ServiceRequest() {}
+
+    public ServiceRequest(String employeeId, String employeeName, String department, 
+                          String problemCategory, String problemDescription, String priority) {
+        this.employeeId = employeeId;
+        this.employeeName = employeeName;
+        this.department = department;
+        this.problemCategory = problemCategory;
+        this.problemDescription = problemDescription;
+        this.priority = priority;
+    }
+
+    // Getters and Setters
+    public String getEmployeeId() { return employeeId; }
+    public void setEmployeeId(String employeeId) { this.employeeId = employeeId; }
+    public String getEmployeeName() { return employeeName; }
+    public void setEmployeeName(String employeeName) { this.employeeName = employeeName; }
+    public String getDepartment() { return department; }
+    public void setDepartment(String department) { this.department = department; }
+    public String getProblemCategory() { return problemCategory; }
+    public void setProblemCategory(String problemCategory) { this.problemCategory = problemCategory; }
+    public String getProblemDescription() { return problemDescription; }
+    public void setProblemDescription(String problemDescription) { this.problemDescription = problemDescription; }
+    public String getPriority() { return priority; }
+    public void setPriority(String priority) { this.priority = priority; }
+}</pre>
+                </div>
+
+                <h3 style="font-size: 1.1rem; color: #a78bfa; margin-top: 2rem;">2. Controller: <code>ServiceRequestServlet.java</code></h3>
+                <div class="code-container">
+<pre>@WebServlet(name = "ServiceRequestServlet", urlPatterns = {"/ServiceRequestServlet", "/submitRequest"})
+public class ServiceRequestServlet extends HttpServlet {
+    private static final AtomicInteger requestCounter = new AtomicInteger(1001);
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
+        
+        request.setCharacterEncoding("UTF-8");
+
+        String empId = request.getParameter("employeeId");
+        String empName = request.getParameter("employeeName");
+        String dept = request.getParameter("department");
+        String category = request.getParameter("problemCategory");
+        String desc = request.getParameter("problemDescription");
+        String priority = request.getParameter("priority");
+
+        // Validate mandatory fields
+        if (empId == null || empId.trim().isEmpty() ||
+            empName == null || empName.trim().isEmpty() ||
+            dept == null || dept.trim().isEmpty() ||
+            category == null || category.trim().isEmpty() ||
+            desc == null || desc.trim().isEmpty()) {
+            
+            request.setAttribute("errorMessage", "All fields are mandatory.");
+            request.getRequestDispatcher("serviceRequest.jsp").forward(request, response);
+            return;
+        }
+
+        // Create Model & Generate Ticket ID
+        ServiceRequest model = new ServiceRequest(empId, empName, dept, category, desc, priority);
+        String requestNumber = "SR-" + requestCounter.getAndIncrement();
+
+        // Bind attributes and forward to result view
+        request.setAttribute("serviceRequest", model);
+        request.setAttribute("requestNumber", requestNumber);
+        request.getRequestDispatcher("acknowledgement.jsp").forward(request, response);
+    }
+}</pre>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        let ticketSeq = 1001;
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        const form = document.getElementById('srForm');
+        const outputArea = document.getElementById('outputArea');
+        const btnSample = document.getElementById('btnSample');
+
+        btnSample.addEventListener('click', () => {
+            document.getElementById('employeeId').value = 'EMP-8824';
+            document.getElementById('employeeName').value = 'Ananya Krishnan';
+            document.getElementById('department').value = 'Human Resources';
+            document.getElementById('problemCategory').value = 'Software';
+            document.querySelector('input[name="priority"][value="Medium"]').checked = true;
+            document.getElementById('problemDescription').value = 'Biometric attendance portal software crashing upon export of monthly logs.';
+            generateAcknowledgement();
+        });
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            generateAcknowledgement();
+        });
+
+        function generateAcknowledgement() {
+            const empId = document.getElementById('employeeId').value.trim();
+            const empName = document.getElementById('employeeName').value.trim();
+            const dept = document.getElementById('department').value;
+            const cat = document.getElementById('problemCategory').value;
+            const priority = document.querySelector('input[name="priority"]:checked').value;
+            const desc = document.getElementById('problemDescription').value.trim();
+
+            const ticketId = 'SR-' + (ticketSeq++);
+
+            let pClass = 'priority-low';
+            if (priority === 'High') pClass = 'priority-high';
+            else if (priority === 'Medium') pClass = 'priority-medium';
+
+            outputArea.style.display = 'block';
+            outputArea.innerHTML = `
+                <div class="ack-card">
+                    <!-- Success Banner -->
+                    <div class="success-banner">
+                        <div class="success-icon">✓</div>
+                        <div>
+                            <strong style="color: #34d399; font-size: 1.05rem;">Service Request Submitted Successfully!</strong>
+                            <p style="color: #94a3b8; font-size: 0.85rem; margin-top: 2px;">Your ticket has been registered into the IT Service Desk system via <code>ServiceRequestServlet</code>.</p>
+                        </div>
+                    </div>
+
+                    <h3 style="font-size: 1.3rem; margin-bottom: 1rem; color: #ffffff;">Service Request Acknowledgement Details</h3>
+
+                    <!-- Details Table -->
+                    <table class="details-table">
+                        <tr>
+                            <th>Service Request Number</th>
+                            <td><span class="ticket-id">${ticketId}</span></td>
+                        </tr>
+                        <tr>
+                            <th>Employee ID</th>
+                            <td><strong>${escapeHtml(empId)}</strong></td>
+                        </tr>
+                        <tr>
+                            <th>Employee Name</th>
+                            <td>${escapeHtml(empName)}</td>
+                        </tr>
+                        <tr>
+                            <th>Department</th>
+                            <td>${escapeHtml(dept)}</td>
+                        </tr>
+                        <tr>
+                            <th>Problem Category</th>
+                            <td>${escapeHtml(cat)}</td>
+                        </tr>
+                        <tr>
+                            <th>Priority Level</th>
+                            <td><span class="${pClass}">${priority}</span></td>
+                        </tr>
+                        <tr>
+                            <th>Problem Description</th>
+                            <td>${escapeHtml(desc)}</td>
+                        </tr>
+                    </table>
+
+                    <!-- MVC Component Mapping -->
+                    <div class="mvc-explanation">
+                        <h4 style="font-size: 0.95rem; color: #60a5fa; margin-bottom: 0.5rem;">📌 MVC Component Mapping for this Request</h4>
+                        <div class="mvc-grid">
+                            <div class="mvc-box">
+                                <h4 style="color: #60a5fa;">Model</h4>
+                                <p><strong>ServiceRequest.java</strong><br>Encapsulates <code>${escapeHtml(empId)}</code> and ticket attributes.</p>
+                            </div>
+                            <div class="mvc-box">
+                                <h4 style="color: #34d399;">View</h4>
+                                <p><strong>acknowledgement.jsp</strong><br>Rendered the dynamic ticket confirmation screen.</p>
+                            </div>
+                            <div class="mvc-box">
+                                <h4 style="color: #a78bfa;">Controller</h4>
+                                <p><strong>ServiceRequestServlet.java</strong><br>Assigned <code>${ticketId}</code> and forwarded request.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" onclick="window.scrollTo({top: 0, behavior: 'smooth'});" class="btn-submit" style="margin-top: 1.5rem; width: 100%;">
+                        &larr; Submit Another Service Request
+                    </button>
+                </div>
+            `;
+
+            outputArea.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>

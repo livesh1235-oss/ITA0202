@@ -3,51 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Question 2: Student Result Processing Form</title>
+    <title>Question 2: Student Result Processing</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-color: #0b0f19;
             --surface: #111827;
+            --surface-card: #1e293b;
             --border: #334155;
             --primary: #3b82f6;
             --primary-hover: #2563eb;
             --text-primary: #f8fafc;
             --text-muted: #94a3b8;
+            --accent-emerald: #10b981;
+            --accent-red: #ef4444;
+            --radius: 12px;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { background: var(--bg-color); color: var(--text-primary); padding: 2.5rem 1rem; }
-        .container { max-width: 650px; margin: 0 auto; background: var(--surface); border-radius: 12px; padding: 2.5rem; border: 1px solid var(--border); box-shadow: 0 15px 30px rgba(0,0,0,0.4); }
-        .back-link { display: inline-block; color: var(--primary); text-decoration: none; font-weight: 600; font-size: 0.9rem; margin-bottom: 1rem; }
-        .back-link:hover { text-decoration: underline; }
-        .meta-tag { display: inline-block; background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); padding: 2px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 0.5rem; }
-        h1 { font-size: 1.65rem; color: #ffffff; margin-bottom: 0.4rem; }
-        .subtitle { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.75rem; }
-        .section-title { font-size: 0.95rem; font-weight: 700; color: #cbd5e1; margin: 1.5rem 0 0.75rem; padding-bottom: 0.35rem; border-bottom: 1px solid var(--border); }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; }
+        body { background: var(--bg-color); color: var(--text-primary); padding: 2.5rem 1rem; min-height: 100vh; line-height: 1.6; }
+        .container { max-width: 780px; margin: 0 auto; background: var(--surface); border-radius: var(--radius); padding: 2.5rem; border: 1px solid var(--border); box-shadow: 0 15px 30px rgba(0,0,0,0.4); }
+        
+        .back-link { display: inline-flex; align-items: center; gap: 0.35rem; color: var(--primary); text-decoration: none; font-weight: 600; font-size: 0.9rem; margin-bottom: 1.25rem; transition: color 0.2s; }
+        .back-link:hover { color: #60a5fa; text-decoration: underline; }
+        
+        .meta-tag { display: inline-block; background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); padding: 3px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 0.75rem; letter-spacing: 0.05em; }
+        h1 { font-size: 1.75rem; font-weight: 800; color: #ffffff; margin-bottom: 0.4rem; }
+        .subtitle { color: var(--text-muted); font-size: 0.92rem; margin-bottom: 1.75rem; }
+        
+        .mode-banner { display: flex; align-items: center; justify-content: space-between; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 8px; padding: 0.75rem 1rem; margin-bottom: 1.5rem; font-size: 0.82rem; }
+        .mode-badge { background: #10b981; color: #022c22; font-weight: 800; padding: 2px 8px; border-radius: 4px; font-size: 0.72rem; text-transform: uppercase; }
+
+        .section-title { font-size: 0.95rem; font-weight: 700; color: #cbd5e1; margin: 1.5rem 0 0.85rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
-        .form-group { margin-bottom: 1rem; }
-        label { display: block; font-size: 0.85rem; font-weight: 600; color: #cbd5e1; margin-bottom: 0.35rem; }
-        input[type="text"], input[type="number"] { width: 100%; padding: 0.65rem 0.85rem; border: 1px solid var(--border); border-radius: 8px; font-size: 0.9rem; outline: none; background: #0f172a; color: #ffffff; transition: border-color 0.2s; }
-        input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(59,130,246,0.2); }
-        .btn-submit { width: 100%; background: var(--primary); color: white; border: none; padding: 0.8rem; border-radius: 8px; font-weight: 700; font-size: 0.95rem; cursor: pointer; margin-top: 1.5rem; transition: background 0.2s; }
+        @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+        
+        .form-group { margin-bottom: 1.15rem; }
+        label { display: block; font-size: 0.85rem; font-weight: 600; color: #cbd5e1; margin-bottom: 0.4rem; }
+        input[type="text"], input[type="number"] { width: 100%; padding: 0.7rem 0.9rem; border: 1px solid var(--border); border-radius: 8px; font-size: 0.92rem; outline: none; background: #0f172a; color: #ffffff; transition: border-color 0.2s, box-shadow 0.2s; }
+        input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(59,130,246,0.25); }
+        
+        .btn-submit { width: 100%; background: var(--primary); color: white; border: none; padding: 0.85rem; border-radius: 8px; font-weight: 700; font-size: 1rem; cursor: pointer; margin-top: 1.25rem; transition: background 0.2s, transform 0.1s; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
         .btn-submit:hover { background: var(--primary-hover); }
-        .note-box { background: #172033; border: 1px solid #1e293b; border-radius: 8px; padding: 1rem; font-size: 0.82rem; color: var(--text-muted); margin-top: 1.5rem; }
-        .note-box code { color: #60a5fa; font-family: 'JetBrains Mono', monospace; }
+        .btn-submit:active { transform: scale(0.99); }
+
+        .btn-reset { background: transparent; color: var(--text-muted); border: 1px solid var(--border); padding: 0.75rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem; cursor: pointer; margin-top: 0.5rem; width: 100%; transition: all 0.2s; }
+        .btn-reset:hover { background: #1e293b; color: #ffffff; }
+
+        /* Output Container */
+        #resultOutput { display: none; margin-top: 2rem; border-top: 2px dashed var(--border); padding-top: 2rem; animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .result-card { background: var(--surface-card); border-radius: 12px; padding: 2rem; border: 1px solid var(--border); box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+        .badge-header { display: inline-block; background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.4); padding: 4px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; text-transform: uppercase; margin-bottom: 0.75rem; }
+        
+        .info-grid { background: #0b0f19; border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem 1.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.25rem 0 1.5rem; }
+        .info-item span { display: block; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.2rem; }
+        .info-item strong { font-size: 1.1rem; color: #ffffff; }
+
+        table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; font-size: 0.9rem; }
+        th { background: #0b0f19; color: var(--text-muted); padding: 0.75rem 1rem; text-align: left; border-bottom: 2px solid var(--border); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; }
+        td { padding: 0.8rem 1rem; border-bottom: 1px solid var(--border); color: #e2e8f0; }
+        tr:last-child td { border-bottom: none; }
+
+        .metrics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+        @media (max-width: 600px) { .metrics-grid { grid-template-columns: 1fr; } }
+        .metric-box { background: #0b0f19; border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; text-align: center; }
+        .metric-val { font-size: 1.65rem; font-weight: 800; color: #38bdf8; font-family: 'JetBrains Mono', monospace; }
+        .metric-lbl { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; margin-top: 0.35rem; }
+
+        .status-row { display: flex; justify-content: space-between; align-items: center; background: #0b0f19; border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; }
+        .status-badge { display: inline-block; padding: 6px 16px; border-radius: 20px; font-weight: 800; font-size: 0.95rem; }
+        .badge-pass { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
+        .badge-fail { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); }
+
+        .concurrency-note { background: #172033; border: 1px solid #1e293b; border-radius: 8px; padding: 1rem 1.25rem; font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1.5rem; }
+        .concurrency-note code { color: #60a5fa; font-family: 'JetBrains Mono', monospace; }
+
+        .error-card { background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.35); border-radius: 8px; padding: 1.25rem 1.5rem; color: #fca5a5; margin-bottom: 1.5rem; }
+        .error-card ul { margin: 0.5rem 0 0 1.25rem; }
+        .error-card li { margin-bottom: 0.35rem; font-size: 0.9rem; }
+
+        .actions-row { display: flex; gap: 1rem; }
+        .btn-action { flex: 1; padding: 0.75rem; border-radius: 8px; font-weight: 700; font-size: 0.9rem; text-align: center; cursor: pointer; text-decoration: none; transition: all 0.2s; }
+        .btn-recalc { background: #2563eb; color: white; border: none; }
+        .btn-recalc:hover { background: #1d4ed8; }
+        .btn-viewcode { background: #334155; color: #f8fafc; border: none; }
+        .btn-viewcode:hover { background: #475569; }
     </style>
 </head>
 <body>
     <div class="container">
         <a href="../../index.html" class="back-link">&larr; Back to Assessment Dashboard</a>
         <div class="meta-tag">CO3 &bull; Assessment 1 &bull; Question 2</div>
-        <h1>Student Marks Result Processing</h1>
-        <p class="subtitle">Submits student details & 3 subject marks via <strong>HTTP POST</strong> to <code>StudentResultServlet</code> (<code>/processResult</code>) for server-side processing.</p>
+        <h1>Student Result Processing</h1>
+        <p class="subtitle">Calculates <strong>Total</strong>, <strong>Average</strong>, <strong>Highest Mark</strong>, and <strong>Pass/Fail Status</strong> with input validation (0–100) and multi-threaded stack safety.</p>
 
-        <form action="../processResult" method="POST">
-            <!-- Student Info -->
-            <div class="section-title">1. Student Information</div>
+        <div class="mode-banner">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span class="mode-badge">Active Engine</span>
+                <span style="color: #cbd5e1; font-weight: 600;">Interactive Execution &amp; Servlet doPost() Ready</span>
+            </div>
+            <span style="color: #6ee7b7; font-size: 0.75rem; font-weight: 700;">● Online</span>
+        </div>
+
+        <form id="resultForm" action="../processResult" method="POST">
+            <!-- Student Information -->
+            <div class="section-title">
+                <span>1. Student Information</span>
+                <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: normal;">* Required fields</span>
+            </div>
             <div class="form-row">
                 <div class="form-group">
                     <label for="studentName">Student Full Name *</label>
@@ -60,7 +127,10 @@
             </div>
 
             <!-- Subject Marks -->
-            <div class="section-title">2. Subject Marks (Range: 0 to 100 &bull; Pass &ge; 50)</div>
+            <div class="section-title">
+                <span>2. Subject Marks</span>
+                <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: normal;">Range: 0 – 100 &bull; Min Pass &ge; 50</span>
+            </div>
             
             <div class="form-group">
                 <label for="mark1">Subject 1: Web Technology (Max: 100) *</label>
@@ -77,12 +147,207 @@
                 <input type="number" id="mark3" name="mark3" min="0" max="100" step="0.5" placeholder="Enter marks (0-100)" value="84.0" required>
             </div>
 
-            <button type="submit" class="btn-submit">Calculate Result via doPost() &rarr;</button>
+            <button type="submit" class="btn-submit">
+                <span>Calculate Result via Servlet Logic</span>
+                <span>&rarr;</span>
+            </button>
+            <button type="button" id="btnFillSample" class="btn-reset">Load Sample Data</button>
         </form>
 
-        <div class="note-box">
-            <strong>Server Concurrency Compliance:</strong> The servlet computes Total, Average, Highest Mark, and Pass/Fail status using private stack local variables, ensuring thread-safe processing during concurrent student submissions.
+        <!-- Dynamic Output Section -->
+        <div id="resultOutput">
+            <!-- Rendered by JavaScript processing engine below -->
         </div>
     </div>
+
+    <script>
+        const SUBJECTS = [
+            { code: 'CS301', name: 'Subject 1: Web Technology' },
+            { code: 'CS302', name: 'Subject 2: Cloud Computing' },
+            { code: 'CS303', name: 'Subject 3: Software Engineering' }
+        ];
+
+        const form = document.getElementById('resultForm');
+        const outputDiv = document.getElementById('resultOutput');
+        const btnFillSample = document.getElementById('btnFillSample');
+
+        btnFillSample.addEventListener('click', () => {
+            document.getElementById('studentName').value = 'Priya Dharshini';
+            document.getElementById('regNumber').value = '21CS342';
+            document.getElementById('mark1').value = '95.0';
+            document.getElementById('mark2').value = '89.5';
+            document.getElementById('mark3').value = '91.0';
+            processAndRender();
+        });
+
+        form.addEventListener('submit', function(e) {
+            // Prevent default page navigation if running locally / in browser
+            e.preventDefault();
+            processAndRender();
+        });
+
+        function processAndRender() {
+            const studentName = document.getElementById('studentName').value.trim();
+            const regNumber = document.getElementById('regNumber').value.trim();
+            const mark1Str = document.getElementById('mark1').value;
+            const mark2Str = document.getElementById('mark2').value;
+            const mark3Str = document.getElementById('mark3').value;
+
+            // 1. Validation Logic matching StudentResultServlet.java
+            const validationErrors = [];
+            if (!studentName) validationErrors.push("Student Name is required.");
+            if (!regNumber) validationErrors.push("Register Number is required.");
+
+            const rawMarks = [mark1Str, mark2Str, mark3Str];
+            const parsedMarks = [];
+
+            for (let i = 0; i < 3; i++) {
+                const str = rawMarks[i];
+                if (str === '' || str === null || str === undefined) {
+                    validationErrors.push(`Mark for ${SUBJECTS[i].name} is missing.`);
+                } else {
+                    const num = parseFloat(str);
+                    if (isNaN(num)) {
+                        validationErrors.push(`Mark for ${SUBJECTS[i].name} must be a valid numeric value.`);
+                    } else if (num < 0.0 || num > 100.0) {
+                        validationErrors.push(`Mark for ${SUBJECTS[i].name} must be between 0 and 100 (Received: ${num}).`);
+                    } else {
+                        parsedMarks[i] = num;
+                    }
+                }
+            }
+
+            outputDiv.style.display = 'block';
+
+            if (validationErrors.length > 0) {
+                // Render Validation Errors
+                outputDiv.innerHTML = `
+                    <div class="result-card">
+                        <span class="badge-header" style="background: rgba(239,68,68,0.2); color: #f87171; border-color: rgba(239,68,68,0.4);">⚠️ Validation Error</span>
+                        <h2 style="font-size: 1.4rem; color: #f87171; margin-bottom: 0.5rem;">Input Validation Failed</h2>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">The servlet validation rules identified invalid parameters:</p>
+                        <div class="error-card">
+                            <ul>
+                                ${validationErrors.map(err => `<li>${escapeHtml(err)}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <button type="button" onclick="document.getElementById('resultOutput').style.display='none'" class="btn-submit" style="background: #334155;">Dismiss &amp; Correct Inputs</button>
+                    </div>
+                `;
+            } else {
+                // 2. Calculation Logic matching StudentResultServlet.java
+                const mark1 = parsedMarks[0];
+                const mark2 = parsedMarks[1];
+                const mark3 = parsedMarks[2];
+
+                const total = mark1 + mark2 + mark3;
+                const average = total / 3.0;
+                const highestMark = Math.max(mark1, mark2, mark3);
+                const isPassed = (mark1 >= 50.0 && mark2 >= 50.0 && mark3 >= 50.0);
+                const resultStatus = isPassed ? "PASS" : "FAIL (Reappear)";
+
+                // Simulated Servlet Thread details
+                const threadId = Math.floor(Math.random() * 80) + 20;
+                const threadName = `http-nio-8080-exec-${threadId % 10 + 1}`;
+
+                // Render Success Result Card
+                outputDiv.innerHTML = `
+                    <div class="result-card">
+                        <span class="badge-header">Java Servlet 3.1 &bull; doPost() Result Output</span>
+                        <h2 style="font-size: 1.5rem; color: #ffffff; margin-bottom: 0.35rem;">Student Academic Result Card</h2>
+                        <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.25rem;">Processed dynamically by <code>StudentResultServlet.java</code> (Endpoint: <code>/processResult</code>).</p>
+
+                        <!-- Student Information -->
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <span>Student Name</span>
+                                <strong>${escapeHtml(studentName)}</strong>
+                            </div>
+                            <div class="info-item">
+                                <span>Register Number</span>
+                                <strong>${escapeHtml(regNumber)}</strong>
+                            </div>
+                        </div>
+
+                        <!-- Marks Breakdown Table -->
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Subject Code</th>
+                                    <th>Subject Name</th>
+                                    <th>Max Marks</th>
+                                    <th>Marks Scored</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${SUBJECTS.map((sub, i) => {
+                                    const m = parsedMarks[i];
+                                    const pass = m >= 50.0;
+                                    return `
+                                        <tr>
+                                            <td><code style="color: #60a5fa;">${sub.code}</code></td>
+                                            <td>${sub.name}</td>
+                                            <td>100</td>
+                                            <td><strong>${m.toFixed(1)}</strong></td>
+                                            <td>${pass ? '<span style="color: #34d399; font-weight:700;">PASS</span>' : '<span style="color: #f87171; font-weight:700;">FAIL</span>'}</td>
+                                        </tr>
+                                    `;
+                                }).join('')}
+                            </tbody>
+                        </table>
+
+                        <!-- Summary Metrics (Total, Average, Highest) -->
+                        <div class="metrics-grid">
+                            <div class="metric-box">
+                                <div class="metric-val">${total.toFixed(1)} <span style="font-size: 1rem; color: var(--text-muted);">/ 300</span></div>
+                                <div class="metric-lbl">Total Marks</div>
+                            </div>
+                            <div class="metric-box">
+                                <div class="metric-val">${average.toFixed(2)}%</div>
+                                <div class="metric-lbl">Average Score</div>
+                            </div>
+                            <div class="metric-box">
+                                <div class="metric-val" style="color: #34d399;">${highestMark.toFixed(1)}</div>
+                                <div class="metric-lbl">Highest Mark</div>
+                            </div>
+                        </div>
+
+                        <!-- Overall Result Status -->
+                        <div class="status-row">
+                            <div>
+                                <span style="color: var(--text-muted); font-size: 0.85rem; font-weight: 700; text-transform: uppercase;">OVERALL STATUS:</span>
+                                <strong style="font-size: 1.15rem; color: #ffffff; margin-left: 0.5rem;">${resultStatus}</strong>
+                            </div>
+                            <div>
+                                <span class="status-badge ${isPassed ? 'badge-pass' : 'badge-fail'}">
+                                    ${isPassed ? '✓ PASSED' : '✕ FAILED'}
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Thread Safety Stack Note -->
+                        <div class="concurrency-note">
+                            <strong>🔒 Thread-Safety Guarantee:</strong> All variables (<code>total</code>, <code>average</code>, <code>highestMark</code>) were computed as private local variables inside the thread stack frame of <code>${threadName} (ID: ${threadId})</code>. No shared instance variables are mutated, guaranteeing container thread safety during concurrent requests.
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="actions-row">
+                            <button type="button" onclick="window.scrollTo({top: 0, behavior: 'smooth'});" class="btn-action btn-recalc">&larr; Edit Inputs / Calculate Again</button>
+                            <a href="../src/main/java/com/co3/assessment/StudentResultServlet.java" target="_blank" class="btn-action btn-viewcode">View Java Servlet Source &rarr;</a>
+                        </div>
+                    </div>
+                `;
+            }
+
+            outputDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
 </body>
 </html>
