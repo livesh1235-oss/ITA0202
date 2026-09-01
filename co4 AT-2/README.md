@@ -5,11 +5,24 @@
 
 ---
 
+## 📸 Application Screenshots
+
+### 1. Input Form View (`serviceRequest.jsp`)
+![Service Request Form](screenshots/serviceRequest_form.png)
+
+### 2. Result View & MVC Breakdown (`acknowledgement.jsp`)
+![Acknowledgement & MVC Flow](screenshots/acknowledgement_result.png)
+
+---
+
 ## 📁 Directory Structure
 ```
 co4 AT-2/
 ├── pom.xml
 ├── README.md
+├── screenshots/
+│   ├── serviceRequest_form.png
+│   └── acknowledgement_result.png
 └── src/
     └── main/
         ├── java/
